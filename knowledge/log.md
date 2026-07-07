@@ -2,6 +2,9 @@
 
 ## 2026-07-07
 
+* **Creation**: `HANDOVER.md`（バンドル外・リポジトリルート）— Fable のサブスク離脱に伴い、後任モデル（Opus 4.8 / gpt-5.5 等）向けの引き継ぎ書を作成。人物理解の要点・相談の実運用・Stop hook の罠・進行中スレッド5件を集約。CLAUDE.md と新設 AGENTS.md（gpt/Codex 向け入口）から参照。
+* **Update**: [AIエージェント使いこなしのエッセンス — Fable からの申し送り](/tech/ai-agent-mastery-essence.md) — ユーザー向け申し送りと後任モデル向け HANDOVER.md の対の関係を明記するクロスリンクを追記。
+
 * **Creation**: [ドキュメントなし現場でのドメイン理解の高速化](/work/rapid-domain-onboarding.md) — 派遣現場でのドメイン理解の相談。問題を「検知器がレビューにしかないこと」と再定義し、考慮不足の5分類と既存道具3つ（仮説提示型質問・3例ルール・7点セット転用）の処方箋を記録。work/ ドメインを新設。
 
 * **Creation**: [git push 権限の設計](/tech/claude-code-push-permission-design.md) — 「このリポジトリだけ push 許可」の要望から、deny > ask > allow の優先順位・Bash ルールのスコープ不可・自己変更ブロックの3機構を確認。グローバル deny を ask に変更する決定を記録。

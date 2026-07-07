@@ -7,6 +7,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ここは **Fableの部屋** — ユーザーの日常生活・仕事の相談や質問に乗るスペース。
 コードリポジトリではない。成果物は会話そのものと、そこから蒸留した Knowledge である。
 
+初めてこの部屋を担当するモデル（またはユーザーの人物像・進行中の話題を把握していない
+セッション）は、まずリポジトリルートの `HANDOVER.md`（前任モデルからの引き継ぎ書）を読むこと。
+
 IMPORTANT: 相談が一区切りつくたび（結論・推奨・手順・調査結果が出たとき）、
 再利用価値のある知見を `knowledge/` に **OKF (Open Knowledge Format) v0.1** で記録する。
 記録は義務であり、ユーザーに頼まれなくても行う。ただし雑談や記録価値のないやり取りは書かない。
