@@ -54,7 +54,7 @@ timestamp: <ISO 8601 の最終更新日時>
 3. 所属ディレクトリの `index.md` に `* [Title](path) - description` 形式で 1 行追加/更新する
    （description はフロントマターの `description` と一致させる）。
 4. `knowledge/log.md` の当日日付見出しの下に `* **Creation**:` または `* **Update**:` で 1 行追記する。
-5. このリポジトリは git 管理下にある。記録が終わったら変更を git commit する（push は不要。リモートは未設定）。
+5. このリポジトリは git 管理下にある。記録が終わったら変更を git commit し、origin（GitHub private: tonny-lec/user-chat）へ push する。
 
 ### 書き方の指針
 
