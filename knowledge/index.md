@@ -11,3 +11,4 @@ okf_version: "0.1"
 * [self](/self/index.md) - 本人の思考パターン・学習スタイル・自己理解に関する知見。
 * [tech](/tech/index.md) - 技術・開発ツール・AIエージェント活用に関する知見。
 * [thinking](/thinking/index.md) - 思考法・問題解決アプローチに関する知見。
+* [work](/work/index.md) - 働き方・現場での仕事の進め方に関する知見。
