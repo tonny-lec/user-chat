@@ -2,6 +2,8 @@
 
 ## 2026-07-07
 
+* **Update**: [AI文脈での「蒸留」とは何か](/tech/what-is-distillation-in-ai.md) — 本人の指摘（良い動きの上位レイヤーへの転写も蒸留）を受け「成功の蒸留」を追記。失敗/成功の非対称（検出=イベントvs非イベント・検証=自己証明vs因果未確認）、成功は沈める前に再現確認、驚きトリガーの検出網。
+
 * **Creation**: `HANDOVER.md`（バンドル外・リポジトリルート）— Fable のサブスク離脱に伴い、後任モデル（Opus 4.8 / gpt-5.5 等）向けの引き継ぎ書を作成。人物理解の要点・相談の実運用・Stop hook の罠・進行中スレッド5件を集約。CLAUDE.md と新設 AGENTS.md（gpt/Codex 向け入口）から参照。
 * **Update**: [AIエージェント使いこなしのエッセンス — Fable からの申し送り](/tech/ai-agent-mastery-essence.md) — ユーザー向け申し送りと後任モデル向け HANDOVER.md の対の関係を明記するクロスリンクを追記。
 
