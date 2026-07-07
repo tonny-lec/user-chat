@@ -2,6 +2,7 @@
 
 ## 2026-07-07
 
+* **Creation**: [git push 権限の設計](/tech/claude-code-push-permission-design.md) — 「このリポジトリだけ push 許可」の要望から、deny > ask > allow の優先順位・Bash ルールのスコープ不可・自己変更ブロックの3機構を確認。グローバル deny を ask に変更する決定を記録。
 * **Creation**: [Excel業務データの構造化方針](/tech/excel-data-structuring-for-ai.md) — 「AIに渡しても業務者と同等の解釈ができるように」の相談。ブレストで利用形態（移行設計図・一度きり）/形態（台帳+帳票混在）/入力源（実ファイルのみ）を確定し、4層モデル+証拠タグ+マスク予測evalの5フェーズ設計を記録。
 * **Creation**: [Excel業務のWeb化における状態モデリング](/tech/state-modeling-for-excel-to-web.md) — 「状態で表示が変わり複雑化する」相談への回答。複雑さはExcelの暗黙状態の可視化であり、対策は状態の設計そのもの。実データ逆算→遷移表レビュー→直交分解→名前付き遷移→UI対応表→例外遷移の7ステップを記録。
 * **Creation**: [AI駆動開発ドキュメントテンプレートの設計原則](/tech/ai-dev-doc-templates.md) — PRD/要件定義書/Design Doc/ADR のテンプレ5点を templates/ に作成。読み手モデル「AIは書いていないことを最もらしく補完する」から全原則を導出（未定の明記・Non-goals必須・理由付き制約・述語の受け入れ条件・ADR最優先）。

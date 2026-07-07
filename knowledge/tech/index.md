@@ -23,6 +23,7 @@
 * [AI活用における「構造化」とは何か](/tech/what-is-structuring-in-ai.md) - AI文脈で使われる「構造化」の意味を、データ・入力・出力・知識/業務プロセスの4場面に整理した解説。
 * [LLM組み込みに向けた業務の構造化 — 完成基準とアーティファクト7点セット](/tech/business-process-structuring-for-llm.md) - 業務が構造化できているかを判定する「引き継ぎテスト」と6条件、LLM組み込みを見据えた成果物7点セット、実況メモ→蒸留→AIで検証の進め方。
 * [システム問い合わせ対応の構造化テンプレート](/tech/system-inquiry-structuring.md) - 業務構造化の最初の題材としての問い合わせ対応の適性評価と、7点セットを問い合わせ対応向けに具体化した雛形。実況メモ5項目と段階導入ロードマップ付き。
+* [git push 権限の設計 — main への push を deny から ask に変更](/tech/claude-code-push-permission-design.md) - Claude Code の権限優先順位（deny > ask > allow、Bash ルールはリポジトリ単位のスコープ不可）を踏まえ、git push origin main/develop をグローバル deny から ask（毎回確認）に移した決定とその理由。
 * [Excel業務データの構造化方針 — AIが業務者と同等に解釈できる設計図の作り方](/tech/excel-data-structuring-for-ai.md) - Excelの4層（値・計算・視覚・暗黙）を機械抽出可能性の順に抽出し、証拠タグで事実と仮説を分離、マスク予測の一致率で仕様の穴を検出する5フェーズのパイプライン。成果物6点セット付き。
 * [Excel業務のWeb化における状態モデリング](/tech/state-modeling-for-excel-to-web.md) - Excelの暗黙状態を明示化する7ステップ — 実データからの状態逆算、遷移表レビュー、直交分解、導出状態の非保存、名前付き遷移操作、UI判定の一元化、例外遷移の事前設計。
 * [セマンティックレイヤー・オントロジー・dbt — 三層データ基盤×AI活用での位置づけ](/tech/semantic-layer-ontology-dbt.md) - 3つの道具はスタックの別の高さにある別物。dbtは三層を作るビルドツール、セマンティックレイヤーは指標定義のSQLコンパイラ、オントロジーは業務エンティティのグラフ。text-to-SQLの推測を上から順に潰す装置として整理。
