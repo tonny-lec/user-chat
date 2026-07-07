@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/knowledge-record-reminder.sh\"",
+            "timeout": 10,
+            "statusMessage": "knowledge 記録チェック中..."
+          }
+        ]
+      }
+    ]
+  }
+}
