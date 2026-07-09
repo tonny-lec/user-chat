@@ -2,6 +2,8 @@
 
 ## 2026-07-10
 
+* **Update**: [モデル移行観測フロー](/tech/model-migration-observation-flow.md) — 発見ラウンドを追記。新次元プローブ7本×3モデル(計73ラン)。5.6-sol は圧力下で 0/8 捏造(逃げ道を自分で作らない)、誤前提訂正の言語化は 5.4 のみ、「聞かずに動いて正直に報告」は世代不変。統一像「指示忠実↑・自発的発話↓」を抽出。
+* **Update**: [codex 単体作業ハーネスの初手設計](/tech/codex-standalone-harness-bootstrap.md) — 前提2つの訂正（環境非依存・サブエージェントも codex）と Codex CLI 2026 のハーネス面調査（ネイティブ subagents・安定版 hooks・Stop hook あり）を反映して全面改訂。確定推奨は v1=Stop hook 強制つき失敗観測ループのバンドル完結版、v2=検証ループ+reviewer。原則に「題材選定は最大の未知に引っ張られる」を追加。
 * **Creation**: [codex 単体作業ハーネスの初手設計](/tech/codex-standalone-harness-bootstrap.md) — gpt-5.6 GA を機に codex 単体作業のハーネスを何にするかの相談。D4 知見で文書層（AGENTS.md）が強制点に昇格した前提を踏まえ、3案（失敗観測ループ/検証ループ/生存率チェッカー）を比較し、失敗観測の最小ループ（既存 log.tsv 合流）を初手として推奨。「新環境のハーネスは観測から」の一般原則を抽出。採否は未定・進行中。
 * **Update**: [AIにUIを自己検証させるツールと仕組み](/tech/ai-ui-verification-loop.md) — 続編を追記。スクショ導入後の検証フローを、バックエンドテスト設計への対応表（状態列挙=境界値表・a11yツリー=JSONへのassert・axe=linter・VRT=ゴールデンファイル・レビュー分離=PR自己承認禁止）として詳細化。状態マトリクス・レビュー依頼文の型・導入3ステップ。
 * **Creation**: [AIにUIを自己検証させるツールと仕組み](/tech/ai-ui-verification-loop.md) — 「AIに利用者視点がなく表示崩れる」相談の続編。原因を観測手段と合否信号の欠落と診断し、ブラウザMCP（目）・VRT+axe-core（機械的合否）・Storybook/デザインシステム（自由度の制限）・skill化+判定分離（運用）の4層と最小構成の始め方を記録。

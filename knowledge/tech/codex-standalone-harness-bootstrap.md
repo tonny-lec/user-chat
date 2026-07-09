@@ -1,71 +1,106 @@
 ---
 type: Consultation
 title: codex 単体作業ハーネスの初手設計 — 最初の1本は観測装置
-description: gpt-5.6 GA を機に codex 単体作業環境のハーネスを作る相談。D4 知見（5.6 は AGENTS.md を維持）により文書層が強制点として昇格、初手は強制でなく失敗観測の最小ループ（既存 log.tsv への合流）を推奨。
-tags: [ai-agent, harness, codex, gpt-5.6, failure-observation]
-timestamp: 2026-07-10T21:00:00+09:00
+description: gpt-5.6 GA を機に「環境非依存・codex のみで完結」するハーネスを作る相談。Codex CLI 2026 のハーネス面（ネイティブ subagents・安定版 hooks）を確認し、初手は Stop hook 強制つき失敗観測ループのバンドル完結版を推奨。
+tags: [ai-agent, harness, codex, gpt-5.6, failure-observation, hooks, subagents]
+timestamp: 2026-07-10T23:00:00+09:00
 ---
 
 # 相談内容
 
 gpt-5.6 が GA したのを機に、codex に「小さく単体で完結したハーネス」を作らせたい。
-前提の確認で判明した要件: (1) Claude からの委譲ではなく **codex のみで完結する作業環境**の
-ハーネス (2) 目的は実用（実際に使うもの）＋ codex 環境の整備の両方。題材は未定だった。
+確定した前提（2往復の確認で判明。初回は前提を取り違えた）:
+
+1. **環境非依存** — ハーネスのバンドル（1ディレクトリ/リポジトリ）だけで稼働する。
+   このPCの既存資産（lets-deep-agents の log.tsv・~/.claude 等）に依存しない。
+2. **codex のみで完結** — サブエージェントも codex。Claude Code は関与しない。
+3. 目的は実用＋ codex 環境の整備。
 
 # 検討・調査
 
-## 設計入力（既存 knowledge から）
+## Codex CLI 2026 のハーネス面（Web 調査で確認・2026-07-10）
 
-1. **文書層の強制力が世代的に昇格した**。[モデル移行観測フロー](/tech/model-migration-observation-flow.md)
-   の D4 で、5.6-sol は正当化付きのユーザー上書き要求にも AGENTS.md を 5/5 で維持
-   （5.4=0/5, 5.5=1/5）。Claude Code なら hook が必要だった規則の一部が、
-   codex 5.6 では AGENTS.md 規約だけで[「ハーネス感」の条件](/tech/skill-to-harness-enforcement.md)
-   （モデルの善意に依存しない強制）に近づく。
-2. **ただし「衝突に黙って倒れる」は世代不変**（44ラン中言及ゼロ）。規約が守られたかを
-   事後に機械が確認する観測装置は依然として別途必要。文書層の強制は「静かに」効く。
-3. **codex 単体作業の失敗データはまだゼロ**。失敗観測駆動の原則に照らすと、観測前に
-   強制ハーネスを厚く作るのは先回り最適化（＝儀式化リスク）。
+Codex CLI は Claude Code とほぼ同等のハーネス面を持つと判明。「分業機構を自作する
+必要がある」という当初の想定は誤りだった。
 
-## 3案
+| 層 | Codex CLI での実体 |
+|---|---|
+| 文書層 | AGENTS.md。D4 実証済みで 5.6 は正当化付き上書きにも維持（[観測フロー](/tech/model-migration-observation-flow.md)） |
+| サブエージェント | ネイティブ。`.codex/agents/*.toml`（プロジェクトスコープ可）。`developer_instructions`/`model`/`sandbox_mode` を役割別に上書き、省略分は親から継承。同時6・ネスト深さ1 |
+| ルール強制 (hooks) | v0.124.0 で安定。SessionStart / PreToolUse / PostToolUse / Stop / SubagentStart / SubagentStop 等。hooks.json または config.toml インライン |
+| 権限 | sandbox_mode・approvals（サブエージェント単位でも指定可） |
 
-- **案A: 失敗観測の最小ループ（codex 版 failure-log）** — codex セッションの失敗を
-  既存の失敗カタログ基盤（lets-deep-agents の log.tsv）に合流させる記録スクリプト1本＋
-  AGENTS.md の記録規約。強制点は D4 で実証した「5.6 は AGENTS.md を守る」性質。
-  道具が増えない（[散らかり対策](/tech/harness-sprawl-and-interference.md)の合流原則）。
-  副産物として Claude 側と codex 側の失敗が同一 tsv に載り、モデル横断の失敗比較器になる。
-- **案B: 検証ループ最小キット** — 「完了宣言前に `./verify` 実行＋出力貼付」を AGENTS.md
-  規約化＋ verify 雛形。強制強度は最上位（検証ループ＝機械が ground truth）だが、
-  verify の中身がプロジェクト依存で「単体完結」がやや崩れる。
-- **案C: AGENTS.md 生存率チェッカー** — 規約を grep 判定可能な形式で書き、セッション
-  ログから遵守率を事後計測。[eval 入門](/tech/evals-for-practitioners.md)の「文書層は
-  生存率で検証」の実装だが、計測器であって作業ハーネスではなく gpt56-eval D シリーズと
-  役割が重なる。
+未確認事項（実装前に要事実確認）: Stop hook が Claude Code の `decision:block` 相当の
+ブロックをできるか / transcript へのアクセス方法 / プロジェクトスコープ hooks の正確な配置。
+
+## 提案の変遷（前提と事実が変わるたびに推奨が動いた記録）
+
+- R1（前提誤解: このPC上の想定）: 既存 log.tsv への合流 → **環境非依存の前提に違反**し廃案。
+- R2（分業機構が未知と想定）: codex exec ラッパー `sub.sh` の自作分業キット →
+  **ネイティブ subagents の存在で作るものが消滅**し廃案。
+- R3（事実確定後）: 最大の未知が消えたので、原則「新環境の初手は観測」に回帰。
 
 # 結論
 
-**推奨は案A（観測装置から始める）**。順序の論理: 観測 → 失敗が溜まる → 失敗が次の
-ハーネスを指名する、という失敗観測駆動ループの初手が A。案B は失敗を1件でも観測して
-から作れば儀式でなく実需になる。
+## v1（初手）: 失敗観測ループ、Stop hook 強制・バンドル完結版
 
-事前調査が1件必要: **codex CLI が現在持つ強制点（hooks 相当・notify・execpolicy 等）の
-事実確認**。これ自体を codex への最初の委譲タスク（「自分の環境の attachment points を
-調べて報告せよ」）にでき、5.6 実務委譲の肩慣らしを兼ねる。
+1リポジトリに閉じる構成。外部依存は codex CLI と認証のみ:
 
-一般化できる原則: **新しい実行環境にハーネスを持ち込むときの初手は、強制ではなく
-観測の最小ループ**。その環境の失敗分布が分かる前に作った強制は、防ぐ相手のいない儀式になる。
+- `log/failures.tsv` — バンドル内の失敗ログ
+- 記録スクリプト1本 — 形式検証つき追記（ログの直接編集禁止）
+- **Stop hook** — セッション終了時に記録を強制。`knowledge-record-reminder.sh` と同じ
+  設計パターン（発火条件も機械が判断・セッション1回・fail-open）を codex hooks に移植
+- `AGENTS.md` — 記録規約数行
+- （同梱可・ほぼタダ）イベント発火ログ hook — PostToolUse/SubagentStart 等を1行ログ。
+  [散らかり対策](/tech/harness-sprawl-and-interference.md)の観測可能性をバンドル内で確保
+
+## v2（失敗を1件観測してから）: 検証ループキット
+
+`./verify` 実行の強制 + `.codex/agents/reviewer.toml`（独立レビュアー）+
+SubagentStop hook でのレビュー結果ログ。[強制強度](/tech/skill-to-harness-enforcement.md)は
+最上位の検証ループ層。
+
+## 残る設計判断
+
+バンドルの形: (a) テンプレートリポジトリ（プロジェクトごとに複製）か
+(b) 作業をバンドル内で行う自己完結ワークスペースか。運用イメージ次第。
+
+## codex への依頼文に含める検証条件
+
+「実装前に公式 Hooks リファレンスで入出力仕様を確認」「偽入力のパイプテストで
+発火5シナリオ（発火・記録済み・短会話・重複防止・再発火防止）を検証してから配線」—
+Claude 側 hook 開発で実証済みの TDD 手順をそのまま指定する。
+
+## 一般化できる原則
+
+1. **新しい実行環境にハーネスを持ち込むときの初手は、強制ではなく観測の最小ループ**。
+   その環境の失敗分布が分かる前に作った強制は、防ぐ相手のいない儀式になる。
+2. **題材選定は「最大の未知」に引っ張られ、未知が消えると観測初手の原則に戻る**。
+   R2 で分業キットを推したのは分業機構が未知だったからで、ネイティブ対応の確認で消えた。
+   前提・事実の確認1つで推奨が丸ごと変わる — 題材決めの前の事実確認は安い保険。
 
 ## ステータス（2026-07-10）
 
-推奨の提示まで。採否と codex への依頼文（目的・範囲・成果物・検証条件つき）の設計は
-未実施 — 決まり次第この文書を更新する。
+確定版の提案（v1: 失敗観測ループ）まで提示。採否と codex への依頼文の設計は次のステップ。
 
 # Examples
 
-案A の最小形のイメージ: `codex-failure-log.sh`（失敗1件を対話的に log.tsv 形式で追記、
-ID をカタログと照合）＋ AGENTS.md に「タスクが失敗・手戻りしたらセッション終了前に
-このスクリプトで記録する」の規約1条。スクリプト1本＋規約数行で単体完結。
+v1 バンドルの骨格イメージ:
+
+```
+codex-harness/
+├── AGENTS.md              # 記録規約（数行）
+├── .codex/
+│   └── hooks.json         # Stop hook + 発火ログ hook
+├── bin/log-failure.py     # 形式検証つき追記
+└── log/
+    ├── failures.tsv
+    └── events.log
+```
 
 # Citations
 
-[1] 関連: [ハーネス基礎](/tech/ai-agent-harness-basics.md)（失敗観測駆動の育て方）、
-[資産マップ](/tech/my-agent-assets-map.md)（既存の失敗記録基盤の所在）
+[1] [Subagents – Codex（OpenAI Developers）](https://developers.openai.com/codex/subagents)
+[2] [Hooks – Codex（OpenAI Developers）](https://developers.openai.com/codex/hooks)
+[3] [Codex CLI in 2026: What's New](https://codex.danielvaughan.com/2026/03/27/codex-cli-in-2026-whats-new/)
+[4] 関連: [ハーネス基礎](/tech/ai-agent-harness-basics.md)、[資産マップ](/tech/my-agent-assets-map.md)、[eval 入門](/tech/evals-for-practitioners.md)
