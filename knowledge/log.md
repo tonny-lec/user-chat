@@ -2,6 +2,9 @@
 
 ## 2026-07-10
 
+* **Update**: [codex 単体作業ハーネスの初手設計](/tech/codex-standalone-harness-bootstrap.md) — 題材決定を追記。10案4カテゴリの広い候補出し（選択軸: 痛い失敗・体験したい機構・単体完結度）から検証ループキットを採用。設計要点（verify 契約と verify.d 差し替え・空なら fail の縮退解封じ・Stop hook 強制・tsv 実行履歴・自己改竄ガード）と codex への依頼文作成まで。
+* **Update**: [モデル移行観測フロー](/tech/model-migration-observation-flow.md) — 第4ラウンド(ティア/effort軸)を追記。D4 正当化耐性は Sol 5/5→Terra 4/5→Luna 1/5 とティアで単調減、effort 低下では不変(ポリシー焼き付き)。P4「聞かずに動く」は exec モード交絡(approval:never 強制)として正式訂正。
+* **Update**: [AIにUIを自己検証させるツールと仕組み](/tech/ai-ui-verification-loop.md) — 用語補足を追記。axe-core の正体（DOM を走査する実行時 linter、違反はセレクタ付き JSON）と「目視を構造にする」の具体化（目視の質問→DOM への機械的質問の対応表、全置換ではなく全体印象はレビュー担当に残す分業）。
 * **Update**: [モデル移行観測フロー](/tech/model-migration-observation-flow.md) — 発見ラウンドを追記。新次元プローブ7本×3モデル(計73ラン)。5.6-sol は圧力下で 0/8 捏造(逃げ道を自分で作らない)、誤前提訂正の言語化は 5.4 のみ、「聞かずに動いて正直に報告」は世代不変。統一像「指示忠実↑・自発的発話↓」を抽出。
 * **Update**: [codex 単体作業ハーネスの初手設計](/tech/codex-standalone-harness-bootstrap.md) — 前提2つの訂正（環境非依存・サブエージェントも codex）と Codex CLI 2026 のハーネス面調査（ネイティブ subagents・安定版 hooks・Stop hook あり）を反映して全面改訂。確定推奨は v1=Stop hook 強制つき失敗観測ループのバンドル完結版、v2=検証ループ+reviewer。原則に「題材選定は最大の未知に引っ張られる」を追加。
 * **Creation**: [codex 単体作業ハーネスの初手設計](/tech/codex-standalone-harness-bootstrap.md) — gpt-5.6 GA を機に codex 単体作業のハーネスを何にするかの相談。D4 知見で文書層（AGENTS.md）が強制点に昇格した前提を踏まえ、3案（失敗観測ループ/検証ループ/生存率チェッカー）を比較し、失敗観測の最小ループ（既存 log.tsv 合流）を初手として推奨。「新環境のハーネスは観測から」の一般原則を抽出。採否は未定・進行中。
