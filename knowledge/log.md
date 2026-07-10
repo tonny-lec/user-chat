@@ -2,6 +2,7 @@
 
 ## 2026-07-10
 
+* **Creation**: [要件定義・設計・実装を同時に進めるフローの構築方針](/tech/concurrent-req-design-impl-flow.md) — 「3工程を同時に進めるフローを作るなら」の仮の相談。設計課題を整合性維持と診断し、凍結の単位を時間（フェーズ）から空間（縦スライス）へ変える方針、3層の矛盾検出の機械化（受け入れテスト・依存lint・書き戻しの正規手順化）、予測失敗モード3つを記録。文脈確定前の仮の話として更新前提。
 * **Update**: [codex 単体作業ハーネスの初手設計](/tech/codex-standalone-harness-bootstrap.md) — 題材決定を追記。10案4カテゴリの広い候補出し（選択軸: 痛い失敗・体験したい機構・単体完結度）から検証ループキットを採用。設計要点（verify 契約と verify.d 差し替え・空なら fail の縮退解封じ・Stop hook 強制・tsv 実行履歴・自己改竄ガード）と codex への依頼文作成まで。
 * **Update**: [モデル移行観測フロー](/tech/model-migration-observation-flow.md) — 第4ラウンド(ティア/effort軸)を追記。D4 正当化耐性は Sol 5/5→Terra 4/5→Luna 1/5 とティアで単調減、effort 低下では不変(ポリシー焼き付き)。P4「聞かずに動く」は exec モード交絡(approval:never 強制)として正式訂正。
 * **Update**: [AIにUIを自己検証させるツールと仕組み](/tech/ai-ui-verification-loop.md) — 用語補足を追記。axe-core の正体（DOM を走査する実行時 linter、違反はセレクタ付き JSON）と「目視を構造にする」の具体化（目視の質問→DOM への機械的質問の対応表、全置換ではなく全体印象はレビュー担当に残す分業）。
