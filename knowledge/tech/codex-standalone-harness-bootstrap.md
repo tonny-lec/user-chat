@@ -33,6 +33,22 @@ Codex CLI は Claude Code とほぼ同等のハーネス面を持つと判明。
 未確認事項（実装前に要事実確認）: Stop hook が Claude Code の `decision:block` 相当の
 ブロックをできるか / transcript へのアクセス方法 / プロジェクトスコープ hooks の正確な配置。
 
+## AGENTS.md の探索範囲 — CLAUDE.md との差分（2026-07-10 追記）
+
+Codex は AGENTS.md を階層的に読むが、**上限は Git リポジトリルート**。探索順:
+
+1. グローバル: `~/.codex/AGENTS.override.md` → なければ `~/.codex/AGENTS.md`（1つだけ）
+2. `.git` のあるディレクトリをプロジェクトルートとし、そこから cwd まで下りながら
+   各階層で `AGENTS.override.md` → `AGENTS.md`（1ディレクトリ最大1ファイル）
+3. ルート側→cwd 側の順に連結（cwd に近いほど後＝実質優先）。合計 32 KiB
+   （`project_doc_max_bytes`）で打ち切り
+
+**Claude Code との挙動差**: Claude Code は git ルートを越えて親ディレクトリを home まで
+遡る（`~/workspace/CLAUDE.md` のようなワークスペース共通層が効く）が、Codex は
+リポジトリ外の中間階層を読まない。マシン共通ルールは `~/.codex/AGENTS.md` に置くか、
+リポジトリ内へコピー/シンボリックリンクするしかない。バンドル完結型ハーネス（本題材）
+には影響なし — リポジトリ内で閉じるため。
+
 ## 提案の変遷（前提と事実が変わるたびに推奨が動いた記録）
 
 - R1（前提誤解: このPC上の想定）: 既存 log.tsv への合流 → **環境非依存の前提に違反**し廃案。
@@ -122,4 +138,5 @@ codex-harness/
 [1] [Subagents – Codex（OpenAI Developers）](https://developers.openai.com/codex/subagents)
 [2] [Hooks – Codex（OpenAI Developers）](https://developers.openai.com/codex/hooks)
 [3] [Codex CLI in 2026: What's New](https://codex.danielvaughan.com/2026/03/27/codex-cli-in-2026-whats-new/)
+[5] [Custom instructions with AGENTS.md（OpenAI Developers）](https://developers.openai.com/codex/guides/agents-md)
 [4] 関連: [ハーネス基礎](/tech/ai-agent-harness-basics.md)、[資産マップ](/tech/my-agent-assets-map.md)、[eval 入門](/tech/evals-for-practitioners.md)
