@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-07-12
+
+* **Update**: [コードエントロピーをエージェントの修正範囲選択に使う](/tech/code-entropy-map-for-agent-scope.md) — 続編（メニュー拡張）を追記。指標を「エージェントの5つの問い」（波及範囲・危険度・安全網強度・実行時被踏度・修正案の健全性）で体系化し、新規4指標（import fan-in エントロピー・gzip 圧縮率・diff 散布・隠れ結合）を lets-langgraph で実測。構造×歴史の4象限で「隠れ結合」（import なし×co-change あり＝規約結合）が最重要信号、mutation kill 分布が自律度の予算、diff 散布は履歴から閾値校正できるタダの述語、という3発見。
+
 ## 2026-07-11
 
 * **Creation**: [コードエントロピーをエージェントの修正範囲選択に使う](/tech/code-entropy-map-for-agent-scope.md) — CSのエントロピー概念を「何の分布か」を軸にカタログ化し、エージェントの修正範囲自律選択に効く3系統（change entropy・naturalness・モデル出力エントロピー）を整理。層1（git履歴マップ）を深掘りし、codex-os/lets-langgraph の実履歴で試作実行。HCM の実用形（HCM2+decay・period幅・一括コミット除外）と、co-change confidence だけが hook で強制可能な述語になるという発見。導入前検証手順（欠陥相関・時系列holdout）付き。
