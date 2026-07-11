@@ -2,6 +2,8 @@
 
 ## 2026-07-11
 
+* **Creation**: [コードエントロピーをエージェントの修正範囲選択に使う](/tech/code-entropy-map-for-agent-scope.md) — CSのエントロピー概念を「何の分布か」を軸にカタログ化し、エージェントの修正範囲自律選択に効く3系統（change entropy・naturalness・モデル出力エントロピー）を整理。層1（git履歴マップ）を深掘りし、codex-os/lets-langgraph の実履歴で試作実行。HCM の実用形（HCM2+decay・period幅・一括コミット除外）と、co-change confidence だけが hook で強制可能な述語になるという発見。導入前検証手順（欠陥相関・時系列holdout）付き。
+
 * **Creation**: [エージェント観測基盤の構想 — 失敗シグナルは追加を駆動するが削除を駆動しない](/tech/harness-observability-platform.md) — ハーネス/hook/skill の観測・可視化基盤の構想相談。「失敗から修正」は追加・修正しか駆動せず、削除・淘汰には利用観測（発火ログ・発火率・生存率）が要るという補完関係を整理。観測シグナルを3層×3種（失敗/利用/冗長）のマトリクスに定式化。telemetry-first と platform-first を区別し、既存の観測断片（failure-review・log.tsv）の合流を起点とする方針。deep-research の結果は追記予定。
 * **Creation**: [Claude と YouTube 動画 — リンク共有で何が見えるか](/tech/claude-video-content-limitations.md) — Claude は動画・音声フォーマットを直接処理できない（Vision は静止画のみ、GIF も先頭フレームだけ）。YouTube リンクからはページテキスト（タイトル・概要欄・コメント）しか取れず、字幕はページに埋め込まれていないため取得不可。yt-dlp で字幕を落として渡すのが確実、という整理。
 * **Creation**: [AIエージェントのサンドボックス — 隔離の層構造と長時間自律の交換関係](/tech/agent-sandboxing-and-long-running-envs.md) — サンドボックス=「失敗と乗っ取りを可逆にする装置」、承認モデルを行為審査から境界設定へ転換することで隔離の強さと自律時間が交換関係になる、という核心機構を整理。隔離技術の5層構造、lethal trifecta と egress 制御が本丸である理由、長時間運用に載せる4要素（可逆性・承認境界・観測・再現性）、2026年前半の勢力図（srt 3プラットフォーム化・E2B/Daytona 2強・大手参入・checkpoint 標準化）。
