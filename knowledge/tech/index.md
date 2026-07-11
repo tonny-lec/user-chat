@@ -6,7 +6,7 @@
 * [このPCのエージェント資産マップ — 何がどこにあり、何をしているか](/tech/my-agent-assets-map.md) - ~/.claude と ~/workspace 配下のエージェント関連資産（設定・hooks・skills・プラグイン・プロジェクト）の棚卸しマップ。自分の環境を教材として理解するための索引。
 * [「作ってもらっただけで自分は何もしてない」問題 — 作らずに理解する学び方](/tech/learning-without-building.md) - エージェント時代は「小さく作って学ぶ」が機能しにくい。作る代わりに予測・破壊・出題逆転・線引きで「判断できる人」になるための練習法。
 * [gpt-5.6 の出力精度を上げるエッセンス — 自前339ラン×公式ガイドの照合から](/tech/gpt-56-prompting-essence.md) - 自前実測(339ラン)を判決、Web情報を仮説として突き合わせた gpt-5.6 向けプロンプティングの9箇条。各項目に【実測済/公式+実測一致/未検証】の証拠ラベル付き。逃げ道・境界1回・簡潔指示の削除が三本柱。
-* [サブエージェント役割別のティア×effort 最適化 — luna/terra × low〜xhigh の120ラン実測](/tech/gpt56-subagent-tier-effort-balance.md) - 実装・テスト作成・レビュー・計画・設計書の5役割で gpt-5.6-luna/terra × reasoning effort 4段階を実測。品質は飽和し差はコスト・テールに出る。「low は medium より高くつく」逆転と役割別推奨構成表。
+* [サブエージェント役割別のティア×effort 最適化 — luna/terra × low〜xhigh の120ラン実測](/tech/gpt56-subagent-tier-effort-balance.md) - 実装・テスト作成・レビュー・計画・設計書の5役割で gpt-5.6-luna/terra × reasoning effort 4段階を実測。品質は飽和し差はコスト・テールに出る。「low は medium より高くつく」逆転と役割別推奨構成表。続編（曖昧さ注入120ラン）で「明示された衝突は全構成が検出、暗黙の穴は構成選択では解決しない」を確認。
 * [gpt-5.6 モデルプロファイル — 339ランの実測から](/tech/gpt-56-model-profile.md) - 5日間・6軸・約340ランの自前実験で確定した gpt-5.6 世代の挙動プロファイル。一言で「書いた通りに、短く、説得されずに動く」。述語+停止条件+逃げ道の3点セットが必須要件。モデル固有層(次世代が来たら破棄)。
 * [GPT/Codex ハーネス癖の実験観測 — 通説の実測検証(第1バッテリー)](/tech/gpt-codex-quirk-findings.md) - codex exec で GPT-5.5 のハーネス癖5仮説を実測。AGENTS.md 無視の通説は最小条件で不支持、ユーザー衝突時の遵守は確率的(2/3)、存在しない前提には「止まらず拡大解釈して実行し正直に開示」がデフォルト。
 * [codex 単体作業ハーネスの初手設計 — 最初の1本は観測装置](/tech/codex-standalone-harness-bootstrap.md) - gpt-5.6 GA を機に「環境非依存・codex のみで完結」するハーネスを作る相談。Codex CLI 2026 のハーネス面（ネイティブ subagents・安定版 hooks）を確認し、10案から検証ループキット（verify 契約+Stop hook 強制+縮退解ガード）を採用。
