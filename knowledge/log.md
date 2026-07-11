@@ -2,6 +2,7 @@
 
 ## 2026-07-11
 
+* **Creation**: [Claude と YouTube 動画 — リンク共有で何が見えるか](/tech/claude-video-content-limitations.md) — Claude は動画・音声フォーマットを直接処理できない（Vision は静止画のみ、GIF も先頭フレームだけ）。YouTube リンクからはページテキスト（タイトル・概要欄・コメント）しか取れず、字幕はページに埋め込まれていないため取得不可。yt-dlp で字幕を落として渡すのが確実、という整理。
 * **Creation**: [AIエージェントのサンドボックス — 隔離の層構造と長時間自律の交換関係](/tech/agent-sandboxing-and-long-running-envs.md) — サンドボックス=「失敗と乗っ取りを可逆にする装置」、承認モデルを行為審査から境界設定へ転換することで隔離の強さと自律時間が交換関係になる、という核心機構を整理。隔離技術の5層構造、lethal trifecta と egress 制御が本丸である理由、長時間運用に載せる4要素（可逆性・承認境界・観測・再現性）、2026年前半の勢力図（srt 3プラットフォーム化・E2B/Daytona 2強・大手参入・checkpoint 標準化）。
 * **Update**: [サブエージェント役割別のティア×effort 最適化](/tech/gpt56-subagent-tier-effort-balance.md) — 第2バッテリー（曖昧さ注入・追加120ラン）を追記。明示された衝突（依頼とREADMEの矛盾・数値的に不可能な要件）はluna/low 含む全構成が完璧に検出・誠実に処理する一方、暗黙の穴（要確認節・仕様の穴・未文書挙動）はティアにも effort にもほぼ反応せず、プロンプト側の強制でしか解決しない。terra=精密/luna=探索の符号反転（v1のFPがv2では唯一の曖昧検出に）も確認。
 * **Creation**: [サブエージェント役割別のティア×effort 最適化](/tech/gpt56-subagent-tier-effort-balance.md) — 実装・テスト作成・レビュー・計画・設計書の5役割 × gpt-5.6-luna/terra × effort 4段階を N=3 の120ランで実測。品質は飽和（luna/low でもほぼ満点）し、差はコスト・レイテンシ・テールに出る。agentic タスクでは low が medium よりトークンを食う逆転、luna の境界取り逃し・投機的FP・文書肥大 vs terra の精密さを確認。既定 terra/medium・実装のみ luna/medium の推奨表。
