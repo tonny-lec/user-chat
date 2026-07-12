@@ -2,6 +2,10 @@
 
 ## 2026-07-12
 
+* **Update**: [エージェント観測基盤の構想 — 失敗シグナルは追加を駆動するが削除を駆動しない](/tech/harness-observability-platform.md) — deep-research の結果を追記。Claude Code は skill_activated / hook_execution_start/_complete / tool_decision 等ハーネス資産レベルの公式 OTel イベントを持つ（原典確認済）ため計装は自作不要。Codex CLI も [otel] 対応だが exec でメトリクス欠落。OTel GenAI semconv は execute_tool/invoke_agent を定義するも Development 段階でハーネス資産は標準化の空白地帯。既存プラットフォーム（Langfuse/LangSmith/Braintrust）もハーネス資産の利用観測は扱わず。Hamel の error-analysis-first と Thoughtworks の Thinnest Viable Platform が telemetry-first/platform-first の見立てと一致。推奨アーキテクチャ（公式計装→薄い受け口→failure-dashboard 拡張→淘汰テストへ接続）を確定。
+
+## 2026-07-12
+
 * **Update**: [コードエントロピーをエージェントの修正範囲選択に使う](/tech/code-entropy-map-for-agent-scope.md) — 続編（メニュー拡張）を追記。指標を「エージェントの5つの問い」（波及範囲・危険度・安全網強度・実行時被踏度・修正案の健全性）で体系化し、新規4指標（import fan-in エントロピー・gzip 圧縮率・diff 散布・隠れ結合）を lets-langgraph で実測。構造×歴史の4象限で「隠れ結合」（import なし×co-change あり＝規約結合）が最重要信号、mutation kill 分布が自律度の予算、diff 散布は履歴から閾値校正できるタダの述語、という3発見。
 
 ## 2026-07-11

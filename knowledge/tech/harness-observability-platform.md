@@ -1,9 +1,9 @@
 ---
 type: Consultation
 title: エージェント観測基盤の構想 — 失敗シグナルは追加を駆動するが削除を駆動しない
-description: ハーネス/hook/skill を常時観測・可視化する基盤の構想相談。失敗観測は改善ループの片翼にすぎず、未使用・冗長の検出には利用観測が要る。telemetry-first は正しいが platform-first は罠、既存の観測断片の合流から始める。
+description: ハーネス/hook/skill の観測・可視化基盤の構想相談と deep-research 結果。失敗観測は片翼で、淘汰には利用観測（発火率・生存率）が要る。計装は自作不要（Claude Code は skill_activated/hook_execution 等の公式 OTel イベントを持つ）、ハーネス資産の観測は標準化・既製品とも空白地帯、自作するのは受け口と閲覧UIだけ。
 tags: [ai-agent, harness, observability, telemetry, claude-code]
-timestamp: 2026-07-11T00:00:00+09:00
+timestamp: 2026-07-12T00:00:00+09:00
 ---
 
 # 相談内容
@@ -56,13 +56,88 @@ timestamp: 2026-07-11T00:00:00+09:00
 3. 順序は telemetry-first（観測点を先に仕込む）であって platform-first（基盤を作り込む）ではない。
    基盤は「観測データを読んで意思決定した回数」を証拠に育てる。
 
-# 未確定・調査中
+# 調査結果（deep-research 2026-07-12。証拠ラベル: 【検証済】=敵対的検証3-0票+原典スポットチェック、【一致】=独立複数ソース一致、【未検証】=単一ソースのみ）
 
-deep-research を実行中（2026-07-11）。対象: Claude Code / Codex CLI の公式テレメトリ機構
-（OpenTelemetry 対応・トランスクリプト JSONL）、OTel GenAI semantic conventions の標準化動向、
-Langfuse / LangSmith / AgentOps 等の既存プラットフォームの守備範囲（LLM トレースを超えた
-ハーネス資産の利用観測をどこまで扱うか）、未使用検出・冗長検出の実践事例。
-結果が出次第この文書に追記する。
+## 1. 計装は自作不要 — Claude Code は公式にハーネス資産レベルのテレメトリを持つ【検証済】
+
+`CLAUDE_CODE_ENABLE_TELEMETRY=1` + 標準 `OTEL_*` 環境変数で OTel 3シグナル
+（メトリクス・イベント・トレース(β)）を OTLP/Prometheus に export できる [1]。
+決定的なのはイベントの粒度が「LLM 呼び出し」ではなく**ハーネス資産**であること:
+
+- `claude_code.skill_activated`（`skill.name`・`invocation_trigger`=user-slash/claude-proactive 付き → **発火率がそのまま取れる**）
+- `claude_code.hook_execution_start/_complete`・`hook_registered`（`hook_event`・`hook_name` 付き → 発火ログの公式版）
+- `claude_code.tool_decision`（ツールごとの許可/拒否とその決定元）
+- メトリクス属性に `skill.name`・`agent.name`・`plugin.name`・`mcp_tool.name`、全イベントに `prompt.id`（UUID）→ コンポーネント別集計とプロンプト単位のトレース再構成が可能
+
+## 2. Codex CLI も OTLP export 対応、ただし穴あり【検証済】
+
+config.toml の `[otel]` で logs/metrics/traces を独立に otlp-http/otlp-grpc へ export [2]。
+既知の穴（codex-cli 0.105.0 時点、2026-02 の issue #12913）: `codex exec`（ヘッドレス）は
+**メトリクスがゼロ**（対話モードは~50個出る）、`codex mcp-server` は OTel 未初期化で全シグナル無し。
+補完材料【未検証】: `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl` が全イベントストリームを持ち、
+`codex resume`/`fork` を支える load-bearing な安定インターフェース。
+
+## 3. 標準化: エージェント操作までは標準あり、ハーネス資産は空白地帯【一致】
+
+OTel GenAI semantic conventions は `execute_tool {tool.name}`・`invoke_agent` 等
+エージェント動作のスパンを定義するが、まだ **Development 段階**（2026年に専用リポジトリ
+open-telemetry/semantic-conventions-genai へ移動したばかり = 動く標準）。
+OpenLLMetry の agent-observability RFC も提案段階で、対象はオーケストレーション
+フレームワーク（LangGraph 等）。**CLAUDE.md・hooks・skills のようなハーネス資産の
+観測は標準化の対象外** — 自作基盤が埋める空白はここ。
+
+## 4. 既存プラットフォームはハーネス資産の利用観測をやらない【一致】
+
+Langfuse/LangSmith/Braintrust の守備範囲はトレース・eval・プロンプト管理まで。
+ハーネス設定資産（hooks・ツール定義・CLI設定）の利用状況・未使用検出を扱う製品は
+比較記事群でゼロ。Braintrust の eval は「事前定義した失敗モードしか測れない」=
+未知の失敗発見は守備範囲外。例外的に Laminar は trace 全データへの SQL と、
+Claude Code/Codex が trace を読んで修正する debugger ループを持ち、改善ループに最も近い。
+需要の実証: claude-code の feature request #35319（org で skill が4週間で67→183本に増殖、
+使用データ0件で未使用検出不能）が per-skill 分析・**90日ゼロ呼び出し=廃止候補**・
+高呼び出し低成功率などまさに「失敗以外のシグナル」を要求している【未検証】。
+（注: 公式 docs は現在 skill_activated を載せており、issue の「per-skill 不能」は解消済みの可能性）
+
+## 5. 遵守率は機械測定できる（研究事例）【未検証・原典未読】
+
+arXiv 2605.10039（Claude Code 1,650セッションの要因計画実験）: 構文検出可能なマーカー指示
++ AST パースで遵守率を二値測定（16,050関数）。知見: CLAUDE.md の構造4変数（サイズ・位置・
+分割・AGENTS.md との矛盾）は遵守率に効果なし、遵守率は**セッション内で減衰**
+（生成ステップごとオッズ約5.6%低下、最初の3〜4関数に集中）。
+→ 文書層の「生存率」測定の実装参考例。減衰するなら観測も時系列で持つ必要がある。
+
+## 6. アプローチ論: 見立てと外部ソースが一致【一致】
+
+- Hamel Husain (evals FAQ): 観測プラットフォームから始めるな、まず実トレース50〜100件の
+  error analysis。ベンダーはコア機能がコモディティで結局その上に自作する。
+  ただし**カスタムのデータ閲覧UIは最高ROIの投資**（汎用プラットフォームでは代替不能）。
+- Thoughtworks Technology Radar: "Incremental developer platform" / Team Topologies の
+  **Thinnest Viable Platform**（wiki 1枚から始めてよい）。フル自作もチケット駆動も両極とも失敗モード。
+
+→ 本文の結論（telemetry-first ○ / platform-first ×）と独立ソースが一致。
+自作すべきは「受け口（collector+ストア）と閲覧UI」だけで、計装は公式機構に乗る。
+
+## 推奨アーキテクチャ（この環境向け）
+
+1. **計装**: Claude Code は `CLAUDE_CODE_ENABLE_TELEMETRY=1`、Codex は `[otel]`（exec の
+   メトリクス欠落は JSONL rollout で補完）。自作 hook の1行ログは既存 log.tsv に合流。
+2. **受け口**: ローカル OTel Collector（または直接ファイル export）→ 単一ストア。
+   SigNoz に Claude Code 用既製ダッシュボードあり【未検証】だが、まず薄く始めるなら
+   OTLP→JSONL/SQLite で十分。
+3. **可視化**: 既存 failure-dashboard skill に「利用シグナル」面（skill別発火数・
+   90日ゼロ呼び出し・hook 多重発火）を追加する形で薄く。
+4. **淘汰への接続**: ゼロ呼び出しリスト → 「消して失敗が再発するか」テストの入力にする。
 
 関連: [強制点の設計](/tech/skill-to-harness-enforcement.md)（層が下ほど観測も機械化しやすい）、
 [モデル移行観測フロー](/tech/model-migration-observation-flow.md)（観測データの比較器としての使い方）。
+
+# Citations
+
+[1] [Claude Code Monitoring (公式)](https://code.claude.com/docs/en/monitoring-usage) — skill_activated/hook_execution/tool_decision イベントと skill.name 等の属性（原典確認済 2026-07-12）
+[2] [Codex config reference (公式)](https://developers.openai.com/codex/config-reference) — `[otel]` セクション
+[3] [codex issue #12913](https://github.com/openai/codex/issues/12913) — exec/mcp-server のテレメトリ欠落報告
+[4] [OTel GenAI semconv リポジトリ](https://github.com/open-telemetry/semantic-conventions-genai) — 2026年に本体から分離（原典確認済: 移動を確認）
+[5] [claude-code issue #35319](https://github.com/anthropics/claude-code/issues/35319) — skill 利用分析の feature request（67→183本・使用データ0件）
+[6] [arXiv 2605.10039](https://arxiv.org/abs/2605.10039) — CLAUDE.md 遵守率の要因計画実験
+[7] [Hamel Husain: LLM Evals FAQ](https://hamel.dev/blog/posts/evals-faq/) — error analysis first・カスタム閲覧UIが最高ROI
+[8] [Thoughtworks: Incremental developer platform](https://www.thoughtworks.com/radar/techniques/incremental-developer-platform) — Thinnest Viable Platform
