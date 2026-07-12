@@ -1,9 +1,9 @@
 ---
 type: Consultation
 title: codex 単体作業ハーネスの初手設計 — 最初の1本は観測装置
-description: gpt-5.6 GA を機に「環境非依存・codex のみで完結」するハーネスを作る相談。Codex CLI 2026 のハーネス面（ネイティブ subagents・安定版 hooks）を確認し、10案から検証ループキット（verify 契約+Stop hook 強制+縮退解ガード）を採用。
+description: gpt-5.6 GA を機に「環境非依存・codex のみで完結」するハーネスを作る相談。Codex CLI 2026 のハーネス面（ネイティブ subagents・安定版 hooks）を確認し、10案から検証ループキット（verify 契約+Stop hook 強制+縮退解ガード）を採用。続編で hooks の未確認3点（decision:block 互換・transcript_path・.codex/hooks.json 配置）を公式ドキュメントで確定、trust 要件と worktree の罠も記録。
 tags: [ai-agent, harness, codex, gpt-5.6, failure-observation, hooks, subagents]
-timestamp: 2026-07-10T23:00:00+09:00
+timestamp: 2026-07-13T09:00:00+09:00
 ---
 
 # 相談内容
@@ -32,6 +32,34 @@ Codex CLI は Claude Code とほぼ同等のハーネス面を持つと判明。
 
 未確認事項（実装前に要事実確認）: Stop hook が Claude Code の `decision:block` 相当の
 ブロックをできるか / transcript へのアクセス方法 / プロジェクトスコープ hooks の正確な配置。
+
+### 未確認事項の解決（2026-07-13、公式ドキュメントで事実確認）
+
+3点とも公式ドキュメント（learn.chatgpt.com/docs/hooks、旧 developers.openai.com/codex/hooks）で確認済み:
+
+1. **`decision:block` — 動く**。Codex の hooks は意図的に Claude Code スキーマ互換。
+   Stop イベントの stdin には `session_id` / `transcript_path` / `stop_hook_active` に加え
+   Codex 独自の `turn_id` / `last_assistant_message` が来る。stdout の
+   `{"decision":"block","reason":"..."}` でターン終了をブロックできる。
+2. **transcript** — stdin JSON の `transcript_path` でアクセス可能（Claude Code と同じ）。
+3. **配置** — 発見順は `~/.codex/hooks.json` → `~/.codex/config.toml` →
+   `<repo>/.codex/hooks.json` → `<repo>/.codex/config.toml`。JSON 構造も Claude Code と同一
+   （`timeout` は秒・デフォルト600。Codex 拡張: `statusMessage` / `commandWindows`）。
+   hooks は 2026-05-14 GA でデフォルト有効。
+
+**運用上の罠が2つ**:
+
+- **trust が前提**: プロジェクトローカルの `.codex/` hooks は、その `.codex/` レイヤーを
+  trust していないと**黙って無視される**（発火しないだけでエラーは出ない）。TUI の
+  `/hooks` で trust 状態の確認・付与ができる。fail-open なスクリプトだと
+  「hook が死んでいる」ことに気づけないので、導入直後に1回わざと発火条件を作って確認する。
+- **git worktree 内では project hooks.json が無視される既知 issue**
+  （[openai/codex#27133](https://github.com/openai/codex/issues/27133)）。worktree 運用と併用するなら注意。
+
+実例: user-chat リポジトリの knowledge 記録 Stop hook（`knowledge-record-reminder.sh`）を
+`.claude/` から `.codex/hooks.json` + `.codex/hooks/` へ移植（2026-07-13、gpt-5.6 が実施・
+Fable が上記事実確認でレビュー）。スクリプト本体は無改変で動く互換性だった（変更点は
+`$CLAUDE_PROJECT_DIR` → `git rev-parse --show-toplevel` の置換のみ）。
 
 ## AGENTS.md の探索範囲 — CLAUDE.md との差分（2026-07-10 追記）
 

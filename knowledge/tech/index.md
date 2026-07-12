@@ -14,7 +14,7 @@
 * [サブエージェント役割別のティア×effort 最適化 — luna/terra × low〜xhigh の120ラン実測](/tech/gpt56-subagent-tier-effort-balance.md) - 実装・テスト作成・レビュー・計画・設計書の5役割で gpt-5.6-luna/terra × reasoning effort 4段階を実測。品質は飽和し差はコスト・テールに出る。「low は medium より高くつく」逆転と役割別推奨構成表。続編（曖昧さ注入120ラン）で「明示された衝突は全構成が検出、暗黙の穴は構成選択では解決しない」を確認。
 * [gpt-5.6 モデルプロファイル — 339ランの実測から](/tech/gpt-56-model-profile.md) - 5日間・6軸・約340ランの自前実験で確定した gpt-5.6 世代の挙動プロファイル。一言で「書いた通りに、短く、説得されずに動く」。述語+停止条件+逃げ道の3点セットが必須要件。モデル固有層(次世代が来たら破棄)。
 * [GPT/Codex ハーネス癖の実験観測 — 通説の実測検証(第1バッテリー)](/tech/gpt-codex-quirk-findings.md) - codex exec で GPT-5.5 のハーネス癖5仮説を実測。AGENTS.md 無視の通説は最小条件で不支持、ユーザー衝突時の遵守は確率的(2/3)、存在しない前提には「止まらず拡大解釈して実行し正直に開示」がデフォルト。
-* [codex 単体作業ハーネスの初手設計 — 最初の1本は観測装置](/tech/codex-standalone-harness-bootstrap.md) - gpt-5.6 GA を機に「環境非依存・codex のみで完結」するハーネスを作る相談。Codex CLI 2026 のハーネス面（ネイティブ subagents・安定版 hooks）を確認し、10案から検証ループキット（verify 契約+Stop hook 強制+縮退解ガード）を採用。
+* [codex 単体作業ハーネスの初手設計 — 最初の1本は観測装置](/tech/codex-standalone-harness-bootstrap.md) - gpt-5.6 GA を機に「環境非依存・codex のみで完結」するハーネスを作る相談。Codex CLI 2026 のハーネス面（ネイティブ subagents・安定版 hooks）を確認し、10案から検証ループキット（verify 契約+Stop hook 強制+縮退解ガード）を採用。続編で hooks の未確認3点（decision:block 互換・transcript_path・.codex/hooks.json 配置）を公式ドキュメントで確定、trust 要件と worktree の罠も記録。
 * [モデル移行観測フロー — 新モデル(GPT-5.6)を題材にした差分観測とプロンプト適応の手順](/tech/model-migration-observation-flow.md) - 新モデル登場を実験機会に変える5フェーズ(凍結ベースライン→無変更転送→差分分類→1変数適応→2層蒸留)。ベースラインは新モデル到着前にしか取れない、が核心。
 * [プロンプト力の階段 — 文面で戦うのをやめる6レベル](/tech/prompting-mastery-ladder.md) - プロンプト上達は言い回しの技術ではなくレイヤーが変わる階段（命令→成功述語→コンテキスト→分業→消去）。委譲成功率という操作的定義と失敗5クラスの観測ループ、および機構編「プロンプトは命令ではなく証拠」から技法を導出する原理。
 * [eval 入門 — 理論の壁は幻想、すでに1個持っている](/tech/evals-for-practitioners.md) - 実務家の eval の操作的定義（凍結入力×成功述語×N回×率）と判定器3種の使い分け、「設計せず採集する」原則、ハーネス層別の検証方法（hookは普通のテスト・skillは発火率と遵守率・文書層は生存率）。
