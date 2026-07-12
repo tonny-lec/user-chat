@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Claude Code Stop hook: 会話が一定量あるのに knowledge/ が未更新ならターン終了をブロックする。
+# Claude Code / Codex 共用 Stop hook: 会話が一定量あるのに knowledge/ が未更新ならターン終了をブロックする。
+# 配線は2箇所: .claude/settings.json（Claude Code）と .codex/hooks.json（Codex）。スクリプト本体はこの1本のみ。
 # CLAUDE.md の「記録は義務」ルール（レベル1: 善意頼み）をレベル3（機械強制）に配線したもの。
 # 入力: stdin に hook の JSON。出力: 発火時のみ decision:block の JSON。
 set -euo pipefail

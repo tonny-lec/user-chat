@@ -1,0 +1,1 @@
+{"hooks":{"Stop":[{"hooks":[{"type":"command","command":"bash \"$(git rev-parse --show-toplevel)/.codex/hooks/knowledge-record-reminder.sh\"","timeout":10,"statusMessage":"knowledge 記録チェック中..."}]}]}}

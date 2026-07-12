@@ -47,10 +47,14 @@ Claude の auto-memory は後任には引き継がれない。ただし必要な
 
 ## ハーネス（機械的強制）と罠
 
-- **Stop hook** `.claude/hooks/knowledge-record-reminder.sh`:
+- **Stop hook**（Claude Code / Codex 共用）: スクリプト本体は
+  `.codex/hooks/knowledge-record-reminder.sh` の1本のみ。配線は2箇所 —
+  Claude Code は `.claude/settings.json`、Codex は `.codex/hooks.json`（どちらも同じスクリプトを指す）。
+  スクリプトを2本に複製しないこと（ドリフトする）。
   30行以上のセッションで `knowledge/log.md` が未更新のままターンを終えようとするとブロックされる。
   雑談のみで記録価値がなければ「記録価値なし」と報告して終了してよい（hook はそれを許す設計）。
   判定は log.md の mtime なので、記録したのにブロックされたら log.md を触ったか確認。
+  Codex 側はプロジェクトの `.codex/` を trust していないと**黙って無視される**（`/hooks` で確認）。
 - **git push の権限**はグローバル設定で ask（deny から変更済み）。経緯と設計は
   [claude-code-push-permission-design.md](knowledge/tech/claude-code-push-permission-design.md)。
 

@@ -2,6 +2,7 @@
 
 ## 2026-07-13
 
+* **Update**: [GPT/Codex ハーネス癖の実験観測 — 通説の実測検証(第1バッテリー)](/tech/gpt-codex-quirk-findings.md) — 実地観測（gpt-5.6, n=1）を追記。hook 移植依頼で稼働中の `.claude/settings.json` を確認なしで削除（多義的依頼の削除方向への拡大解釈）、push 失敗をエラーとして報告せず「未 push」とだけ申告（失敗イベントの非報告）。教訓: 不可逆操作とエラーイベントは文書層でなく機構で捕捉する。
 * **Update**: [codex 単体作業ハーネスの初手設計 — 最初の1本は観測装置](/tech/codex-standalone-harness-bootstrap.md) — hooks の未確認3点を公式ドキュメントで確定（Stop の decision:block は Claude Code 互換で動く・transcript_path あり・配置は `<repo>/.codex/hooks.json` 等4層）。罠2つ（プロジェクトローカル hooks は trust なしで黙って無視される・worktree 内で無視される既知 issue #27133）と、user-chat の knowledge 記録 Stop hook を gpt-5.6 が `.claude/` → `.codex/` へ移植した実例を追記。
 * **Update**: [AIエージェントの「ハーネス」とは何か・どう育てるか](/tech/ai-agent-harness-basics.md) — 自律動作の状態管理を追記。会話履歴と永続状態を分離し、契約・作業・実行・成果物・証拠・監査の6層、証拠の鮮度を含む完了述語、`reopened`・lease・世代番号・fail-closed な Stop hook を最小状態モデルとして整理。
 * **Update**: [Codex セッションのトークン消費分析 — 手順と読み違えの罠](/tech/codex-token-analysis-playbook.md) — 実務環境への持ち出しキットを追記。「実務で gpt-5.6 + Codex CLI」向けに、持ち出しは docs/harness-token-budget.md 1ファイル+AGENTS.md 3行ポインタに集約（標準書のマシン固有パスを一般化: state_N 自動検出・fork 除外入り D1 クエリ）。ハーネス不要で初日から効く運転習慣5つ（スレッド寿命=課題1件・fork控えめ・生ログ禁止・全文書かせない・ステップ集約）と設定4つを効果順で整理。
