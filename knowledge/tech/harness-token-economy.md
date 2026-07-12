@@ -79,8 +79,35 @@ timestamp: 2026-07-12T00:00:00+09:00
 再計算しない機構に置き換えろ**」であり、それはプロンプトを短くする話ではなく
 **コンテキストに何が堆積するかを制御する話**。
 
+# 続編: 標準化（Decision, 2026-07-12）
+
+「今後もハーネスを多数作る前提でコスト制約を標準化したい」を受け、本文書の理論を
+**Codex CLI 向けの運用標準**に落とした。
+
+## 決定
+
+- **形**: docs 標準書 + AGENTS.md ポインタ + 検収述語（案A）。既存の
+  `agent-harness-tech-choice.md` と同じ「常駐は最小ポインタ・詳細は発火時ロード」の型。
+  skill 化は却下（Codex では skill は exec に溶け発火が観測不能 = 善意頼み）、
+  依頼テンプレートのコピペ運用も却下（人間の儀式に依存）。
+- **適用点は両方**: 設計時制約（作成指示に効く7則）+ 検収時述語（完了宣言前に評価）。
+- **検収は実測述語まで**: 静的3（S1 常駐増分≤3行 / S2 注入有界性 / S3 プレフィックス安定性）
+  + 動的1（D1: 凍結タスク×N≥5 をハーネス有無で `tokens_used` 比較、品質述語と同時判定。
+  「成功率同等以上 かつ 中央値減」が合格 = 「品質を下げずに削減」の操作的定義）。
+- **D1 は選択的**: 常駐追記・高頻度発火・1k超注入のいずれかに該当するハーネスのみ。
+  全件実測は測定コストが本体を食う。
+- **強制の経路**: 入口は AGENTS.md ポインタ（文書）、出口は verify 契約 + Stop hook（機構）。
+
+## 成果物
+
+- `~/workspace/docs/harness-token-budget.md` — 標準書本体（7則 + 検収述語 + D1 測定手順）
+- `~/.codex/AGENTS.md` 末尾に3行（見出し+2行）のポインタ追記
+- D1 の測定根拠: `~/.codex/state_5.sqlite` の `threads.tokens_used`（298/298 スレッドで
+  記録済みを実データで確認。結合キー: cwd / model / first_user_message / created_at_ms）
+
 # 関連
 
 - [境界の統一理論](/tech/agent-boundary-theory.md) — コンテキストの境界=半透膜としての同型
 - [観測基盤の構想](/tech/harness-observability-platform.md) — トークン内訳の観測先
 - [AIエージェント使いこなしのエッセンス](/tech/ai-agent-mastery-essence.md) — コンテキスト管理の原則
+- [codex 単体作業ハーネスの初手設計](/tech/codex-standalone-harness-bootstrap.md) — 検収述語の接続先（verify 契約 + Stop hook）
