@@ -77,6 +77,46 @@ config.toml の `[otel]` で logs/metrics/traces を独立に otlp-http/otlp-grp
 補完材料【未検証】: `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl` が全イベントストリームを持ち、
 `codex resume`/`fork` を支える load-bearing な安定インターフェース。
 
+## 2b. Codex CLI の観測面の実地調査（このPC・codex-cli 0.144.1、2026-07-12）【実測】
+
+Web調査の続きとしてローカルの実物を検分した結果。**Codex の観測資産は rollout JSONL +
+SQLite 群で、Claude Code より生データは厚いが、ハーネス資産のラベルが無い**。
+
+観測に使える資産（すべて `~/.codex/`）:
+
+- **rollout JSONL**（`sessions/YYYY/MM/DD/rollout-*.jsonl`、289本蓄積）: 全イベントストリーム。
+  `session_meta`（model・cwd・cli_version・context_window）、**ターンごとの `turn_context`
+  （approval_policy・sandbox_policy・permission_profile・model・effort・personality・comp_hash）**、
+  `custom_tool_call`/`_output`（status付き）、`token_count`（ステップ単位）、`sub_agent_activity`、
+  `patch_apply_end`、`mcp_tool_call_end`、`turn_aborted`、`context_compacted`。
+  turn_context がターン単位の設定スナップショットなので、**介入前後比較（ハーネスA/B測定）の
+  結合キーとして優秀**。
+- **state_5.sqlite の `threads` テーブル**: セッション索引が既に集計済み
+  （rollout_path・cwd・model_provider・sandbox_policy・approval_mode・**tokens_used**・title）。
+  JSONL をパースせずに SQL で横断集計できる受け口がすでにある。
+- **logs_2.sqlite**（内部トレーシング約17万行）: `codex_otel::*` が生きており、`[otel]` 未設定でも
+  メトリクス export 自体は内部で動いている。デバッグ用でハーネスシグナルは無い。
+
+決定的なギャップ（Claude Code との差）:
+
+- **skill はイベントにならない**。ツール呼び出しの実体はほぼ `exec`（直近60セッションで
+  custom_tool_call 1,483件中 exec 1,490+42件）で、skill 発動は exec に溶けて区別不能。
+- **hook もイベントにならない**。project hooks（`.codex/hooks.json` の Stop hook）は実在し
+  config.toml の `[hooks.state]` で trusted_hash 管理されているが、発火の記録は rollout にも
+  内部ログにも無い。→ **Codex では「hook は自分で1行ログを吐く」（発火ログ原則）が唯一の観測手段**。
+
+| シグナル | Claude Code | Codex CLI 0.144.1 |
+|---------|-------------|-------------------|
+| skill 発火 | `skill_activated`（公式イベント） | 無し → skill 側で自己記録するしかない |
+| hook 発火 | `hook_execution_start/_complete` | 無し → hook 自身が log.tsv に1行吐く |
+| ツール実行 | `tool_decision`（許可/拒否付き） | rollout の `custom_tool_call` + turn_context |
+| セッション索引 | transcripts JSONL（要パース） | `threads` テーブル（SQL可・tokens_used集計済み） |
+| 有効化 | 環境変数1つ | rollout/SQLite は**常時オン**（設定不要） |
+
+→ 基盤の Codex 側取り込みは「OTel を立てる」より **rollout JSONL + threads テーブルを直接読む**
+のが正解（常時オン・設定不要・過去289セッション分が既にある）。`[otel]` は token/latency の
+時系列が欲しくなったら追加する。
+
 ## 3. 標準化: エージェント操作までは標準あり、ハーネス資産は空白地帯【一致】
 
 OTel GenAI semantic conventions は `execute_tool {tool.name}`・`invoke_agent` 等
