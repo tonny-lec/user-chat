@@ -2,6 +2,7 @@
 
 ## 2026-07-12
 
+* **Creation**: [AIエージェントにおける「境界」の統一理論](/tech/agent-boundary-theory.md) — 「境界」の思考セッション。6次元の棚卸し→期待損失の因子分解→候補3案（可逆性等高線・因子キャップ・半透膜）が形/機能/位置という別の問いへの答えだと判明し連言定義へ。各項の欠落から4病（依頼・儀式的境界・ただの絞り・無意味な壁）と監査4問を導出。本人の「病の観測ゼロ」は自律時間ゼロの正常な姿と解釈し、予測レジストリとして持ち越し。
 * **Update**: [エージェント観測基盤の構想 — 失敗シグナルは追加を駆動するが削除を駆動しない](/tech/harness-observability-platform.md) — Codex CLI 観測面の実地調査（0.144.1）を追記。rollout JSONL（289本・turn_context がターン単位の設定スナップショットでA/B測定の結合キーに）+ threads SQLite（tokens_used 集計済み・SQL可）が常時オンの観測資産。一方 skill は exec に溶け hook は発火記録ゼロ — Codex では発火ログ自己記録が唯一の観測手段。Claude Code との対照表と「OTel より rollout 直読が正解」の結論。
 * **Update**: [エージェント観測基盤の構想 — 失敗シグナルは追加を駆動するが削除を駆動しない](/tech/harness-observability-platform.md) — deep-research の結果を追記。Claude Code は skill_activated / hook_execution_start/_complete / tool_decision 等ハーネス資産レベルの公式 OTel イベントを持つ（原典確認済）ため計装は自作不要。Codex CLI も [otel] 対応だが exec でメトリクス欠落。OTel GenAI semconv は execute_tool/invoke_agent を定義するも Development 段階でハーネス資産は標準化の空白地帯。既存プラットフォーム（Langfuse/LangSmith/Braintrust）もハーネス資産の利用観測は扱わず。Hamel の error-analysis-first と Thoughtworks の Thinnest Viable Platform が telemetry-first/platform-first の見立てと一致。推奨アーキテクチャ（公式計装→薄い受け口→failure-dashboard 拡張→淘汰テストへ接続）を確定。
 
