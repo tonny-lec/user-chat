@@ -2,6 +2,7 @@
 
 ## 2026-07-13
 
+* **Update**: [AIエージェントの「ハーネス」とは何か・どう育てるか](/tech/ai-agent-harness-basics.md) — 自律動作の状態管理を追記。会話履歴と永続状態を分離し、契約・作業・実行・成果物・証拠・監査の6層、証拠の鮮度を含む完了述語、`reopened`・lease・世代番号・fail-closed な Stop hook を最小状態モデルとして整理。
 * **Update**: [Codex セッションのトークン消費分析 — 手順と読み違えの罠](/tech/codex-token-analysis-playbook.md) — 実務環境への持ち出しキットを追記。「実務で gpt-5.6 + Codex CLI」向けに、持ち出しは docs/harness-token-budget.md 1ファイル+AGENTS.md 3行ポインタに集約（標準書のマシン固有パスを一般化: state_N 自動検出・fork 除外入り D1 クエリ）。ハーネス不要で初日から効く運転習慣5つ（スレッド寿命=課題1件・fork控えめ・生ログ禁止・全文書かせない・ステップ集約）と設定4つを効果順で整理。
 
 ## 2026-07-12
