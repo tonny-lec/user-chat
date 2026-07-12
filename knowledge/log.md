@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-07-13
+
+* **Update**: [Codex セッションのトークン消費分析 — 手順と読み違えの罠](/tech/codex-token-analysis-playbook.md) — 実務環境への持ち出しキットを追記。「実務で gpt-5.6 + Codex CLI」向けに、持ち出しは docs/harness-token-budget.md 1ファイル+AGENTS.md 3行ポインタに集約（標準書のマシン固有パスを一般化: state_N 自動検出・fork 除外入り D1 クエリ）。ハーネス不要で初日から効く運転習慣5つ（スレッド寿命=課題1件・fork控えめ・生ログ禁止・全文書かせない・ステップ集約）と設定4つを効果順で整理。
+
 ## 2026-07-12
 
 * **Creation**: [エージェントに「失敗」を判定させる方法 — 判定可能性による4層モデル](/tech/agent-failure-detection-layers.md) — 「業務の開発作業で失敗したとどう判断させるか」の相談。核心は「判断させる」の主語転換（事前に成功述語を固定し、判断が機械的にできる形にタスク入口を整形する）。失敗を判定可能性で4層に分解し、層1(hook)→層2(git log 週次バッチ)→層3(failure-review 継続)の実装順を提示。自己申告は C5/F21 と同型に汚染されるため候補生成に限定し、recall/precision を エージェント/人間 で分業する。
