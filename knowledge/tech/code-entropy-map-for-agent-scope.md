@@ -1,7 +1,7 @@
 ---
 type: Consultation
 title: コードエントロピーをエージェントの修正範囲選択に使う — 種類の整理と層1(履歴エントロピーマップ)の実測
-description: エントロピーは必ず「何の分布か」を特定して使う。修正範囲の自律選択に効く3系統のうち、git履歴から作る層1（change entropy + co-change）を実リポジトリ2つで試作。続編で指標を「エージェントの5つの問い」体系に拡張（構造×歴史の4象限・mutation=自律度の予算・diff散布の自己採点）。
+description: エントロピーは必ず「何の分布か」を特定して使う。git履歴の層1（change entropy + co-change）を実リポジトリで試作、続編で「エージェントの5つの問い」体系に拡張（構造×歴史の4象限・mutation=自律度の予算・diff散布の自己採点）、続編2でQ4実行時系を深掘り（影響度×検出遅延の2軸・7分布・Q4だけはレバーが露出制御）。
 tags: [entropy, agent, risk-map, git, harness]
 timestamp: 2026-07-12T00:00:00+09:00
 ---
@@ -173,6 +173,73 @@ import しないのに support 6–8 で共変更）。「オプション1つ追
 5. 本番テレメトリ系（Q4）— [観測基盤の構想](/tech/harness-observability-platform.md)と合流時に
 
 実装メモ: ESM の TS は import が `.js` 拡張子で書かれ実体は `.ts`（import 解決で踏んだ罠）。
+
+---
+
+# 続編2: Q4「実行時に踏まれるか」の深掘り（2026-07-12）
+
+## Q4 の特異性
+
+- Q1〜Q3・Q5 はリポジトリから計算できるが、**Q4 だけは証拠がリポジトリの外**（本番）にある。
+  測るのはコードの性質ではなく「世界がそのコードにどう依存しているか」。
+- ただし Q4 は新規の問いではない: [観測基盤](/tech/harness-observability-platform.md)の
+  **利用観測（skill 発火率・hook 発火ログ）= Q4 をハーネス資産に適用したもの**。
+  アプリケーションコードへの一般化にすぎない。
+
+## hot/cold は1軸ではない — 影響度 × 検出遅延
+
+- hot: 影響大だが世界がすぐ教えてくれる（検出遅延 短）
+- cold: 影響小に見えるが挙動の証拠がゼロ。壊れても沈黙する（検出遅延 ∞）
+- **真の危険帯は周期的 warm**（月末バッチ・年次処理）。単純な hot/cold 分類が最も外す
+- エージェントにとっての本質量 = **壊した場合フィードバックが検証ループに届くまでの時間**。
+  cold 領域で「テストが通ったので大丈夫」は、安全の証拠ではなく証拠の不在
+
+## 7つの分布
+
+| 指標 | 分布 | エージェント翻訳 | 取得 |
+|---|---|---|---|
+| 実行パス熱 | 実行回数の関数分布 | hot=即検出/影響大、cold=証拠なし・テスト先行 | continuous profiler |
+| 時間パターン | 実行の時間バケット分布 | 低H×周期=バッチパス。「今cold」を信じるな | cron台帳+実行ログ |
+| 実行時 fan-in | 呼び出し元(テナント/版)分布 | 静的fan-inの実行時版 | OTel traces |
+| 入力分布 | 実引数・ペイロードの値分布 | 低H=事実上の契約は型より狭い | サンプリングログ |
+| 構成/フラグ | フラグ状態の Bernoulli H(p_on) | H≈1=両枝テスト必須、H≈0半年=片枝はdead(Piranha が自動削除する対象) | フラグ基盤 |
+| ログ novelty | ログテンプレート出現分布(-log p) | 新テンプレ=異常信号。前後比較=デプロイ検証器 | Drain 等 |
+| データ/状態 | 本番DBカラム値分布 | **migration の危険度はスキーマでなく値の分布で決まる** | DB統計 |
+
+データ/状態は[状態モデリング](/tech/state-modeling-for-excel-to-web.md)の「実データからの
+状態逆算」と同じ操作。
+
+## 教材: Knight Capital (2012)
+
+8年前の dead code 残存【cold の放置】+ フラグ再利用【構成エントロピー崩壊】+ 8台中7台への
+部分デプロイ【バージョン分布分裂】→ 45分で$460M。「cold は無害」への最強の反例。
+cold の正しい扱いは放置ではなく削除（淘汰テストと同じ流儀）。
+
+## 最重要発見: Q4 はレバーが違う
+
+- Q1〜Q3・Q5 のリスクは**書き方**（diff縮小・テスト先行・範囲拡張）で下げられる
+- **Q4 は書き方では下げられない**（本番の入力・構成分布は開発環境で再現できない）。
+  下げるレバーは**出し方=露出制御**: flag 下で露出ゼロ開始 / canary（本番分布からの
+  少数サンプリングによる安価な仮説検定）/ 段階ロールアウト+ログnovelty監視
+- 帰結: **エージェントの自律選択の出力は（修正範囲, テスト戦略）に加えて（露出戦略）を
+  含むべき**。範囲と露出は独立に選べる2つのダイヤル
+  （cold×検出遅延大 → diff 自由だが flag 必須 / hot → diff 最小+canary）
+
+## 段階導入 — テレメトリを待たない
+
+- **Tier 0（インフラ不要）**: 静的到達可能性（実測: lets-langgraph 57ファイル中1つが
+  エントリポイント未到達・テスト参照もなし = dead 候補 `phase2-stubs/contracts.ts` を即検出）/
+  テスト実行時 coverage ヒット数 = 実行熱の実験室代理 / fixture の値分布
+- **Tier 1（既存ログ寄せ集め）**: アクセスログ→熱、エラーログ→テンプレ分布、cron 設定→周期台帳
+- **Tier 2（テレメトリ基盤）**: OTel・continuous profiling・フラグ基盤。
+  [観測基盤の構想](/tech/harness-observability-platform.md)との合流点。telemetry-first 原則そのまま
+
+## Citations（続編2）
+
+[5] [SEC 行政処分書: Knight Capital (2013)](https://www.sec.gov/litigation/admin/2013/34-70694.pdf)
+[6] [Ren et al., "Google-Wide Profiling" (IEEE Micro 2010)](https://research.google/pubs/pub36575/)
+[7] [Du et al., "DeepLog" (CCS 2017)](https://dl.acm.org/doi/10.1145/3133956.3134015)
+[8] [Ramanathan et al., "Piranha: Reducing Feature Flag Debt at Uber" (ICSE-SEIP 2020)](https://dl.acm.org/doi/10.1145/3377813.3381350)
 
 # Citations
 
