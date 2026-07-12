@@ -41,5 +41,7 @@ timestamp: 2026-07-12T00:00:00+09:00
 4. **計測の常設化**: 手順1〜3を30行スクリプトにして Stop hook から
    「fresh / steps / max_context / fork数」を log.tsv に1行。閾値超で警告。
 
-関連: [エージェント観測基盤の構想](/tech/harness-observability-platform.md)（rollout 直読が正解の理由・自己記録の非対称）、
+関連: [ハーネスのトークン経済学](/tech/harness-token-economy.md)（コストモデル側。本文書はその測定手順にあたる。
+経済学の D1 述語=凍結タスク×N回比較は、本手順3の fresh 差分で実装できる）、
+[エージェント観測基盤の構想](/tech/harness-observability-platform.md)（rollout 直読が正解の理由・自己記録の非対称）、
 [ハーネスの散らかりと干渉](/tech/harness-sprawl-and-interference.md)（観測→淘汰の接続）。
