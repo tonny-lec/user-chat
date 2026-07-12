@@ -2,6 +2,7 @@
 
 ## 2026-07-12
 
+* **Creation**: [DDD の取り組みを「AIが活用できる/できない」で二分する](/tech/ddd-ai-applicability.md) — DDD相談。判定基準（AI不可の条件は「入力が存在しない=暗黙知」か「出力が社会的行為=合意・決断」の2つのみ）を先に立てて戦略/戦術の取り組みを二分。ユビキタス言語は候補生成・警察はAI/合意は人間のように取り組み内部で分割される点、および「DDDは人間視点でなく有限認知向けの道具であり、AIもコンテキスト窓を持つ有限認知エージェントだから境界づけられたコンテキスト=委譲単位としてそのまま効く」という前提の反転が核。
 * **Creation**: [AIエージェントにおける「境界」の統一理論](/tech/agent-boundary-theory.md) — 「境界」の思考セッション。6次元の棚卸し→期待損失の因子分解→候補3案（可逆性等高線・因子キャップ・半透膜）が形/機能/位置という別の問いへの答えだと判明し連言定義へ。各項の欠落から4病（依頼・儀式的境界・ただの絞り・無意味な壁）と監査4問を導出。本人の「病の観測ゼロ」は自律時間ゼロの正常な姿と解釈し、予測レジストリとして持ち越し。
 * **Update**: [エージェント観測基盤の構想 — 失敗シグナルは追加を駆動するが削除を駆動しない](/tech/harness-observability-platform.md) — Codex CLI 観測面の実地調査（0.144.1）を追記。rollout JSONL（289本・turn_context がターン単位の設定スナップショットでA/B測定の結合キーに）+ threads SQLite（tokens_used 集計済み・SQL可）が常時オンの観測資産。一方 skill は exec に溶け hook は発火記録ゼロ — Codex では発火ログ自己記録が唯一の観測手段。Claude Code との対照表と「OTel より rollout 直読が正解」の結論。
 * **Update**: [エージェント観測基盤の構想 — 失敗シグナルは追加を駆動するが削除を駆動しない](/tech/harness-observability-platform.md) — deep-research の結果を追記。Claude Code は skill_activated / hook_execution_start/_complete / tool_decision 等ハーネス資産レベルの公式 OTel イベントを持つ（原典確認済）ため計装は自作不要。Codex CLI も [otel] 対応だが exec でメトリクス欠落。OTel GenAI semconv は execute_tool/invoke_agent を定義するも Development 段階でハーネス資産は標準化の空白地帯。既存プラットフォーム（Langfuse/LangSmith/Braintrust）もハーネス資産の利用観測は扱わず。Hamel の error-analysis-first と Thoughtworks の Thinnest Viable Platform が telemetry-first/platform-first の見立てと一致。推奨アーキテクチャ（公式計装→薄い受け口→failure-dashboard 拡張→淘汰テストへ接続）を確定。
