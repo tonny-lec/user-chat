@@ -24,7 +24,7 @@
 * [AIエージェント使いこなしのエッセンス — Fable からの申し送り](/tech/ai-agent-mastery-essence.md) - モデルが入れ替わっても通用する、AIエージェント活用の7原則。コンテキスト管理・検証・委譲・可逆性・失敗観測駆動の運用ループを凝縮した申し送り書。
 * [エージェント観測基盤の構想 — 失敗シグナルは追加を駆動するが削除を駆動しない](/tech/harness-observability-platform.md) - ハーネス/hook/skill の観測・可視化基盤の構想相談と deep-research 結果。失敗観測は片翼で、淘汰には利用観測（発火率・生存率）が要る。計装は自作不要（Claude Code は skill_activated/hook_execution 等の公式 OTel イベントを持つ）、ハーネス資産の観測は標準化・既製品とも空白地帯、自作するのは受け口と閲覧UIだけ。
 * [ハーネスの散らかりと干渉への対処 — 生成コスト激減時代の依存管理](/tech/harness-sprawl-and-interference.md) - お試しハーネスの作りすぎで環境が散らかる・ハーネス同士が干渉してバグる問題への対処。隔離（ローカル検疫＋昇格制）・淘汰（消して再発するかテスト）・観測可能性（発火ログ＋二分探索）の3機構に整理。
-* [AIエージェントの「ハーネス」とは何か・どう育てるか](/tech/ai-agent-harness-basics.md) - ハーネスの定義と層構造、「開示されない」という誤解の正体、失敗観測駆動でハーネスを育てる実践手順。
+* [AIエージェントの「ハーネス」とは何か・どう育てるか](/tech/ai-agent-harness-basics.md) - ハーネスの定義と層構造、「開示されない」という誤解の正体、失敗観測駆動でハーネスを育てる実践手順。コードが要るのは強制点だけという素材マップを含む。
 * [superpowers プラグイン解剖 — 公開ハーネスの実例読み解き](/tech/superpowers-plugin-anatomy.md) - obra/superpowers (MIT) の hook・skill 構造を実物で読み解き、ハーネス設計の技術(強制の機械化・合理化潰し・skill の TDD)を抽出したメモ。
 * [skill を作ってもハーネス感がない問題 — 強制点の設計](/tech/skill-to-harness-enforcement.md) - skill は知識層にすぎず、ハーネス感の正体は「モデルが従わなくても機械が発火・検証・遮断する強制点」。強制の強度スペクトラムと、skill をハーネス化する2つの質問。
 * [AI駆動開発ドキュメントテンプレート（PRD/要件定義書/Design Doc/ADR）の設計原則](/tech/ai-dev-doc-templates.md) - templates/ に作成した4文書テンプレの使い分けと設計原則。各セクションを「AIのどの誤解を防ぐか」に因果配線し、空欄は「未定」と明記、Non-goals必須、制約は理由付き、ADRが最高費用対効果。
