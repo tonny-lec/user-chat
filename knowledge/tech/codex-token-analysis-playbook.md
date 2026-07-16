@@ -1,9 +1,9 @@
 ---
 type: Playbook
 title: Codex セッションのトークン消費分析 — 手順と読み違えの罠
-description: threads テーブルと rollout の token_count からプロジェクト別トークン消費を分解する手順。tokens_used は fork が親カウンタを複製するため単純合計は過大、実消費は非キャッシュinput+outputの差分で測る。sheetlens 実測で「常駐コンテキスト×ステップ数」が支配項と判明。
+description: threads テーブルと rollout の token_count からプロジェクト別トークン消費を分解する手順。tokens_used は fork が親カウンタを複製するため単純合計は過大、実消費は非キャッシュinput+outputの差分で測る。sheetlens 実測で「常駐コンテキスト×ステップ数」が支配項と判明。手順1〜3は docs/codex-token-report.py にスクリプト化済み。
 tags: [codex, tokens, observability, harness, cost]
-timestamp: 2026-07-12T00:00:00+09:00
+timestamp: 2026-07-17T00:00:00+09:00
 ---
 
 # 手順（sheetlens 分析で確立）
@@ -44,6 +44,25 @@ state_N 自動検出・fork 除外入り D1 クエリ）＋実務マシンの AG
 設定: 未使用 MCP を繋がない / AGENTS.md 3行ポインタ / effort はむやみに下げない
 （120ラン実測: agentic では low が medium より高い）/ プレフィックスに変動値を入れない。
 計測は週1で本 Playbook の手順1〜3。
+
+# 観測スクリプト化と業務PC展開（2026-07-17）
+
+業務PCでの「どこが無駄か不明」相談を受け、手順1〜3+支配項分解を単一ファイルにスクリプト化:
+**`~/workspace/docs/codex-token-report.py`**（stdlib のみ・読み取り専用・state_N 自動検出・
+fork 分離・長生きスレッド/太い常駐/fork超過の3警告付き）。
+`python3 codex-token-report.py --days 7 [--cwd <repo>]` で週次レポートが出る。
+
+これで持ち出しキットは3点セットに確定:
+1. `docs/harness-token-budget.md`（設計7則+検収述語）
+2. `docs/codex-token-report.py`（観測。まずこれを実行してから打ち手を選ぶ）
+3. `~/.codex/AGENTS.md` 末尾の3行ポインタ（見出し「## ハーネス作成」+2行。文面はローカルの同ファイル末尾からコピー）
+
+導入手順（業務PC）: 上記2ファイルを任意の場所に置く → AGENTS.md に3行追記 →
+`codex-token-report.py --days 7` を実行し、警告セクションに対応する運転習慣から着手する。
+
+ローカル実測の教訓（2026-07-17, 直近30日）: main 48.7M に対し **fork が 392M と8倍**、
+常駐コンテキスト中央値 100K 超が 35/128 本。自分の環境ですら無駄の在り処は
+「観測するまで直感と違う」の再確認になった。
 
 # 消費の支配項と改善レバー（sheetlens 実測: 17.5h・893step・fresh 200万/セッション）
 
