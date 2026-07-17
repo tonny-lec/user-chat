@@ -47,5 +47,6 @@
 * [システム問い合わせ対応の構造化テンプレート](/tech/system-inquiry-structuring.md) - 業務構造化の最初の題材としての問い合わせ対応の適性評価と、7点セットを問い合わせ対応向けに具体化した雛形。実況メモ5項目と段階導入ロードマップ付き。
 * [git push 権限の設計 — main への push を deny から ask に変更](/tech/claude-code-push-permission-design.md) - Claude Code の権限優先順位（deny > ask > allow、Bash ルールはリポジトリ単位のスコープ不可）を踏まえ、git push origin main/develop をグローバル deny から ask（毎回確認）に移した決定とその理由。
 * [Excel業務データの構造化方針 — AIが業務者と同等に解釈できる設計図の作り方](/tech/excel-data-structuring-for-ai.md) - Excelの4層（値・計算・視覚・暗黙）を機械抽出可能性の順に抽出し、証拠タグで事実と仮説を分離、マスク予測の一致率で仕様の穴を検出する5フェーズのパイプライン。成果物6点セット付き。
+* [Excel→Web 移行の網羅性検証 — 逆参照の欠如は「台帳＋契約＋突合」に還元する](/tech/excel-to-web-traceability-verification.md) - SheetLens の弱点「Web→Excel の参照がなく移行の検証ができない」の相談。検証を網羅性と挙動等価性に分離し、前者を決定的ID台帳(elements.json)・Web側契約(sheetlens-trace.yaml)・突合コマンド(verify)の3点で解く設計に落とした。
 * [Excel業務のWeb化における状態モデリング](/tech/state-modeling-for-excel-to-web.md) - Excelの暗黙状態を明示化する7ステップ — 実データからの状態逆算、遷移表レビュー、直交分解、導出状態の非保存、名前付き遷移操作、UI判定の一元化、例外遷移の事前設計。
 * [セマンティックレイヤー・オントロジー・dbt — 三層データ基盤×AI活用での位置づけ](/tech/semantic-layer-ontology-dbt.md) - 3つの道具はスタックの別の高さにある別物。dbtは三層を作るビルドツール、セマンティックレイヤーは指標定義のSQLコンパイラ、オントロジーは業務エンティティのグラフ。text-to-SQLの推測を上から順に潰す装置として整理。
