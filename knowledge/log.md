@@ -2,6 +2,8 @@
 
 ## 2026-07-17
 
+* **Creation**: [DB とリポジトリからの設計書・ドメイン抽出 — 復元できるのは What であって Why ではない](/tech/design-doc-extraction-from-db-and-code.md) — ドキュメントなし現場でローカルDB+既存リポジトリから Codex に設計書を抽出させたい相談。抽出可能性を3層（機械確定・実データで確定・原理的に復元不能=Why）に分け、証拠タグ【code/data/推測】で事実と仮説を分離、4フェーズ（台帳→機械抽出→解釈→突合・推測回収）に落とした。成果物は散文の設計書でなく台帳を正とし、AGENTS.md からのポインタで以後の Codex オンボーディング資料を兼ねる。
+
 * **Creation**: [Excel→Web 移行の網羅性検証 — 逆参照の欠如は「台帳＋契約＋突合」に還元する](/tech/excel-to-web-traceability-verification.md) — SheetLens の「Web→Excel の逆参照がなく移行検証ができない」相談。検証を網羅性/挙動等価性に分離し、網羅性を決定的ID台帳(elements.json)＋Web側契約(sheetlens-trace.yaml)＋突合(verify)で解く設計を承認・spec 化（sheetlens リポジトリにコミット済み）。trace init による初期漏れゼロの構成的保証、skipped+reason 必須による意図的省略の一級化、「契約は知識層・verify が強制点」の構図が再利用点。
 
 * **Update**: [skill を作ってもハーネス感がない問題 — 強制点の設計](/tech/skill-to-harness-enforcement.md) — 「プロンプトだと制約を意識させられないから md で契約を書く方がいいのでは」の相談を続編として追記。md 契約化の実利は置き場所と寿命（定位置再注入・書く過程での述語化・レビュー可能な成果物）だが md も知識層で保証装置ではない（衝突時遵守 2/3 の実測）。診断3分岐での仕分け表と、処方「hook が参照する仕様書として述語形式で書き、破られた条項から hook へ昇格」（前例: harness-token-budget.md の契約本文+検収述語の分離）。
