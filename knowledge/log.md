@@ -2,6 +2,8 @@
 
 ## 2026-07-17
 
+* **Update**: [DB とリポジトリからの設計書・ドメイン抽出 — 復元できるのは What であって Why ではない](/tech/design-doc-extraction-from-db-and-code.md) — Codex 実施用プロンプト集を # Examples として追記。共通規約（証拠タグ・読み取り専用境界・逃げ道）は AGENTS.md に1回だけ書き、各フェーズのプロンプトは完了述語だけの痩せた形に分離（gpt-5.6 エッセンス準拠）。Phase 0 のみ「候補提示で止まれ」を入れ、拡大解釈癖への対策として人間の判断点を明示。
+
 * **Creation**: [DB とリポジトリからの設計書・ドメイン抽出 — 復元できるのは What であって Why ではない](/tech/design-doc-extraction-from-db-and-code.md) — ドキュメントなし現場でローカルDB+既存リポジトリから Codex に設計書を抽出させたい相談。抽出可能性を3層（機械確定・実データで確定・原理的に復元不能=Why）に分け、証拠タグ【code/data/推測】で事実と仮説を分離、4フェーズ（台帳→機械抽出→解釈→突合・推測回収）に落とした。成果物は散文の設計書でなく台帳を正とし、AGENTS.md からのポインタで以後の Codex オンボーディング資料を兼ねる。
 
 * **Creation**: [Excel→Web 移行の網羅性検証 — 逆参照の欠如は「台帳＋契約＋突合」に還元する](/tech/excel-to-web-traceability-verification.md) — SheetLens の「Web→Excel の逆参照がなく移行検証ができない」相談。検証を網羅性/挙動等価性に分離し、網羅性を決定的ID台帳(elements.json)＋Web側契約(sheetlens-trace.yaml)＋突合(verify)で解く設計を承認・spec 化（sheetlens リポジトリにコミット済み）。trace init による初期漏れゼロの構成的保証、skipped+reason 必須による意図的省略の一級化、「契約は知識層・verify が強制点」の構図が再利用点。
