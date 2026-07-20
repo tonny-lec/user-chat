@@ -122,7 +122,7 @@ def main() -> int:
 
     p_rec = sub.add_parser("record", help="受験結果を履歴に追記する")
     p_rec.add_argument("--path", required=True, help="knowledge/ 相対の文書パス")
-    p_rec.add_argument("--verdict", required=True, choices=VERDICTS)
+    p_rec.add_argument("--verdict", required=True)
     p_rec.add_argument("--question", help="出題の一行要約")
     p_rec.add_argument("--root", type=Path, default=Path.cwd())
 

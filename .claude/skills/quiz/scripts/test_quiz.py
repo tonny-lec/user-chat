@@ -177,3 +177,14 @@ def test_cli_record_roundtrip(tmp_path):
     )
     assert proc.returncode == 0
     assert quiz.read_history(tmp_path)["tech/a.md"]["verdict"] == "correct"
+
+
+def test_cli_record_bad_verdict_json_error_exit_1(tmp_path):
+    make_doc(tmp_path, "tech/a.md")
+    proc = run_cli(
+        ["record", "--path", "tech/a.md", "--verdict", "maybe", "--root", str(tmp_path)],
+        cwd=tmp_path,
+    )
+    assert proc.returncode == 1
+    assert "error" in json.loads(proc.stdout)
+    assert not (tmp_path / "quiz" / "history.jsonl").exists()
