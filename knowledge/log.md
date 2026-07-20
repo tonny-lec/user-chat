@@ -2,6 +2,8 @@
 
 ## 2026-07-20
 
+* **Update**: [knowledge 文書の想起クイズ機構 — 出題選択と記録は機構、生成と採点だけ LLM](/tech/knowledge-recall-quiz-design.md) — 実装完了を反映。/quiz を .claude/skills/quiz/（SKILL.md + quiz.py + テスト18本）として実装し、確定した詳細（履歴スキーマ・優先度規則・採点境界・置き場所）と実装時の学び（CLI 契約は不正入力をテストで踏んで初めて確定する — argparse choices と error JSON 契約の矛盾をレビューが実行検出）を追記。
+
 * **Creation**: [knowledge 文書の想起クイズ機構 — 出題選択と記録は機構、生成と採点だけ LLM](/tech/knowledge-recall-quiz-design.md) — knowledge/ 66文書の理解定着クイズの相談。要件を4択（結論の想起・会話内対話式・履歴駆動・自由想起）で確定し、実現方式3案から「/quiz スキル + 選択・記録スクリプト」を推奨案として採用。履歴は quiz/history.jsonl で git 管理。詳細設計（履歴スキーマ・優先度規則・採点基準・置き場所）は次セッションで確定予定。
 
 ## 2026-07-17
