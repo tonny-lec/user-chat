@@ -93,3 +93,50 @@ def pick(root: Path, domain: str | None) -> dict:
         "last_quizzed": last["ts"] if last else None,
         "stats": stats,
     }
+
+
+def record(root: Path, path: str, verdict: str, question: str | None) -> dict:
+    if verdict not in VERDICTS:
+        raise ValueError(f"verdict は {VERDICTS} のいずれか: {verdict!r}")
+    entry = {
+        "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
+        "path": path,
+        "verdict": verdict,
+    }
+    if question:
+        entry["question"] = question
+    hist = root / "quiz" / "history.jsonl"
+    hist.parent.mkdir(parents=True, exist_ok=True)
+    with hist.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    return entry
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p_pick = sub.add_parser("pick", help="優先度規則で出題文書を1件選ぶ")
+    p_pick.add_argument("--domain", help="knowledge/ 直下のサブディレクトリ名で絞る（例: tech）")
+    p_pick.add_argument("--root", type=Path, default=Path.cwd(), help="リポジトリルート（既定: cwd）")
+
+    p_rec = sub.add_parser("record", help="受験結果を履歴に追記する")
+    p_rec.add_argument("--path", required=True, help="knowledge/ 相対の文書パス")
+    p_rec.add_argument("--verdict", required=True, choices=VERDICTS)
+    p_rec.add_argument("--question", help="出題の一行要約")
+    p_rec.add_argument("--root", type=Path, default=Path.cwd())
+
+    args = parser.parse_args()
+    if args.command == "pick":
+        result = pick(args.root, args.domain)
+    else:
+        try:
+            result = record(args.root, args.path, args.verdict, args.question)
+        except ValueError as e:
+            result = {"error": str(e)}
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 1 if "error" in result else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -113,3 +113,67 @@ def test_pick_domain_filter_applies_rules_within_domain(tmp_path):
 def test_pick_reads_frontmatter_title(tmp_path):
     make_doc(tmp_path, "tech/a.md", title="実験の題名")
     assert quiz.pick(tmp_path, None)["title"] == "実験の題名"
+
+
+import subprocess
+import sys as _sys
+from pathlib import Path as _Path
+
+import pytest
+
+QUIZ_PY = _Path(quiz.__file__)
+
+
+def test_record_appends_line(tmp_path):
+    result = quiz.record(tmp_path, "tech/a.md", "partial", "結論は？")
+    line = (tmp_path / "quiz" / "history.jsonl").read_text(encoding="utf-8").strip()
+    saved = json.loads(line)
+    assert saved == result
+    assert saved["path"] == "tech/a.md"
+    assert saved["verdict"] == "partial"
+    assert saved["question"] == "結論は？"
+    assert saved["ts"]  # ISO 8601 が入っている
+
+
+def test_record_appends_not_overwrites(tmp_path):
+    quiz.record(tmp_path, "tech/a.md", "correct", None)
+    quiz.record(tmp_path, "tech/b.md", "wrong", None)
+    lines = (tmp_path / "quiz" / "history.jsonl").read_text(encoding="utf-8").strip().splitlines()
+    assert len(lines) == 2
+    assert "question" not in json.loads(lines[0])
+
+
+def test_record_rejects_bad_verdict(tmp_path):
+    with pytest.raises(ValueError):
+        quiz.record(tmp_path, "tech/a.md", "maybe", None)
+
+
+def run_cli(args, cwd):
+    return subprocess.run(
+        [_sys.executable, str(QUIZ_PY), *args],
+        capture_output=True, text=True, cwd=cwd,
+    )
+
+
+def test_cli_pick_outputs_json(tmp_path):
+    make_doc(tmp_path, "tech/a.md")
+    proc = run_cli(["pick", "--root", str(tmp_path)], cwd=tmp_path)
+    assert proc.returncode == 0
+    assert json.loads(proc.stdout)["path"] == "tech/a.md"
+
+
+def test_cli_pick_error_exits_1(tmp_path):
+    (tmp_path / "knowledge").mkdir()
+    proc = run_cli(["pick", "--root", str(tmp_path)], cwd=tmp_path)
+    assert proc.returncode == 1
+    assert "error" in json.loads(proc.stdout)
+
+
+def test_cli_record_roundtrip(tmp_path):
+    make_doc(tmp_path, "tech/a.md")
+    proc = run_cli(
+        ["record", "--path", "tech/a.md", "--verdict", "correct", "--question", "Q?", "--root", str(tmp_path)],
+        cwd=tmp_path,
+    )
+    assert proc.returncode == 0
+    assert quiz.read_history(tmp_path)["tech/a.md"]["verdict"] == "correct"
