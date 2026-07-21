@@ -1,1 +1,2 @@
 {"ts": "2026-07-20T13:13:06+09:00", "path": "tech/gpt56-subagent-tier-effort-balance.md", "verdict": "partial", "question": "役割別ティア×effort の既定構成の一行まとめと、コストの逆転現象は何か"}
+{"ts": "2026-07-21T16:05:56+09:00", "path": "tech/evals-for-practitioners.md", "verdict": "wrong", "question": "実務家のevalの操作的定義・判定器3分類・設計せず採集する原則を想起する"}
