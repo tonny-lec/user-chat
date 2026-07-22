@@ -1,5 +1,11 @@
 # Directory Update Log
 
+## 2026-07-22
+
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 2周目実測: 削除提案62→18件(71%減)・狙った2クラスはゼロ、だが順トレース missing 20件（禁止リストと重なる内容）— 過剰を塞いだら不足に倒れ、双方向検証の2体目が捕捉。教訓「逃げ道(反論条項)は審問には効くが生成は禁止に服従する」→ 恒久要件は禁止の例外でなく「明示的な許可」節として書く。処置3点（名指し許可への変換・可変行の表現方式は人間の設計判断・要件書側の明記）を記録。
+
+* **Creation**: [LangGraph の概念 — チェックポイント付き BSP ループから全概念を導く](/tech/langgraph-concepts.md) — 「langgraphの概念をちゃんと理解したい」への回答を蒸留。全概念（reducer・Send・checkpointer・interrupt 等）を super-step ループ上の住所として整理し、lets-langgraph の実コード3例と罠4点（resume のノード先頭再実行・MemorySaver 揮発性ほか）で接地。
+
 ## 2026-07-21
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 結果チェック用プロンプト（4指標+機械的判定+keep無作為5件の原文引用）を追記。
