@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-07-23
+
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — DB 設計後の次の成果物を整理: 一冊の設計書でなく未設計の決定3つ（処理設計=CRUD対応+規則仕様でフェーズDシナリオが種 / Pleasanterマッピング表 / 移行設計）を同じ台帳+evidence+トレース方式で。db-design.yaml 自体が DB 設計書であり、人が読む体裁は台帳→文書の一方向機械生成で二重管理を避ける。
+
 ## 2026-07-22
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 数字の振動（missing 18・未確定42）から測定モード→確定モードへのフェーズ移行を宣言。原因は毎回の全再生成（確率的な再サンプリング）。db-design.yaml 凍結・再生成禁止・典拠からの差分解消のみ許可の確定モードプロンプトを提供。一般形「測定と確定は目的が逆なので規律も逆」を記録。
