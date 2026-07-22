@@ -2,6 +2,8 @@
 
 ## 2026-07-22
 
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — v6 統合版を提供（v5 + 既存テーブル対応表・missing 理由列必須・審問の実在確認 keep・alias 前提）。統合ルール「差分2〜3個で全文再統合」の実践。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 「existing-tables.md を参照しない」問題: ファイルを渡す≠読ませる。読んだ証拠を成果物として強制する3点（既存テーブル対応表を設計の前提条件に・missing 判定に「既存で満たせない理由」列を必須化・カタログに業務語彙 alias）。一般形「渡した典拠は典拠由来の中間生成物を要求して初めて消費される」を記録。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — items.md 肥大（分類不能190件）の対処: 出所の HTML 要素で機械仕分け（非データ要素は削除候補）、消しすぎは順トレースが捕まえるので疑わしきは消す。典拠ファイル自身も台帳規律（source+req 必須）に従う。掃除は5周目より先。
