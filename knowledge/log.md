@@ -2,6 +2,8 @@
 
 ## 2026-07-23
 
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — **完了**: フェーズD 0件で終了条件3点が揃い DB 設計確定。締め3点（スナップショット・判断記録の保存・シナリオSQL保持）を記録。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — フェーズD報告の対処規則: 報告は台帳への差分に変換する。DDLエラーはyaml側修正（制約外し禁止）、未使用列はevidenceの強さで振り分け、書けなかった要件は3分岐（列不足/構造欠陥/規則曖昧）、シナリオSQLは保存して処理設計の種に。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 処理設計プロンプトを提供（典拠5つ・db-design.yaml 凍結と差分提案・rule の原文引用主義・カバレッジ+使用審問+幽霊参照・SQL 実行が本番の検証）。
