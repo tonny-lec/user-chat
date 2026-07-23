@@ -2,6 +2,8 @@
 
 ## 2026-07-23
 
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 同期台帳の検証全○で段2-1完了。impl 仕分けプロンプトを提供（store宣言と meta-sync を判定材料にした5規則、独自一覧=実装バックログ、要実機確認カテゴリで constraints の「実例≠全機能表」を処理）。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — source 未確定の一括解消: 判別質問「導入後この値を書き続けるのは誰か」1つに帰着、3観測（mjs読み書き方向・process writes・existing usage）から提案駆動で。決定と mjs の矛盾リスト＝改修箇所一覧という副産物も。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — constraints はサイトパッケージ JSON から、同期台帳下書きは既存 mjs から抽出する方式に変更（機械成果物の典拠昇格）。コードから取れるのは What まで、正・方向・タイミングは人間が確定。台帳外の対応の検出と台帳↔mjs 突合の回帰チェック化も記録。
