@@ -12,10 +12,12 @@ timestamp: 2026-07-24T00:00:00+09:00
 
 # 0. 共通規律（すべてのプロンプトの前提）
 
-- **基線**: 走査・抽出・検証・実装はすべて scan-scope.md に宣言した基線
-  （develop ＋ baseline タグ）のチェックアウト上で行う。作業前に
-  `git branch --show-current` / `git rev-parse HEAD` を確認し、基線と
-  不一致なら**作業せず停止して報告**。feature/* とスコープ外パスに触れない。
+- **基線**: 走査・抽出・検証は基線（develop ＋ baseline タグ）上で、実装は
+  **基線または基線から派生した作業ブランチ**上で行う。判定は同一性でなく祖先性:
+  `git merge-base --is-ancestor <baselineタグ> HEAD` が真であること。
+  scan-scope.md の**除外ブランチ（お試し実装を名指し。feature/* のような
+  ワイルドカード指定はしない — 新規作業ブランチまで弾くため）**そのもの、
+  またはそれを取り込んだ状態なら停止して報告。スコープ外パスに触れない。
 - **全報告にコミットハッシュを含める**（どの版を見た観測かを常に追跡可能に）。
 - 検証の「○」報告は**全行検分の表とセット**のときだけ信用する。
 - 台帳はすべて凍結。変更は差分提案→人間承認→反映。人間の決定は
@@ -514,10 +516,16 @@ backlog.md を典拠と突合して監査せよ。集計だけの報告は不可
 
 ```markdown
 ## 開始前チェック（作業より先に必ず実行）
-- git branch --show-current と git rev-parse HEAD を出力し、scan-scope.md の
-  基線（develop / baseline タグ）と一致することを確認せよ。
-  不一致なら作業せず停止して報告せよ。
-- feature/* および scan-scope.md の対象外パスに触れてはならない。
+1. git branch --show-current / git rev-parse HEAD を出力せよ。
+2. 派生の確認: git merge-base --is-ancestor <baselineタグ> HEAD が真であること
+   （= 現在地が基線から派生している）。偽なら作業せず停止して報告せよ。
+3. 汚染の確認: 現在のブランチが scan-scope.md の除外ブランチ（お試し実装・
+   trial-archive）そのものでなく、かつ
+   git merge-base --is-ancestor <除外ブランチ> HEAD が偽であること
+   （= お試しを取り込んでいない）。真なら停止して報告せよ。
+4. 新しい作業アイテムを始める場合は、基線から作業ブランチを切ってよい:
+   git switch -c <feat|fix>/<短い説明> <baselineタグ>
+5. scan-scope.md の対象外パスに触れてはならない。
 
 ## 典拠（すべて凍結。変更が必要なら差分提案として報告、勝手に変えない）
 db-design.yaml / process-design.yaml / meta-sync.yaml / items.md /
@@ -582,8 +590,9 @@ backlog.md の状態列を「完了」に更新し（完了証拠のコミット
    → 人間が確認: 全部お試しなら develop は完全な基線。
      正当な作業が混ざっていればそれだけ develop に取り込んでから次へ。
 2. 基線の確定: develop をチェックアウトし HEAD に基線タグを打て。
-   scan-scope.md に「走査対象は develop（基線タグ）のツリー、feature/* は
-   対象外」と記せ。git rev-parse HEAD を報告せよ。
+   scan-scope.md に「走査対象は develop（基線タグ）のツリー。除外ブランチ:
+   <お試し実装ブランチ名を名指し>・trial-archive。作業ブランチは基線から
+   派生させること」と記せ。git rev-parse HEAD を報告せよ。
 3. 混入監査: コード・画面由来の台帳行（items.md source / process-design の
    trigger / meta-sync・ui-binding の evidence / backlog の対象）を develop
    ツリーと突合し、存在しないものを参照する行を「混入行」として列挙
