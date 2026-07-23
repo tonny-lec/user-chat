@@ -6,6 +6,9 @@ tags: [db-design, codex, verification, traceability, over-engineering, workflow]
 timestamp: 2026-07-21T00:00:00+09:00
 ---
 
+> 実行用プロンプトの現行版全文は[プロンプト集](/tech/db-design-flow-prompts.md)に
+> 集約してある。本編（このファイル）は経緯・原理・失敗の記録。
+
 # 相談内容
 
 Codex に要件定義書から DB 設計を作らせると、開発規模が大きくなりすぎる設計が出てくる。

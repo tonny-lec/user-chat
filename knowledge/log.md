@@ -2,6 +2,8 @@
 
 ## 2026-07-23
 
+* **Creation**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — 「プロンプトはドキュメントにあるっけ」の指摘で、チャットにしか無かった全プロンプト現行版（DB設計v6・確定モード・フェーズD統合・処理設計・抽出・sourceトリアージ・同期検証・store付与・impl仕分け）を Playbook として集約。本編は経緯・原理、こちらは写経元という分担。旧版は保存しない・改訂は上書き。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — store 付与は meta-sync 完成により提案駆動から機械導出に簡略化（全列独自を既定、meta-sync・既存DBとの二重保存疑いだけ○×）。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 同期台帳の検証全○で段2-1完了。impl 仕分けプロンプトを提供（store宣言と meta-sync を判定材料にした5規則、独自一覧=実装バックログ、要実機確認カテゴリで constraints の「実例≠全機能表」を処理）。
