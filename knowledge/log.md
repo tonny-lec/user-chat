@@ -2,6 +2,8 @@
 
 ## 2026-07-23
 
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 対象外218は監査で問題なし・段1完了。段2-1 Pleasanter マッピングプロンプトを提供（pleasanter-constraints.md による器の物質化・危険分類は人間承認制・実現不能制約の処理設計への還流）。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 処理設計1周目: 判定全○だが対象外218件は縮退解の疑い（対象外は missing を出さない最安の逃げ道）。宣言との突合→宣言外は covered|missing に強制再判定の監査プロンプトを提供。一般形「分類ラベルには発行権限を明示しないと最安ラベルに判定が流れる」を記録。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — E2E までの階段4段を記録: 処理設計（紙の上のE2E）→実装仕分け+マッピング→ローカルE2E（scenario/*.sql が期待値に昇格、契約だけ複製の環境）→E2E機械化。process 台帳に impl フィールド仮置き。
