@@ -644,19 +644,24 @@ feature チェックアウト上で走っていた**（feature の上で「featu
 探せ」→ 空振りの必然）。教訓: **指定が無ければモデルは現在のチェックアウトで
 走る。ブランチは人間が思っている以上に暗黙の前提**。
 
+**確定版（develop 軸）**: クリーンな統合ブランチ（develop）があるなら、
+差分の全量仕分けは不要 — 「develop に無いものを参照する台帳行＝混入」の
+単純な述語に落ちる。汚染世界の外に立って探すので構造的に空振りしない。
+
 ```markdown
-1. git merge-base main feature を報告し、
-   git diff --stat $(git merge-base main feature)..feature を出力せよ
-   （お試しが混ざりうる母集団の全量）。
-2. （人間が一覧を 正当な作業 / お試し実装 に仕分ける — 要の人間入力）
-3. a. お試しファイル群に由来する行を全台帳（items.md source /
-      process-design の trigger / meta-sync・ui-binding の evidence / backlog）
-      から検索し「混入行」として列挙（削除は承認後）。
-   b. お試しファイルを退避ブランチ trial-archive へ移し feature から削除する
-      コミットを用意（実行は承認後。破棄でなく退避）。
-4. クリーン HEAD に基線タグ → #7 と処理設計のカバレッジ+使用審問を再実行、
-   差分のみ報告。**混入 PROC 除去後に未使用列が新たに露出するかまで見る**
-   （お試し処理が DB の過剰を隠していた可能性）。
+1. 前提確認: git diff --stat develop..feature を出力せよ。
+   → 人間が確認: 全部お試しなら develop は完全な基線。
+     正当な作業が混ざっていればそれだけ develop に取り込んでから次へ。
+2. 基線の確定: develop をチェックアウトし HEAD に基線タグを打て。
+   scan-scope.md に「走査対象は develop（基線タグ）のツリー、feature/* は
+   対象外」と記せ。git rev-parse HEAD を報告せよ。
+3. 混入監査: コード・画面由来の台帳行（items.md source / process-design の
+   trigger / meta-sync・ui-binding の evidence / backlog の対象）を develop
+   ツリーと突合し、存在しないものを参照する行を「混入行」として列挙
+   （削除は承認後）。
+4. 除去後、#7 と処理設計のカバレッジ+使用審問を再実行し差分のみ報告。
+   **混入 PROC 除去で新たに未使用列が露出するかまで見る**（お試し処理が
+   DB の過剰を隠していた可能性）。以後の全報告にコミットハッシュを含める。
 ```
 
 被害範囲の見立て: 要件由来（REQ・スコープ・決定・DB骨格）はブランチ非依存。
