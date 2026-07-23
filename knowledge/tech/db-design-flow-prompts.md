@@ -536,6 +536,44 @@ existing-tables.md
 backlog.md の状態列を更新し、報告にコミットハッシュを含めよ。
 ```
 
+# フェーズ6: 設計書生成（実装と並行可）
+
+## 6.1 台帳からの設計書一式生成
+
+設計書は執筆でなく**変換** — 内容は全部台帳にある。生成は何回でもタダなので
+実装と並行してよく、乖離は再生成で消える。docs/design/ を git 管理すれば
+再生成の diff が設計変更レビューになる。設計書側は手で直さない
+（唯一の例外は 00-overview の散文 — 人間レビュー前提のドラフト）。
+
+```markdown
+台帳から設計書一式を docs/design/ に生成せよ。全文書の冒頭に
+「本書は台帳からの自動生成。修正は台帳側に行うこと」と、生成元基線
+（git rev-parse HEAD）・生成日を記せ。台帳に無い情報を書き足すな。
+
+1. 00-overview.md — アーキテクチャ概要: 着地点宣言・impl 内訳・meta-sync から
+   責務分界（Pleasanter 標準 / 拡張HTML+独自テーブル / バッチ）を図
+   （mermaid 可）と散文1〜2ページで。散文はドラフトであり、末尾に
+   「要人間レビュー」と記せ。
+2. 10-database.md — db-design.yaml から: テーブル一覧（用途1行）→
+   各テーブルの列表（名前 / 型 / 必須 / store / 説明 = evidence の REQ を
+   1行要約）→ FK・external 参照の一覧。
+3. 20-process.md — process-design.yaml から: 処理一覧（種別・impl・trigger）→
+   各処理の reads/writes（CRUD 表）と rule（DEC/REQ 引用付き）。
+4. 30-integration.md — meta-sync.yaml とサイト構築仕様から:
+   同期対応表（field / source / direction / sync）と Pleasanter サイト構成。
+5. 40-migration.md — migration.yaml と rehearsal/ から:
+   移行対応表と当日手順（キー解決・合否述語含む）。
+6. 90-traceability.md — 全 REQ → テーブル.列 / PROC の対照表と、
+   決定記録一覧（requirements.md の DEC-xx を転記）。
+7. 自己検査: 各文書の件数（テーブル数・列数・処理数・REQ 数）を台帳と突合し、
+   冒頭に「件数検査: 一致（テーブル N / 列 N / 処理 N / REQ N）」と記せ。
+   不一致なら生成をやり直せ。
+```
+
+並行運用ルール: 再生成トリガーは「台帳が動いたとき」（差分提案の承認時）/
+設計書は手で直さず台帳を直して再生成 / pending の提案は映らなくて正しい
+（冒頭ハッシュが時点を保証）。
+
 # トラブルシューティング（横断・フェーズ非依存）
 
 ## T1. 集計不一致の個票突合（旧#13）
