@@ -2,6 +2,8 @@
 
 ## 2026-07-23
 
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — フェーズD報告の対処規則: 報告は台帳への差分に変換する。DDLエラーはyaml側修正（制約外し禁止）、未使用列はevidenceの強さで振り分け、書けなかった要件は3分岐（列不足/構造欠陥/規則曖昧）、シナリオSQLは保存して処理設計の種に。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 処理設計プロンプトを提供（典拠5つ・db-design.yaml 凍結と差分提案・rule の原文引用主義・カバレッジ+使用審問+幽霊参照・SQL 実行が本番の検証）。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — DB 設計後の次の成果物を整理: 一冊の設計書でなく未設計の決定3つ（処理設計=CRUD対応+規則仕様でフェーズDシナリオが種 / Pleasanterマッピング表 / 移行設計）を同じ台帳+evidence+トレース方式で。db-design.yaml 自体が DB 設計書であり、人が読む体裁は台帳→文書の一方向機械生成で二重管理を避ける。
