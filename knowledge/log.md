@@ -2,6 +2,8 @@
 
 ## 2026-07-23
 
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 着地点宣言を3値化（独自既定/pleasanter標準/既存DB）。宣言は提案駆動で作成、既存DB分類は二重保存の検出器を兼ねる（時点保存列は例外）。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — メタ情報のみ Pleasanter 標準の混在構成と確定、ミニマッピングプロンプトを提供（対象は着地点宣言の閉包、必須フィールドに link と writer、二重管理検出と同期規則が本丸）。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 拡張HTML+独自テーブル構成の判明でマッピング不要に転回（翻訳層が存在しない、対応表は儀式）。代替は着地点宣言1枚+impl仕分け（責務分界）。教訓「成果物の要否はアーキテクチャの事実で決まる — 前提未確認の定石要求は儀式の発注」。
