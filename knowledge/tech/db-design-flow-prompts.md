@@ -233,10 +233,18 @@ process-design.yaml・existing-tables.md のパスのみ。編集禁止・報告
    - コードの対応は「現状の事実」であり「正しい設計」ではない。補正せずそのまま。
    - direction / source / sync はコードから断定できる場合のみ根拠行を引用して書き、
      断定できなければ「未確定」。推測で埋めるな。
-3. 突合報告: 抽出した対応のうち db-design.yaml・existing-tables.md のどちらにも
+3. 範囲フィルタ: 抽出した対応のうち、field が pleasanter-constraints.md の
+   標準項目に実在する行のみを meta-sync.yaml とせよ。それ以外
+   （拡張HTML と独自テーブル・既存DBの結線）は ui-binding.yaml に分けよ
+   （同期台帳の対象外だが、mjs↔設計台帳の突合用に保持する）。
+4. 突合報告: 抽出した対応のうち db-design.yaml・existing-tables.md のどちらにも
    現れない項目を「台帳外の対応」として列挙せよ。
-報告: constraints 抽出項目数 / 下書き行数（確定/未確定）/ 台帳外の対応 <件数>
+報告: constraints 抽出項目数 / meta-sync 行数 / ui-binding 行数（確定/未確定）/
+台帳外の対応 <件数>
 ```
+
+※範囲フィルタを忘れると、コードは台帳の範囲を知らないため全結線が
+meta-sync に流れ込み、検証で幽霊が数百件出る（2026-07-23 実測: 幽霊277）。
 
 # 6. source 未確定の一括トリアージ
 
