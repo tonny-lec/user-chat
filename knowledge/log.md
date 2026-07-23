@@ -2,6 +2,8 @@
 
 ## 2026-07-23
 
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — source 未確定の一括解消: 判別質問「導入後この値を書き続けるのは誰か」1つに帰着、3観測（mjs読み書き方向・process writes・existing usage）から提案駆動で。決定と mjs の矛盾リスト＝改修箇所一覧という副産物も。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — constraints はサイトパッケージ JSON から、同期台帳下書きは既存 mjs から抽出する方式に変更（機械成果物の典拠昇格）。コードから取れるのは What まで、正・方向・タイミングは人間が確定。台帳外の対応の検出と台帳↔mjs 突合の回帰チェック化も記録。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — メタ情報の源泉は大半が既存DBと判明、ミニマッピングを同期台帳に再定義（source/direction単一方向/sync/link、双方向は人間判断、同期はprocessとして新設を差分提案）。原則「正は1箇所・流れは1方向」「写す仕事は処理」。
