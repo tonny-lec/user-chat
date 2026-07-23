@@ -2,6 +2,8 @@
 
 ## 2026-07-23
 
+* **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — メタ情報の源泉は大半が既存DBと判明、ミニマッピングを同期台帳に再定義（source/direction単一方向/sync/link、双方向は人間判断、同期はprocessとして新設を差分提案）。原則「正は1箇所・流れは1方向」「写す仕事は処理」。
+
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — 着地点宣言を3値化（独自既定/pleasanter標準/既存DB）。宣言は提案駆動で作成、既存DB分類は二重保存の検出器を兼ねる（時点保存列は例外）。
 
 * **Update**: [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) — メタ情報のみ Pleasanter 標準の混在構成と確定、ミニマッピングプロンプトを提供（対象は着地点宣言の閉包、必須フィールドに link と writer、二重管理検出と同期規則が本丸）。
