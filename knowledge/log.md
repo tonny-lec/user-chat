@@ -2,6 +2,8 @@
 
 ## 2026-07-25
 
+* **Creation**: [hermes-agent の ChatGPT サブスクログイン実装 — codex exec ではなく OAuth 模倣の直接 API 呼び出し](/tech/hermes-agent-chatgpt-login.md) — NousResearch/hermes-agent の `openai-codex` プロバイダは Codex CLI の client_id を流用した自前 OAuth + `chatgpt.com/backend-api/codex` 直接呼び出し。サブプロセスは別系統 `codex app-server` のみで `codex exec` は不使用。サブスク対応エージェントの実装2択（CLI ラップ/OAuth 流用直叩き）の知見も記録。
+
 * **Update**: [superpowers プラグイン解剖 — 公開ハーネスの実例読み解き](/tech/superpowers-plugin-anatomy.md) — 続編: brainstorming(要件聞き出し)を深掘り。1問1答・選択式優先・スコープ判定先行の会話プロトコル、HARD-GATE と digraph 状態機械による強制、セルフ→ユーザー→サブエージェントの多層レビュー、visual companion(ファイルシステム経由の非同期対話チャネル、brainstorming 唯一のコード実装)。コンテキスト収集はコードでなく手順書 1 行、が核心の発見。
 
 ## 2026-07-24

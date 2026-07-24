@@ -2,6 +2,7 @@
 
 技術・開発ツール・AIエージェント活用に関する知見。
 
+* [hermes-agent の ChatGPT サブスクログイン実装 — codex exec ではなく OAuth 模倣の直接 API 呼び出し](/tech/hermes-agent-chatgpt-login.md) - NousResearch/hermes-agent の ChatGPT サブスクリプションログインは codex exec のサブプロセス呼び出しではなく、Codex CLI の OAuth client_id を流用して自前でトークンを取得し chatgpt.com/backend-api/codex を直接叩く実装。
 * [一発プロンプトに必要なのは完了条件＋「行き先」— きっかけの正体は遷移](/tech/one-prompt-workflow-transitions.md) - 「一回のプロンプトで作業を完了させるには完了条件だけでなく次工程のきっかけも要る」という直観の検討。きっかけは第3の要素ではなく完了条件に行き先を付けた遷移（edge）であり、トリガーは自分の記憶でなく成果物の状態に条件付ける（Makefile型）と迷子復帰・再開がタダで付く、と整理。
 * [LangGraph の概念 — チェックポイント付き BSP ループから全概念を導く](/tech/langgraph-concepts.md) - LangGraph の全概念を Pregel 由来の super-step ループ1個に還元した理解モデル。lets-langgraph の実コードで接地済み。
 * [ベーコンの4イドラをコーディングエージェントの制約に翻訳する](/tech/bacon-idols-as-agent-constraints.md) - 4イドラを「バイアスの住処」の分類（種族=アーキテクチャ共通・洞窟=個体とセッション・市場=言語IF・劇場=取り込んだ教義）として読み替え、住処ごとに制約文と機械的強制点を配線した対応表。LLMでは市場のイドラが他の3つの土台に来るという序列の強化が核。続編で制約から機構へ反転 — 失敗分類の語彙・来歴タグ・4レンズレビュー・洞窟の多様性設計に展開し、「語彙が先・道具が後」を推奨順とした。
