@@ -1164,5 +1164,27 @@ reads・writes・rule が焼き込み済み）/ 検証での突合確認。
 報告: 復旧経路（git | 逆再構成）/ 失われた差分 <件数> / 検証突合 <一致|差分あり>
 ```
 
+**複数消失時の全数復旧プロンプト:**
+
+```markdown
+誤削除の被害を全数確認してから復旧せよ。1件ずつ発見して直すことを禁ずる。
+1. 棚卸し: 以下の期待一覧と現状を突合し、存在 / 消失 の表を出せ:
+   requirements.md / items.md / existing-tables.md / db-design.yaml /
+   process-design.yaml / meta-sync.yaml / ui-binding.yaml / migration.yaml /
+   matrix-spec.md / questions.md / backlog.md / scan-scope.md /
+   scenario/ / rehearsal/ / verification/ / docs/design/
+2. git を確認: git status（追跡済みの削除は D で見える）と
+   git log --oneline -- <消失ファイル> を出力せよ。
+   追跡済みの削除分は git checkout で一括復元せよ（最も安い経路）。
+3. git に無い消失分だけ、依存順に再構成せよ:
+   a. process-design.yaml — docs/design/20-process.md（機械生成ビュー）と
+      backlog.md から逆再構成（各行に再構成元を注記）
+   b. scenario/*.sql — 復元済みの全台帳から再生成し、SQLite で実行確認
+   c. その他も生成元があるものは再生成、無いものは報告
+4. 復旧後、整合性スイープ（全層）を1回実行し、直近の全○と数字が一致するか
+   突合せよ。一致 = 完全復旧 / 差分 = 失われた変更として列挙。
+報告: 消失一覧 / 復旧経路の内訳（git 復元 / 再構成 / 再生成）/ スイープ判定
+```
+
 再発防止: 台帳ファイル群はマイルストーン（検証○・差分承認後）ごとに git
 コミットする — 誤削除を常に「checkout 1回」の事故にしておく。
