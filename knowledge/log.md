@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-07-25
+
+* **Update**: [superpowers プラグイン解剖 — 公開ハーネスの実例読み解き](/tech/superpowers-plugin-anatomy.md) — 続編: brainstorming(要件聞き出し)を深掘り。1問1答・選択式優先・スコープ判定先行の会話プロトコル、HARD-GATE と digraph 状態機械による強制、セルフ→ユーザー→サブエージェントの多層レビュー、visual companion(ファイルシステム経由の非同期対話チャネル、brainstorming 唯一のコード実装)。コンテキスト収集はコードでなく手順書 1 行、が核心の発見。
+
 ## 2026-07-24
 
 * **Creation**: [一発プロンプトに必要なのは完了条件＋「行き先」— きっかけの正体は遷移](/tech/one-prompt-workflow-transitions.md) — 「きっかけ」は完了条件と独立の第3要素でなく、完了条件に行き先を付けた遷移（成功・失敗・不明の3方向）。トリガーは記憶でなく成果物の状態に条件付ける Makefile 型が長い自律実行で壊れない。一発プロンプト＝遷移表を知識層に畳み込んだ縮退版ワークフロー。
