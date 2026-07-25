@@ -2,6 +2,8 @@
 
 ## 2026-07-25
 
+* **Creation**: [hermes-agent / pi / Archon 比較 — 3つは競合ではなくスタックの別の層](/tech/hermes-pi-archon-comparison.md) — 3並列サブエージェント調査＋GitHub API スポットチェックで作成。hermes（自己改善する常駐パーソナルエージェント・データフライホイール動機）/ pi（最小主義・MCP 拒否・自己拡張）/ Archon（YAML ワークフローでエージェントを部品化する harness builder）。Archon が pi を統合、OpenClaw が pi 上に構築という相互関係と「出自が設計思想を予言する」の一般化を記録。
+
 * **Creation**: [プロジェクト単位で Claude Code のモデルを固定する — /model はグローバルに書く](/tech/per-project-model-default.md) — /model はグローバル設定に保存される事実と、プロジェクト側 .claude/settings.json の model + effortLevel で上書きする手順、元の値の復元手がかり（settings.json.bak / ~/.claude.json の履歴 / fallbackModel）を Playbook 化。user-chat に fable[1m]+high を適用した実例つき。
 
 * **Creation**: [hermes-agent の ChatGPT サブスクログイン実装 — codex exec ではなく OAuth 模倣の直接 API 呼び出し](/tech/hermes-agent-chatgpt-login.md) — NousResearch/hermes-agent の `openai-codex` プロバイダは Codex CLI の client_id を流用した自前 OAuth + `chatgpt.com/backend-api/codex` 直接呼び出し。サブプロセスは別系統 `codex app-server` のみで `codex exec` は不使用。サブスク対応エージェントの実装2択（CLI ラップ/OAuth 流用直叩き）の知見も記録。

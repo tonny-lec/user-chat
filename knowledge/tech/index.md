@@ -2,6 +2,7 @@
 
 技術・開発ツール・AIエージェント活用に関する知見。
 
+* [hermes-agent / pi / Archon 比較 — 3つは競合ではなくスタックの別の層](/tech/hermes-pi-archon-comparison.md) - NousResearch hermes-agent（自己改善する常駐パーソナルエージェント）、badlogic の pi（最小主義の自己拡張コーディングハーネス）、coleam00 の Archon（エージェントを部品として編成するワークフローエンジン）の比較。3者は同一カテゴリの競合ではなく層が違い、Archon は pi を実際にプロバイダとして取り込んでいる。
 * [hermes-agent の ChatGPT サブスクログイン実装 — codex exec ではなく OAuth 模倣の直接 API 呼び出し](/tech/hermes-agent-chatgpt-login.md) - NousResearch/hermes-agent の ChatGPT サブスクリプションログインは codex exec のサブプロセス呼び出しではなく、Codex CLI の OAuth client_id を流用して自前でトークンを取得し chatgpt.com/backend-api/codex を直接叩く実装。
 * [一発プロンプトに必要なのは完了条件＋「行き先」— きっかけの正体は遷移](/tech/one-prompt-workflow-transitions.md) - 「一回のプロンプトで作業を完了させるには完了条件だけでなく次工程のきっかけも要る」という直観の検討。きっかけは第3の要素ではなく完了条件に行き先を付けた遷移（edge）であり、トリガーは自分の記憶でなく成果物の状態に条件付ける（Makefile型）と迷子復帰・再開がタダで付く、と整理。
 * [LangGraph の概念 — チェックポイント付き BSP ループから全概念を導く](/tech/langgraph-concepts.md) - LangGraph の全概念を Pregel 由来の super-step ループ1個に還元した理解モデル。lets-langgraph の実コードで接地済み。
