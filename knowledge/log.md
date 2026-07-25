@@ -2,6 +2,8 @@
 
 ## 2026-07-25
 
+* **Creation**: [「均一＝無秩序、不均一＝秩序」— 自己組織化とエントロピーの直感修正](/thinking/self-organization-and-order.md) — 「不均一な状態が秩序立っている」への違和感を解消。日常語の秩序(均一=整然)と科学の秩序(構造=区別がつくこと)の混線が原因、情報量アンカーで読み替え(秩序=情報がある/区別がつく)。コーヒーの均一化=エントロピー最大、自己組織化は開いた系でのみ均一から構造が湧く=第二法則と非矛盾。既存の[操作的分解](/thinking/uncertainty-reduction-as-operations.md)の工学的「秩序を作る」と「秩序=系が取りうる状態数の削減」で接続・相互リンク。
+
 * **Creation**: [hermes-agent / pi / Archon 比較 — 3つは競合ではなくスタックの別の層](/tech/hermes-pi-archon-comparison.md) — 3並列サブエージェント調査＋GitHub API スポットチェックで作成。hermes（自己改善する常駐パーソナルエージェント・データフライホイール動機）/ pi（最小主義・MCP 拒否・自己拡張）/ Archon（YAML ワークフローでエージェントを部品化する harness builder）。Archon が pi を統合、OpenClaw が pi 上に構築という相互関係と「出自が設計思想を予言する」の一般化を記録。
 
 * **Creation**: [プロジェクト単位で Claude Code のモデルを固定する — /model はグローバルに書く](/tech/per-project-model-default.md) — /model はグローバル設定に保存される事実と、プロジェクト側 .claude/settings.json の model + effortLevel で上書きする手順、元の値の復元手がかり（settings.json.bak / ~/.claude.json の履歴 / fallbackModel）を Playbook 化。user-chat に fable[1m]+high を適用した実例つき。
