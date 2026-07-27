@@ -1,5 +1,11 @@
 # Directory Update Log
 
+## 2026-07-28
+
+* **Creation**: [「LLMは本当はもっと賢く、制限で抑えられている」仮説の検討](/tech/hidden-capability-hypothesis.md) — 仮説を「能力上限の隠蔽(A)」と「発揮を妨げる冗長(B)」に分割。A は機構的に不成立（タスク保持・指示追従自体がポストトレーニングの産物で、外すと自由度が増え事実3により平均へ回帰）、手元の Sol 2,660行の内訳が反証になっていることを確認。実測された alignment tax は較正と出力多様性に限定され、これは事実8の起源説明になる。B は実在するが全て「指定の追加」で解ける正規の栓に整理。結論は「外すべきハーネスは自分側の死んだ層」への転回。
+
+* **Update**: [LLM の構造的事実9つとハーネス設計レバーへの配線](/tech/llm-structural-facts-to-harness-levers.md) — 事実8の機構欄に較正劣化の起源（RLHF の副作用、GPT-4 システムカード）と alignment tax の範囲限定を追記。
+
 ## 2026-07-27
 
 * **Creation**: [LLMシステムプロンプトの抽出アーカイブ — asgeirtj/system_prompts_leaks](/tech/llm-system-prompt-archives.md) — gpt-5.6-luna / sol のシステムプロンプトを知りたいという質問への調査結果。コミュニティ抽出リポジトリに Sol（extra-high）のみ収録・Luna は未収録と確認し、Sol プロンプトの構造（SKILL.md 方式・4チャンネル制・Juice・広告応答定型など）をメモ化。
