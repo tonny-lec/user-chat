@@ -1366,3 +1366,54 @@ reads・writes・rule が焼き込み済み）/ 検証での突合確認。
 
 再発防止: 台帳ファイル群はマイルストーン（検証○・差分承認後）ごとに git
 コミットする — 誤削除を常に「checkout 1回」の事故にしておく。
+
+**git 管理外の場合の復旧（2026-07-27 実測: 台帳が git の無い場所に生成されて
+いた — 安全網の前提が環境と食い違う穴）**: git 経路は使えないので、
+実体探索（ごみ箱・.bak・エディタ履歴）→ 導出物からの逆再構成の順。
+逆再構成の根拠は使用審問○の実績（全列がどこかの reads/writes に現れる）。
+
+```markdown
+db-design.yaml を誤削除した。この場所は git 管理外である — git による復元は
+不可能なので試みるな。以下の順で復旧せよ。
+
+0. 実体の探索: ごみ箱・エディタのバックアップ（.bak・自動保存・ローカル
+   履歴）・一時フォルダに db-design.yaml の実体が残っていないか探せ。
+   見つかればそれを復元し、手順3へ進め。
+1. 素材の棚卸し: 以下の存在を確認し、存在するものを列挙せよ:
+   docs/design/ の生成済み設計書（10-database.md 等）/ scenario/*.sql /
+   process-design.yaml / migration.yaml / meta-sync.yaml / items.md /
+   existing-tables.md / speculative 採否・未確定決定の記録 /
+   requirements.md（DEC・スコープ宣言）
+2. 逆再構成: 存在する素材から db-design.yaml を再構成せよ。優先順:
+   - 骨格（テーブル・列・型・必須・store）: 10-database.md があればそれが
+     最良（機械生成ビューであり内容は台帳と一致していた）。無ければ
+     migration.yaml（store: 独自 の全列を網羅）と process-design.yaml の
+     reads/writes・scenario/*.sql から列を全数復元せよ
+     （使用審問○の実績により、全列はどこかの reads/writes に現れる）。
+   - evidence: 90-traceability.md（REQ→テーブル.列）と items.md から復元。
+     復元できない要素は evidence を空欄にせず
+     evidence: {lost: 再構成} と注記せよ（後で人間が埋める目印）。
+   - 各行に再構成元（どのファイルから復元したか）を注記せよ。
+3. 検証: 復旧後、順トレースと削除審問を1回実行し、直近の検証結果の数字
+   （missing 0 / 削除提案 0 等）と一致するか突合せよ。
+   一致 = 復旧完了 / 差分 = 失われた変更として列挙せよ。
+   さらに DDL を SQLite で実行し、scenario/*.sql が全件通ることを確認せよ。
+
+報告: 復旧経路（実体発見 | 逆再構成）/ 素材の棚卸し / 失われた差分 <件数> /
+検証突合 <一致 | 差分あり> / DDL・scenario <結果>
+```
+
+**再発防止（復旧後に実行）**: 根本原因は誤削除でなく、台帳が安全網の外に
+生成されていること。
+
+```markdown
+台帳ファイル群（requirements.md / items.md / existing-tables.md /
+db-design.yaml / process-design.yaml / meta-sync.yaml / ui-binding.yaml /
+migration.yaml / questions.md / backlog.md / scenario/ / docs/design/ 等）が
+git 管理外の場所にある。以下を実行せよ:
+1. 台帳ディレクトリで git init し、全台帳をコミットせよ（既存リポジトリの
+   配下に移動できるならそちらでもよい — どちらが可能か先に報告して人間の
+   指示を待て）。
+2. 以後、検証○・差分承認のマイルストーンごとにコミットする運用とする。
+報告: 選んだ方式 / 初回コミットの対象ファイル数
+```
