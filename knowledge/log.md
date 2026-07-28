@@ -2,6 +2,8 @@
 
 ## 2026-07-28
 
+* **Update**: [台帳整合性チェッカー集](/tech/ledger-consistency-checks.md) — C7 の×の閉じ方を追記: 幽霊参照が「使う項目」の場合、参照削除での解消は最安の逃げ道として禁止。3分類（表記ゆれ=実名へ / db-design 列不足=DB差分提案・evidence 必須 / existing-tables カタログ不足=実在確認して追記）→○×カード→反映→C7 再実行、列追加時は C3 を該当分のみ再確認。
+
 * **Update**: [台帳整合性チェッカー集](/tech/ledger-consistency-checks.md) / [本編・運用コスト考](/tech/db-design-validation-from-requirements.md) — スコープを絞る理由を追記（ユーザー実測: 大プロンプトの繰り返しでトークン消費が激増）: 利点はトークン・精度（逃げ道の余地減）・再実行（×の辺だけ）の3軸。以後スコープ絞りが既定。
 
 * **Creation**: [台帳整合性チェッカー集 — requirements から順に、辺ごとの専用プロンプト](/tech/ledger-consistency-checks.md) - ユーザー要望「大きな1プロンプトでなく対象を絞った専用プロンプト集がほしい」。整合性スイープを依存グラフの辺ごとに分解した C1〜C13（req 健全性 / items / 順トレース+審問 / item トレース / external / カバレッジ / 使用審問 / 同期 / 移行 / scenario / acceptance / backlog / docs）。共通規律: 読むだけ・母数報告必須（母数0の○無効）・上流から実行。
