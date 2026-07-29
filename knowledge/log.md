@@ -2,6 +2,8 @@
 
 ## 2026-07-29
 
+* **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — 次点プロンプト「view と実装の不整合の裁定」を追加: 動作確認中に1件発見（列が view に無い or 実装の参照先誤り）。view の SELECT は復旧時 scenario 導出のため導出漏れの線が濃いが、裁定は実装と view の直接比較でなく台帳（process-design reads・db-design view 定義）を正に 3分岐（view 差分 / 実装修正 / 記載曖昧→決定待ち）。PROC-3 調査と並行可。
+
 * **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — いま打つ1本を PROC-3 の procedure エラー調査に上書き: DDL はテーブル・ビュー・制約のみでプロシージャは台帳外、という構造背景を踏まえ、エラー実物→定義の所在全検索→3分類（未適用/どこにも無い=発明禁止で○×/方言不整合）。
 
 * **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — いま打つ1本を仕様順（job 先行）に上書き: job が Pleasanter レコードを生成する依存があるため、job 実行（生成件数）→レコードを開いて画面表示→保存1件の順に並べ替え。
