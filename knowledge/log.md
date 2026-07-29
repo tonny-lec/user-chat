@@ -2,6 +2,8 @@
 
 ## 2026-07-30
 
+* **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — 実測: job○だが画面✗保存✗の原因は「レコードを作る job を実行していない」。いま打つ1本を「レコード生成 job の特定（Pleasanter 側 field を writes に持つ同期 PROC を台帳から特定）→実行→画面→保存の続き」に上書き。
+
 * **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — job エラーの実測: null=c（復旧導出過誤 — SQLite の暗黙自動採番が PostgreSQL 復元で落ちた identity 欠落、○推奨）/ TypeError の正体は TLS 証明書検証失敗（local bridge 経路で回避 — 経路は環境値集約へ、本番経路疎通は要実機確認リストへ）。いま打つ1本を「承認処置の適用と動作確認再開」に上書き。
 
 ## 2026-07-29
