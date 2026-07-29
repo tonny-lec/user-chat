@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-07-30
+
+* **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — job エラーの実測: null=c（復旧導出過誤 — SQLite の暗黙自動採番が PostgreSQL 復元で落ちた identity 欠落、○推奨）/ TypeError の正体は TLS 証明書検証失敗（local bridge 経路で回避 — 経路は環境値集約へ、本番経路疎通は要実機確認リストへ）。いま打つ1本を「承認処置の適用と動作確認再開」に上書き。
+
 ## 2026-07-29
 
 * **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — いま打つ1本を job エラー2種の調査に上書き: null value は制約外し禁止の下、required の実測根拠（items 空欄率）と値の出所を突合して3分岐（渡し忘れ=即修正/源泉が空=required 再検討 or 補完で○×/復旧導出過誤=差分提案）。TypeError は型変換表と整合必須（矛盾する修正禁止、表の誤りは表を直す）。
