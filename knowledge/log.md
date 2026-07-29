@@ -2,6 +2,8 @@
 
 ## 2026-07-29
 
+* **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — いま打つ1本を job エラー2種の調査に上書き: null value は制約外し禁止の下、required の実測根拠（items 空欄率）と値の出所を突合して3分岐（渡し忘れ=即修正/源泉が空=required 再検討 or 補完で○×/復旧導出過誤=差分提案）。TypeError は型変換表と整合必須（矛盾する修正禁止、表の誤りは表を直す）。
+
 * **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — PROC-3・view 不整合とも○で修正済み。いま打つ1本を動作確認（対象名指し・job 先行版）に戻し、通しの再実行へ。
 
 * **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — 次点プロンプト「view と実装の不整合の裁定」を追加: 動作確認中に1件発見（列が view に無い or 実装の参照先誤り）。view の SELECT は復旧時 scenario 導出のため導出漏れの線が濃いが、裁定は実装と view の直接比較でなく台帳（process-design reads・db-design view 定義）を正に 3分岐（view 差分 / 実装修正 / 記載曖昧→決定待ち）。PROC-3 調査と並行可。
