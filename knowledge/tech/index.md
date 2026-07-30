@@ -20,6 +20,7 @@
 * [構築モード — 製品完成優先の第3モードとそのプロンプト](/tech/build-mode-prompts.md) - 測定・確定に続く第3モード。動くこと最優先・決定はユーザーが実機で直接・目標単位1本渡し・台帳はマイルストーンごとに実物から逆生成。垂直スライスと後追い記録のプロンプトを収録。
 * [要件→DB→処理→実装フローのプロンプト集（実行順・現行版のみ）](/tech/db-design-flow-prompts.md) - DB設計〜E2Eフローで実際に使っている全プロンプトの現行版全文を実行順に配置。経緯と原理は db-design-validation-from-requirements.md 側、こちらは実行用の写経元。
 * [Codex × Playwright MCP による E2E テスト自動化](/tech/playwright-codex-e2e-automation.md) - Pleasanter 案件の acceptance TEST を Codex＋Playwright MCP で自動化する構成の調査。Playwright Test Agents（planner/generator/healer）が Codex を公式サポート。生成と修理だけエージェント、実行は決定的に。
+* [シナリオテスト＋不変条件の二層受け入れ検証 — 過程でなくあるべき姿を検証する](/tech/invariant-scenario-acceptance.md) - 細かい修正の高速回転で実装がバグまみれにならないための構図。SCEN（終状態のみ判定の事例ベース）と INV（0件であるべきSQL＝禁止状態の網）の二層に acceptance を再編し、修正のたび INV・ゲートで SCEN の2速運転にする。
 * [要件定義書からの DB 設計 — 3述語の検証機構と「生成1回＋検証3層」フロー](/tech/db-design-validation-from-requirements.md) - Codex が要件から過剰規模の DB 設計を出す問題。妥当性を「不足なし・過剰なし・実際に回る」の3述語に分解し、根拠タグ付き台帳・削除審問（別セッション adversarial）・DDL 実行検証の3機構と、規模述語をプロンプトに書く予防で解く。続編で3機構をパイプラインに配線 — 生成2段（エンティティ台帳→物理設計）・人間判断点2箇所・fail 時の戻り先定義・失敗のプロンプト還元ループ。
 * [DB とリポジトリからの設計書・ドメイン抽出 — 復元できるのは What であって Why ではない](/tech/design-doc-extraction-from-db-and-code.md) - ドキュメントなし現場でローカルDB+既存リポジトリから Codex に設計書・ドメインを抽出させる相談。抽出可能性を3層（機械確定・実データで確定・原理的に復元不能）に分け、成果物を証拠タグ付き台帳として構成、推測タグ一覧を仮説提示型質問リストに変換して回収するループに落とした。
 * [Dify + dbt で BI グラフは作れるか — 会話型アドホック分析なら◎、常設ダッシュボードなら✕](/tech/dify-dbt-bi-charts.md) - 2つは直接連携しない。dbtがマートと指標定義を整え、DifyがNL→SQL→ECharts描画の会話UIを担う分業なら成立。ダッシュボード用途はdbtネイティブBI（Lightdash等）が正解。

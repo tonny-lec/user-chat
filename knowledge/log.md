@@ -2,6 +2,8 @@
 
 ## 2026-07-30
 
+* **Creation**: [シナリオテスト＋不変条件の二層受け入れ検証](/tech/invariant-scenario-acceptance.md) - ユーザー構想（シナリオテスト＋「こうなってはいけない」制約、過程でなくあるべき姿の検証）を SCEN＋INV の二層に同定。判定は終状態と不変条件のみ（過程を検証しないからテストが修正で壊れない）、INV は台帳から抽出した「0件であるべき SQL」、修正のたび INV・ゲートで SCEN の2速運転。資料反映もれは DoD 1行＋ゲートスイープの別機構。INV 抽出の導入プロンプト案を収録（投入は #4c 再実行後）。
+
 * **Creation**: [Codex × Playwright MCP による E2E テスト自動化](/tech/playwright-codex-e2e-automation.md) - Pleasanter 案件の acceptance TEST を Codex＋Playwright MCP で自動化する構成の調査。Playwright Test Agents（planner/generator/healer）が Codex を公式サポート（--loop=codex）。planner は acceptance.md からの変換で簡略化、生成と修理だけエージェント・実行は npx playwright test の決定的実行、DB 状態突合込みの2層 assert、healer に台帳を正とする規律。導入プロンプト案を収録（キュー投入は #4c 再実行後）。
 
 * **Update**: [agentic-project-ops の汎用化](/tech/agentic-project-ops-generalization.md) - v2 実装完了を追記（21コミット、core 6 + profiles/db-ledger 5 の二層構成）。実装=codex exec / レビュー=文脈なし Claude の生成・判定分離で9タスク完走、fix round 各1回以内。裁定2件（mv-only vs 参照修正 / 計画の古い対応表）と次版 TODO を記録。
