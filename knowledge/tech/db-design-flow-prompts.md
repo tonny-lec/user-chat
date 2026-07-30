@@ -53,6 +53,10 @@ site id は設計値ではなく環境値である。id の相違を理由に TE
 3. 全○になったら: #5 構築の締め（台帳同期・仮決め回収・backlog 確定・
    引き渡しセット）
 
+並行トラック候補（TEST 再実行が回った後に1本立てる）:
+[Codex × Playwright MCP による E2E テスト自動化](/tech/playwright-codex-e2e-automation.md)
+— acceptance TEST-xx を Playwright spec に恒久化（導入プロンプト案は同文書内）。
+
 運用: 実行は常に「チャットで直近に指定された1本」だけ。ファイル内の
 過去の続報プロンプト群（#4c-0a/0b 等）は履歴であり、指定されない限り
 打たない。

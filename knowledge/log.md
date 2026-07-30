@@ -2,6 +2,8 @@
 
 ## 2026-07-30
 
+* **Creation**: [Codex × Playwright MCP による E2E テスト自動化](/tech/playwright-codex-e2e-automation.md) - Pleasanter 案件の acceptance TEST を Codex＋Playwright MCP で自動化する構成の調査。Playwright Test Agents（planner/generator/healer）が Codex を公式サポート（--loop=codex）。planner は acceptance.md からの変換で簡略化、生成と修理だけエージェント・実行は npx playwright test の決定的実行、DB 状態突合込みの2層 assert、healer に台帳を正とする規律。導入プロンプト案を収録（キュー投入は #4c 再実行後）。
+
 * **Update**: [agentic-project-ops の汎用化](/tech/agentic-project-ops-generalization.md) - v2 実装完了を追記（21コミット、core 6 + profiles/db-ledger 5 の二層構成）。実装=codex exec / レビュー=文脈なし Claude の生成・判定分離で9タスク完走、fix round 各1回以内。裁定2件（mv-only vs 参照修正 / 計画の古い対応表）と次版 TODO を記録。
 
 * **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — #4c 初回が空振り（実測: site id 相違を理由に TEST 全✗・全項目実機送り）。原因は Pleasanter 仕様の未把握 — site id はインポート時採番で指定不可＝環境値。いま打つ1本を「id 対応表→環境値結線→再仕分け→TEST 再実行」に上書きし、共通規律に「site id は環境値」を恒久追加。ローカル検証の目的（実機確認の最小化）と挙証責任の向き（つかない側が名指しで挙証）もプロンプトに明文化。
