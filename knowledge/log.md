@@ -2,6 +2,8 @@
 
 ## 2026-07-30
 
+* **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — 実測: Pleasanter 連携の修正が通った（見立てに基づく修正プロンプトで解消）。いま打つ1本を #4c ローカル検証キャンペーンに上書き — インポート済みのためリハーサルを「実施操作と手順書の突合」に差し替え、TEST ✗はその場修正禁止（個票で全件回し切り、仕分けは次の1本）。
+
 * **Update**: [agentic-project-ops の汎用化](/tech/agentic-project-ops-generalization.md) - 案A確定＋knowledge 統合を追記: Explore 2体で knowledge/ を掃引し約26文書を設計へ配線（ナレッジ源泉マップ33行をスペックに収録）。契約3要素・P/J/W 型 DoD・仮説提示型質問・状態マトリクス・MTTR≒0 など。スポットチェック3/3合格。
 
 * **Creation**: [agentic-project-ops の汎用化](/tech/agentic-project-ops-generalization.md) - パッケージを型を問わない汎用形に育てる相談の記録。ギャップ分析4点（要件定義フェーズの欠落 / E2E実行・受入判定の薄さ / DB台帳語彙への結合 / 外部利用契約の未整備）と3案比較。推奨は案A（core/契約カタログ＋汎用フェーズプロンプト、profiles/db-ledger/ に現行資産を移設）。ユーザー選択待ちの中間記録。
