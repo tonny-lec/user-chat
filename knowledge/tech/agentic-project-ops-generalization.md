@@ -52,9 +52,31 @@ timestamp: 2026-07-30T12:00:00+09:00
 
 # 結論
 
-案A（コア/プロファイル二層化）を推奨として提示。ユーザーの選択待ち
-（本記録時点で未確定 — 確定後にこの文書を更新し、設計はパッケージ側の
-リポジトリに正本を置く）。
+案A（コア/プロファイル二層化）で確定（ユーザー承認済み）。設計の正本は
+`agentic-project-ops/docs/specs/2026-07-30-core-profile-split-design.md`。
+
+**knowledge 資産の統合（ユーザー要望「user-chat のナレッジ資料を活かした設計に」）**:
+Explore サブエージェント2体（契約・検証・復旧系 / フェーズ系）で knowledge/ を
+掃引し、約26文書の知見を設計へ配線した。スペックに「ナレッジ源泉マップ」
+（部品×源泉×採ったもの、33行）を収録 — 実装時はマップ記載の文書を一次資料と
+して参照する（発明しない）。主な配線:
+
+- 契約カタログ: 完了述語・境界・逃げ道の3要素（[gpt-5.6 実測](/tech/gpt-56-prompting-essence.md)）、
+  DoD の P/J/W 型分類と J型片側検定（[同時進行フロー](/tech/concurrent-req-design-impl-flow.md)）、
+  機械の証拠とモデルの申告の分離（[観測→制御](/tech/observation-control-mapping.md)）、
+  外部利用契約は許可リストでなく断面のカタログ化（[閉域ループ](/tech/closed-network-agent-dev-loop.md)）
+- 00-requirements: 仮説提示型質問・考慮不足5分類（[高速ドメイン把握](/work/rapid-domain-onboarding.md)）、
+  引き継ぎテスト完成判定（[業務プロセス構造化](/tech/business-process-structuring-for-llm.md)）、
+  マスク再導出による穴検出（[Excel構造化](/tech/excel-data-structuring-for-ai.md)）
+- 30-e2e: 状態マトリクスと合格の凍結（[UI検証ループ](/tech/ai-ui-verification-loop.md)）、
+  台帳×突合の4値状態（[トレーサビリティ検証](/tech/excel-to-web-traceability-verification.md)）、
+  N回×率（[evals](/tech/evals-for-practitioners.md)）
+- 90-recovery: 保全→無変更再実行→尋問→3分岐→1変数（[プロンプト習熟の階段](/tech/prompting-mastery-ladder.md)）、
+  MTTR≒0（[バースト実行設計](/self/burst-execution-design.md)）
+
+見送り（次版へ）: 来歴4タグ全面移行・NFR レーン・反例バケツ。
+サブエージェント報告はスポットチェック3/3合格（逃げ道 8/8→0/5・P/J/W・
+skipped+reason 必須、原典一致）。
 
 # Citations
 

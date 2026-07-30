@@ -2,6 +2,8 @@
 
 ## 2026-07-30
 
+* **Update**: [agentic-project-ops の汎用化](/tech/agentic-project-ops-generalization.md) - 案A確定＋knowledge 統合を追記: Explore 2体で knowledge/ を掃引し約26文書を設計へ配線（ナレッジ源泉マップ33行をスペックに収録）。契約3要素・P/J/W 型 DoD・仮説提示型質問・状態マトリクス・MTTR≒0 など。スポットチェック3/3合格。
+
 * **Creation**: [agentic-project-ops の汎用化](/tech/agentic-project-ops-generalization.md) - パッケージを型を問わない汎用形に育てる相談の記録。ギャップ分析4点（要件定義フェーズの欠落 / E2E実行・受入判定の薄さ / DB台帳語彙への結合 / 外部利用契約の未整備）と3案比較。推奨は案A（core/契約カタログ＋汎用フェーズプロンプト、profiles/db-ledger/ に現行資産を移設）。ユーザー選択待ちの中間記録。
 
 * **Update**: [プロンプト駆動プロジェクト運用マニュアル（汎用版）](/tech/prompt-driven-project-ops.md) — パッケージ分離（ユーザー要望）: 汎用部分を独立リポジトリ agentic-project-ops/ に抽出（README/TEMPLATE/prompts 4本 — 設計・構築・チェッカー・トラブルシュート、計6ファイル）。案件固有の実測・続報は knowledge 側に記録として残し、以後の汎用改善はパッケージ側が正。TEMPLATE に反省会の主結論（契約・DoD・証拠、○×カード成立条件）を標準形として収録。
