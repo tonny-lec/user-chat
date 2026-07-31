@@ -2,6 +2,8 @@
 
 ## 2026-07-31
 
+* **Update**: [Codex サブエージェントのライフサイクル](/tech/codex-subagent-lifecycle.md) - AGENTS.md オーケストレーション方針ブロック（現行版）を Examples に追加。hook なし・プロンプト層のみの運用（本人の選択）。スレッド選択規律（新タスク=spawn / followup=同一タスクの続きのみ / 完了で close）・委譲文自己完結・要約報告・並列 spawn の5則。model/effort は TOML 側、hook 層は違反を体感してから。
+
 * **Update**: [Codex サブエージェントのライフサイクル](/tech/codex-subagent-lifecycle.md) - ユーザーの実観測（呼び出し時のセッションID指定）の指摘を受け初稿を訂正: multi-agent v2 は6プリミティブ（spawn_agent/send_message/followup_task/wait_agent/list_agents/close_agent）を持ち、followup_task で既存スレッドへ ID 指定タスク追加＝コンテキスト蓄積が実在する。再利用は機構の強制でなく親モデルの実行時判断で、放置すると再利用（楽な縮退解）に寄る。処方を「新タスクは spawn_agent・followup_task は同一タスクの続きに限定・完了で close」の AGENTS.md 明文化＋SubagentStart hook での違反観測に更新。
 
 * **Creation**: [Codex サブエージェントのライフサイクル](/tech/codex-subagent-lifecycle.md) - 「使い回しでコンテキストが混ざる」懸念を公式ドキュメントで事実確認。TOML は configuration layer（役割テンプレート）で親履歴非継承。Claude Code 比較表と実践ポイント（委譲文自己完結・TOML への model/effort 焼き込み等）を記録。
