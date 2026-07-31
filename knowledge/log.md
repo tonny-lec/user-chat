@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-07-31
+
+* **Creation**: [Codex サブエージェントのライフサイクル](/tech/codex-subagent-lifecycle.md) - 「使い回しでコンテキストが混ざる」懸念を公式ドキュメントで事実確認。TOML は configuration layer（役割テンプレート）で、委譲ごとに新規 thread spawn・親履歴非継承・完了で close・再開機構なし — 理想の運用はネイティブ挙動そのもの。Claude Code 比較表と実践5点（委譲文自己完結・1委譲1仕事・TOML への model/effort 焼き込み・完了スレッド close・往復はファイル引き継ぎ）を記録。
+
 ## 2026-07-30
 
 * **Creation**: [シナリオテスト＋不変条件の二層受け入れ検証](/tech/invariant-scenario-acceptance.md) - ユーザー構想（シナリオテスト＋「こうなってはいけない」制約、過程でなくあるべき姿の検証）を SCEN＋INV の二層に同定。判定は終状態と不変条件のみ（過程を検証しないからテストが修正で壊れない）、INV は台帳から抽出した「0件であるべき SQL」、修正のたび INV・ゲートで SCEN の2速運転。資料反映もれは DoD 1行＋ゲートスイープの別機構。INV 抽出の導入プロンプト案を収録（投入は #4c 再実行後）。
