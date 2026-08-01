@@ -76,3 +76,4 @@
 * [Excel→Web 移行の網羅性検証 — 逆参照の欠如は「台帳＋契約＋突合」に還元する](/tech/excel-to-web-traceability-verification.md) - SheetLens の弱点「Web→Excel の参照がなく移行の検証ができない」の相談。検証を網羅性と挙動等価性に分離し、前者を決定的ID台帳(elements.json)・Web側契約(sheetlens-trace.yaml)・突合コマンド(verify)の3点で解く設計に落とした。
 * [Excel業務のWeb化における状態モデリング](/tech/state-modeling-for-excel-to-web.md) - Excelの暗黙状態を明示化する7ステップ — 実データからの状態逆算、遷移表レビュー、直交分解、導出状態の非保存、名前付き遷移操作、UI判定の一元化、例外遷移の事前設計。
 * [セマンティックレイヤー・オントロジー・dbt — 三層データ基盤×AI活用での位置づけ](/tech/semantic-layer-ontology-dbt.md) - 3つの道具はスタックの別の高さにある別物。dbtは三層を作るビルドツール、セマンティックレイヤーは指標定義のSQLコンパイラ、オントロジーは業務エンティティのグラフ。text-to-SQLの推測を上から順に潰す装置として整理。
+* [Fable→GPT 委譲が高品質な理由 — Fable 本人の証言による仮説の判定](/tech/fable-gpt-delegation-testimony.md) - ChatGPT が立てた8仮説（指示変換・監督ループ・選別など）を Fable 本人が機構/行動/検証不能に切り分けて判定。適応ループは実在せずワンショットが基本、品質の源は機構が強制する文脈再コンパイルと破棄コストの安さ。

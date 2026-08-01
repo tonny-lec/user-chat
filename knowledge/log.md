@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-08-01
+
+* **Creation**: [Fable→GPT 委譲が高品質な理由](/tech/fable-gpt-delegation-testimony.md) - 「Fable が GPT を呼ぶと高品質」現象への ChatGPT 8仮説を Fable 本人が判定。コンテキスト分離・指示変換は機構の強制（技能でない）、適応的監督ループは誤り（ワンショットが実態）、見落としは破棄コストゼロと並列比較。検証は A〜D 実験より先に実トレース読解（C条件は即実施可能）。
+
 ## 2026-07-31
 
 * **Update**: [Codex サブエージェントのライフサイクル](/tech/codex-subagent-lifecycle.md) - AGENTS.md オーケストレーション方針ブロック（現行版）を Examples に追加。hook なし・プロンプト層のみの運用（本人の選択）。スレッド選択規律（新タスク=spawn / followup=同一タスクの続きのみ / 完了で close）・委譲文自己完結・要約報告・並列 spawn の5則。model/effort は TOML 側、hook 層は違反を体感してから。
