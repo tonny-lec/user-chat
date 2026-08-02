@@ -24,7 +24,7 @@ timestamp: 2026-08-03T00:00:00+09:00
 | compaction のブロック | exit code 2 または `{"decision": "block"}` | `{"continue": false}` で停止。`decision:block`/exit 2 は**意図的に非サポート**（PR の Out of Scope） |
 | 要約への介入 | PreCompact の `hookSpecificOutput.additionalContext` で compact 指示に追加可能 | **不可**。要約内容・プレビュー・カスタム指示はフックに渡されない（明示的にスコープ外） |
 | 入力ペイロード | `session_id`, `transcript_path`, `cwd`, `permission_mode`, `hook_event_name`, `compaction_trigger` | `session_id`, `turn_id`, `subagent`, `cwd`, `transcript_path`, `model`, `trigger` |
-| PostCompact | ブロック不可。ログ・クリーンアップ・additionalContext 再注入用 | 同じく副作用専用 |
+| PostCompact | ブロック不可。stdin に `compact_summary`（生成要約の全文）を受領 — 要約の観測が可能 | 副作用専用。要約本文は渡されない |
 | SessionStart の compact ソース | あり（matcher `compact`、v2.1.214+） | あり |
 | 設定場所 | settings.json | `~/.codex/hooks.json` / `<repo>/.codex/hooks.json` / config.toml `[hooks]`（Claude Code の設計をほぼ踏襲） |
 
@@ -49,13 +49,22 @@ timestamp: 2026-08-03T00:00:00+09:00
 前提の整理: Codex の additionalContext 不在は「未実装」ではなく PR #19905 の Out of Scope で
 **明示的に拒否**されたもの。問うべきは「なぜ後回しか」ではなく「なぜ断ったか」。
 
-**中心仮説 — hooks の設計不変条件**: Codex hooks は「観測と拒否権」のシステムであり、
-モデルコンテキストへの書き込み権を持たない。PreCompact で `decision:block`（拒否して続行）すら
-非サポートなのも同じ線上。一箇所でも注入を許すと hooks 全体が prompt-mutation 経路になる。
-Claude Code は逆に SessionStart / UserPromptSubmit / PreCompact の至る所で additionalContext を
-許す「ユーザーがどこでもモデルを操縦できる」思想で、差分は成熟度ではなく思想の分岐。
+**中心仮説 v1（反証済み・2026-08-03 同日）**: 「Codex hooks は観測と拒否権のみで
+モデルコンテキストへの書き込み権を持たない」— これは誤り。schema.rs の原典確認で、
+Codex も SessionStart / UserPromptSubmit / PreToolUse / PostToolUse / SubagentStart（+docs 上
+Stop / SubagentStop）で `additionalContext` 注入可、`updated_input` / `updatedMCPToolOutput` で
+ツール入出力の書き換えまで可能と判明。詳細は
+[hooks 全機能比較](/tech/hooks-feature-comparison-claude-vs-codex.md)。
 
-不変条件を支える実務的動機（推測）:
+**中心仮説 v2（改訂）**: Codex が閉じているのは hooks 全体ではなく **compaction パイプライン
+だけ**（ブロック不可・注入不可・要約プレビューなし）。通常ターンへの注入は次のターンで
+訂正が効く回復可能な介入だが、compaction への注入は**セッションの永続記憶そのものを
+書き換える**——汚染された要約は以後のグラウンドトゥルースになり、回復不能かつ気づきにくい。
+だから他はすべて Claude Code 互換で開けつつ、そこだけ聖域にしたと読む。
+Claude Code は対照的に compaction を両方向に開いている（PreCompact で `custom_instructions`
+受領+ブロック可、PostCompact で `compact_summary` 全文受領）。
+
+聖域化を支える実務的動機（推測）:
 
 1. **要約プロンプトを閉じて品質保証**: ユーザー文字列の混入は劣化の切り分け・再現性・
    サポート負担を悪化させる。

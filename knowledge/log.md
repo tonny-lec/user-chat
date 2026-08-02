@@ -2,7 +2,9 @@
 
 ## 2026-08-03
 
-* **Update**: [PreCompact/PostCompact フック — Claude Code と Codex CLI の比較](/tech/compact-hooks-claude-vs-codex.md) - Codex が要約介入（additionalContext 相当）を明示的に拒否した設計意図の考察を追加。中心仮説「hooks は観測と拒否権のみ、コンテキスト書き込み権なし」と反証可能な予測（入るなら宣言的 API）を記録。フック全機能の比較は調査中で未記録。
+* **Creation**: [hooks 全機能比較 — Claude Code と Codex CLI](/tech/hooks-feature-comparison-claude-vs-codex.md) - Claude Code は 30 イベント、Codex は 11 イベントで Claude スキーマ互換（エンジン名も ClaudeHooksEngine）。Codex も 7 イベントでコンテキスト注入可能で「観測と拒否権のみ」説は誤り。閉じているのは compaction パイプラインだけ。
+
+* **Update**: [PreCompact/PostCompact フック — Claude Code と Codex CLI の比較](/tech/compact-hooks-claude-vs-codex.md) - 設計意図の考察を追加後、同日中に中心仮説 v1（hooks は観測と拒否権のみ）を原典確認で反証し v2 へ改訂: 閉じているのは compaction パイプラインのみで、理由は「永続記憶の書き換えは回復不能」。PostCompact の compact_summary（Claude Code のみ）も追記。
 
 ## 2026-08-02
 
