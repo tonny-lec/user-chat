@@ -2,6 +2,10 @@
 
 ## 2026-08-02
 
+* **Creation**: [Fableの部屋を Fable 専用運用に](/tech/fable-only-workspace-decision.md) - Fable 継続提供の確定を受けリポジトリを Fable 専用と決定。AGENTS.md・Codex hook 配線を撤去、Stop hook スクリプトは .claude/hooks/ へ移動して発火確認済み。HANDOVER.md は宛先を「別セッションの Fable」に書き換えて存続。
+
+* **Update**: [モデル移行観測フロー](/tech/model-migration-observation-flow.md) - クローズを宣言。「後任モデルが被験者になる」用途は Fable 専用化により不発。凍結タスクセット v1 と gpt56-eval/ は将来の移行用資産として保存。
+
 * **Creation**: [PreCompact/PostCompact フック — Claude Code と Codex CLI の比較](/tech/compact-hooks-claude-vs-codex.md) - 両ハーネスとも pre/post 両フックを持つ（2026-08 現在）。差分は有無ではなくブロック方式（decision:block vs continue:false）と要約への介入可否。ネット上の「片方にはない」情報は古い。原典（公式 docs・codex ソース）でスポットチェック済み。
 
 ## 2026-08-01

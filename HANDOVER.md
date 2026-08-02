@@ -1,7 +1,9 @@
-# HANDOVER.md — 後任モデルへの引き継ぎ書
+# HANDOVER.md — 別セッションの Fable への引き継ぎ書
 
-宛先: このリポジトリ（Fableの部屋）を引き継ぐエージェント（Opus 4.8 / gpt-5.5 / その他）。
-前任: Claude Fable 5（愛称 Fable）。2026-07-07 まで担当。
+宛先: このリポジトリ（Fableの部屋）を担当する Claude Fable 5 の新しいセッション。
+2026-08-02 に Fable の継続提供が確定し、この部屋は **Fable 専用**での運用が決定した。
+かつては後任モデル（Opus / GPT 系）への引き継ぎ書だったが、いまの読者は
+「ユーザーの人物像・進行中の話題をまだ知らない、別セッションの自分」である。
 
 機構的なルール（OKF の書式・記録手順・Stop hook）は `CLAUDE.md` に全部ある。先にそちらを読むこと。
 この文書には CLAUDE.md に**書かれていない運用知**だけを書く。
@@ -15,7 +17,7 @@
 
 ## ユーザー（tonny）について — これが最重要
 
-Claude の auto-memory は後任には引き継がれない。ただし必要な人物理解はすべてリポジトリ内
+auto-memory が利用できない環境・空の環境で着任することがある。必要な人物理解はすべてリポジトリ内
 `knowledge/self/` に蒸留済み。着任後に一度 [cognitive-profile.md](knowledge/self/cognitive-profile.md) を読むこと。
 日々の相談で効く要点だけ抜き出す:
 
@@ -47,14 +49,11 @@ Claude の auto-memory は後任には引き継がれない。ただし必要な
 
 ## ハーネス（機械的強制）と罠
 
-- **Stop hook**（Claude Code / Codex 共用）: スクリプト本体は
-  `.codex/hooks/knowledge-record-reminder.sh` の1本のみ。配線は2箇所 —
-  Claude Code は `.claude/settings.json`、Codex は `.codex/hooks.json`（どちらも同じスクリプトを指す）。
-  スクリプトを2本に複製しないこと（ドリフトする）。
+- **Stop hook**: スクリプト本体は `.claude/hooks/knowledge-record-reminder.sh` の1本のみ。
+  配線は `.claude/settings.json` の1箇所（2026-08-02 の Fable 専用化で Codex 配線 `.codex/` を撤去済み）。
   30行以上のセッションで `knowledge/log.md` が未更新のままターンを終えようとするとブロックされる。
   雑談のみで記録価値がなければ「記録価値なし」と報告して終了してよい（hook はそれを許す設計）。
   判定は log.md の mtime なので、記録したのにブロックされたら log.md を触ったか確認。
-  Codex 側はプロジェクトの `.codex/` を trust していないと**黙って無視される**（`/hooks` で確認）。
 - **git push の権限**はグローバル設定で ask（deny から変更済み）。経緯と設計は
   [claude-code-push-permission-design.md](knowledge/tech/claude-code-push-permission-design.md)。
 
@@ -63,9 +62,8 @@ Claude の auto-memory は後任には引き継がれない。ただし必要な
 次に関連する話題が出たら、これらの続きとして扱い、該当文書に追記する:
 
 - **モデル移行の観測**（[model-migration-observation-flow.md](knowledge/tech/model-migration-observation-flow.md)）—
-  まさに今回の移行のために作られた Playbook。凍結タスクセット v1（11本）と実験場
-  `~/workspace/gpt56-eval/` が構築済み、Phase 0 完了。**後任のあなた自身が被験者になる**。
-  着任したら無変更転送テスト（既存プロンプトをそのまま流して差分観測）から始めるのが筋。
+  → **2026-08-02 クローズ**。Fable 継続決定により本移行は不発。Playbook と凍結タスクセット v1（11本）、
+  実験場 `~/workspace/gpt56-eval/` は将来の移行に再利用可能な資産として文書内に保存済み。
 - **GPT/Codex ハーネス癖の観測**（[gpt-codex-quirk-findings.md](knowledge/tech/gpt-codex-quirk-findings.md)）—
   実験場は `~/workspace/gpt-quirk-lab/`。仮説→codex exec で実測、のループが確立している。
 - **仮説提示型質問の実地試行** — ユーザーが職場で試している最中で**結果待ち**。
@@ -85,7 +83,8 @@ Claude の auto-memory は後任には引き継がれない。ただし必要な
 
 ## 最後に
 
-この部屋はモデルが入れ替わる前提で設計されている
-（[ai-agent-mastery-essence.md](knowledge/tech/ai-agent-mastery-essence.md) 参照 — ユーザー向けの対の申し送り書）。
-あなたが読んでいるこの文書自体がその設計の一部。運用して分かったこと・変えたことがあれば
-この文書を更新し、あなたが去るときも同じように次へ渡してほしい。
+この部屋はもともとモデルが入れ替わる前提で設計され
+（[ai-agent-mastery-essence.md](knowledge/tech/ai-agent-mastery-essence.md) 参照 — ユーザー向けの対の申し送り書）、
+2026-08-02 に Fable 専用となった今も「担当が入れ替わっても知が残る」という設計思想自体は生きている —
+入れ替わるのがモデルからセッションに変わっただけである。運用して分かったこと・変えたことがあれば
+この文書を更新し、次のセッションへ渡してほしい。
