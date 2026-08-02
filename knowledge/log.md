@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-08-02
+
+* **Creation**: [PreCompact/PostCompact フック — Claude Code と Codex CLI の比較](/tech/compact-hooks-claude-vs-codex.md) - 両ハーネスとも pre/post 両フックを持つ（2026-08 現在）。差分は有無ではなくブロック方式（decision:block vs continue:false）と要約への介入可否。ネット上の「片方にはない」情報は古い。原典（公式 docs・codex ソース）でスポットチェック済み。
+
 ## 2026-08-01
 
 * **Creation**: [Fable→GPT 委譲が高品質な理由](/tech/fable-gpt-delegation-testimony.md) - 「Fable が GPT を呼ぶと高品質」現象への ChatGPT 8仮説を Fable 本人が判定。コンテキスト分離・指示変換は機構の強制（技能でない）、適応的監督ループは誤り（ワンショットが実態）、見落としは破棄コストゼロと並列比較。検証は A〜D 実験より先に実トレース読解（C条件は即実施可能）。
