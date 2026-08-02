@@ -1,9 +1,9 @@
 ---
 type: Reference
 title: PreCompact/PostCompact フック — Claude Code と Codex CLI の比較
-description: 両ハーネスとも pre/post 両フックを持つ（2026-08 現在）。差分は有無ではなくブロック方式（decision:block vs continue:false）と要約への介入可否。ネット上の「片方にはない」情報は古い。
-tags: [claude-code, codex, hooks, compaction, harness]
-timestamp: 2026-08-02T00:00:00+09:00
+description: 両ハーネスとも pre/post 両フックを持つ（2026-08 現在）。差分は有無ではなくブロック方式（decision:block vs continue:false）と要約への介入可否。ネット上の「片方にはない」情報は古い。Codex が要約介入を拒否した設計意図の考察（仮説）付き。
+tags: [claude-code, codex, hooks, compaction, harness, design-philosophy]
+timestamp: 2026-08-03T00:00:00+09:00
 ---
 
 # PreCompact/PostCompact フック — Claude Code と Codex CLI の比較
@@ -43,6 +43,35 @@ timestamp: 2026-08-02T00:00:00+09:00
    逆に Claude Code の PostCompact 追加も比較的最近。両方向に古い言説が流通しており、
    本件の調査でもサブエージェント 1 体が古い認識（Claude Code に PostCompact なし）を
    報告してきた。**この種の仕様は必ず原典（公式 docs / ソース）で裏取りする。**
+
+## 設計意図の考察（仮説、2026-08-03 の相談より）
+
+前提の整理: Codex の additionalContext 不在は「未実装」ではなく PR #19905 の Out of Scope で
+**明示的に拒否**されたもの。問うべきは「なぜ後回しか」ではなく「なぜ断ったか」。
+
+**中心仮説 — hooks の設計不変条件**: Codex hooks は「観測と拒否権」のシステムであり、
+モデルコンテキストへの書き込み権を持たない。PreCompact で `decision:block`（拒否して続行）すら
+非サポートなのも同じ線上。一箇所でも注入を許すと hooks 全体が prompt-mutation 経路になる。
+Claude Code は逆に SessionStart / UserPromptSubmit / PreCompact の至る所で additionalContext を
+許す「ユーザーがどこでもモデルを操縦できる」思想で、差分は成熟度ではなく思想の分岐。
+
+不変条件を支える実務的動機（推測）:
+
+1. **要約プロンプトを閉じて品質保証**: ユーザー文字列の混入は劣化の切り分け・再現性・
+   サポート負担を悪化させる。
+2. **注入面の最小化**: フック出力→要約器プロンプト直結は、レビューを経ない injection チャネル。
+3. **compaction をサーバ側へ動かす自由度**: クライアントフックからの介入を API として
+   約束すると移行の足枷になる。
+
+**Codex 側の一理**: 「要約器に指示して守ってもらう」は確率的機構（無視されたら終わり）、
+「transcript を外部退避して PostCompact / SessionStart(compact) で再注入」は決定的機構。
+祈りを打点に数えない設計。ただし additionalContext の実用的な軽さ（ファイル退避を書く
+までもない一言を守れる）は捨てている。ハーネス選択の指針: 失敗が安い短タスクは確率的操縦で
+速度を、長時間自律実行は試行回数が増えるぶん決定的機構に寄せる。
+
+**反証可能な予測**: 将来 Codex に要約介入が入るとしても「自由文注入」ではなく
+「compact 後に保持するファイル/範囲を宣言する」宣言的 API の形になる。
+Issue #23153（フックからの compaction 発火要望）の捌かれ方が試金石。
 
 ## 未検証の第三者分析（使うならスポットチェック要）
 

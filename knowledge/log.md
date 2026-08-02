@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-08-03
+
+* **Update**: [PreCompact/PostCompact フック — Claude Code と Codex CLI の比較](/tech/compact-hooks-claude-vs-codex.md) - Codex が要約介入（additionalContext 相当）を明示的に拒否した設計意図の考察を追加。中心仮説「hooks は観測と拒否権のみ、コンテキスト書き込み権なし」と反証可能な予測（入るなら宣言的 API）を記録。フック全機能の比較は調査中で未記録。
+
 ## 2026-08-02
 
 * **Creation**: [Fableの部屋を Fable 専用運用に](/tech/fable-only-workspace-decision.md) - Fable 継続提供の確定を受けリポジトリを Fable 専用と決定。AGENTS.md・Codex hook 配線を撤去、Stop hook スクリプトは .claude/hooks/ へ移動して発火確認済み。HANDOVER.md は宛先を「別セッションの Fable」に書き換えて存続。
