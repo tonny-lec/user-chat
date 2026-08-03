@@ -2,6 +2,8 @@
 
 ## 2026-08-03
 
+* **Creation**: [要件定義の世界最高峰 — 頂点を貫く単一原理と現物3点](/tech/requirements-quality-ceiling.md) - 「一番レベルの高い要件定義を見せて」への回答を蒸留。レベルの高さ=文書が判定器として機能する度合い。現物はシャトルPASS・seL4・IETF RFC、技法は EARS。fifth 版 skill との残差は文単位の判定可能性と双方向トレース lint の2つ。
+
 * **Creation**: [hooks 全機能比較 — Claude Code と Codex CLI](/tech/hooks-feature-comparison-claude-vs-codex.md) - Claude Code は 30 イベント、Codex は 11 イベントで Claude スキーマ互換（エンジン名も ClaudeHooksEngine）。Codex も 7 イベントでコンテキスト注入可能で「観測と拒否権のみ」説は誤り。閉じているのは compaction パイプラインだけ。
 
 * **Update**: [PreCompact/PostCompact フック — Claude Code と Codex CLI の比較](/tech/compact-hooks-claude-vs-codex.md) - 設計意図の考察を追加後、同日中に中心仮説 v1（hooks は観測と拒否権のみ）を原典確認で反証し v2 へ改訂: 閉じているのは compaction パイプラインのみで、理由は「永続記憶の書き換えは回復不能」。PostCompact の compact_summary（Claude Code のみ）も追記。
