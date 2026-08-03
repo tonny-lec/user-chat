@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-08-04
+
+* **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — ユーザー指定で順序変更: 修正を安全に回すため E2E 恒久化（Playwright）を修正ループより先行。いま打つ1本を導入プロンプト（init-agents --loop=codex → acceptance 変換 → 環境値経由・2層 assert・終状態のみ判定の spec 生成 → 全件実行 → 期待値書き換え禁止の失敗裁定）に上書き。以後の修正 DoD に「playwright test 全件＋台帳反映 <済|不要>」を組み込み。
+
 ## 2026-08-03
 
 * **Creation**: [要件定義の世界最高峰 — 頂点を貫く単一原理と現物3点](/tech/requirements-quality-ceiling.md) - 「一番レベルの高い要件定義を見せて」への回答を蒸留。レベルの高さ=文書が判定器として機能する度合い。現物はシャトルPASS・seL4・IETF RFC、技法は EARS。fifth 版 skill との残差は文単位の判定可能性と双方向トレース lint の2つ。
