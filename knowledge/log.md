@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-08-05
+
+* **Creation**: [エージェントの resilience 2層 — 実行基盤の復旧（層A）と判断の立て直し（層B）](/tech/agent-resilience-layers.md) - LangChain resilience 発表の解釈を蒸留。発表の「障害」はシステム障害（durable execution、層A）で、エージェントの判断ミスからの自己復帰（層B）とは別層。4機能は「外部化された記憶から障害時にどう続けるか」の4ポリシーに圧縮。どちらの層を学習題材に作るかは brainstorming 継続中。
+
 ## 2026-08-04
 
 * **Update**: [要件→DB→処理→実装フローのプロンプト集（現行版のみ）](/tech/db-design-flow-prompts.md) — ユーザー指定で順序変更: 修正を安全に回すため E2E 恒久化（Playwright）を修正ループより先行。いま打つ1本を導入プロンプト（init-agents --loop=codex → acceptance 変換 → 環境値経由・2層 assert・終状態のみ判定の spec 生成 → 全件実行 → 期待値書き換え禁止の失敗裁定）に上書き。以後の修正 DoD に「playwright test 全件＋台帳反映 <済|不要>」を組み込み。
