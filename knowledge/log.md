@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-08-06
+
+* **Creation**: [SSSF (Super Simple Software Factory) cookbooks 全9ファイルの読解](/tech/sssf-cookbooks.md) - disler の SSSF スキルの cookbooks 9本を精読して蒸留。「agent proposes, code disposes」（決定論的 Python がシーケンス・リトライ・受入を所有、エージェントは境界付きノード）、全フェーズ default fail、envelope の同期三つ組、ゲート違反は同一セッションへの補正返し、オーケストレーターは起動・監視・報告のみ。v1 実行系は pi。
+
 ## 2026-08-05
 
 * **Creation**: [重み vs コンテキストの事実格納](/tech/facts-in-weights-vs-context.md) - ICL 総括ブログ記事の評価から残差1点のみ蒸留。記事本体は事実4の裏面の再記述で新規性なし、O'Neill 実験（重み格納の事実は逐次20回で保持1%、コンテキスト供給で77-80%回復。arXiv:2607.11020、原典照合済み・査読なし）だけを Reference 化。
