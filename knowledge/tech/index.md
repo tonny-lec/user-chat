@@ -4,6 +4,7 @@
 
 * [要件定義の世界最高峰 — 頂点を貫く単一原理と現物3点](/tech/requirements-quality-ceiling.md) - 「一番レベルの高い要件定義」の相談への回答。頂点の性質は「文書単独で判定器として機能する度合い」の一点に圧縮でき、現物はシャトルPASS・seL4・IETF RFC の3方向。自然言語側の頂点技法は EARS。
 
+* [重み vs コンテキストの事実格納 — 「重みに書いた事実は脆い」の定量的証拠](/tech/facts-in-weights-vs-context.md) - 事実知識をファインチューニングで重みに書くと応用が利かず逐次更新で崩壊し、コンテキストに与えれば回復する、という非対称性を測った O'Neill 実験（arXiv, 2026-07）の数値と限界。事実4の弾薬。
 * [エージェントの resilience 2層 — 実行基盤の復旧（層A）と判断の立て直し（層B）](/tech/agent-resilience-layers.md) - LangChain の resilience 発表（retry / recovery path / resume / model fallback）の解釈。発表の実体は実行基盤の durable execution（層A）であり、エージェント自身の作業失敗からの自己復帰（層B）とは別物、という層の分離。
 * [LLMシステムプロンプトの抽出アーカイブ — asgeirtj/system_prompts_leaks](/tech/llm-system-prompt-archives.md) - 主要LLM（ChatGPT GPT-5.6 Sol・Claude・Gemini・Grok等）のコミュニティ抽出システムプロンプトを集めたGitHubリポジトリの案内と、GPT-5.6 Sol プロンプトの構造メモ。
 * [「LLMは本当はもっと賢く、制限で抑えられている」仮説の検討 — 蓋モデルは成り立たない、外すべきは自分側の死んだ層](/tech/hidden-capability-hypothesis.md) - 安全訓練・システムプロンプトを外せば潜在能力が解放されるという仮説の検討。「賢い素体＋蓋」という順序が機構的に誤りで、タスク遂行能力自体がポストトレーニングの産物であることを示す。実測された alignment tax（較正・多様性）の範囲を確定し、回収可能な浪費は全て「指定の追加」で解ける正規の栓に整理。発想は対象をモデル側から自分側の死んだハーネス層へ転回すると本物になる。

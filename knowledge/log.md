@@ -2,6 +2,9 @@
 
 ## 2026-08-05
 
+* **Creation**: [重み vs コンテキストの事実格納](/tech/facts-in-weights-vs-context.md) - ICL 総括ブログ記事の評価から残差1点のみ蒸留。記事本体は事実4の裏面の再記述で新規性なし、O'Neill 実験（重み格納の事実は逐次20回で保持1%、コンテキスト供給で77-80%回復。arXiv:2607.11020、原典照合済み・査読なし）だけを Reference 化。
+* **Update**: [LLM の構造的事実9つ](/tech/llm-structural-facts-to-harness-levers.md) - 事実4に上記実験の定量的裏付け段落を追記（証拠ラベル【未検証の単一報告】、Reference へリンク）。
+
 * **Creation**: [エージェントの resilience 2層 — 実行基盤の復旧（層A）と判断の立て直し（層B）](/tech/agent-resilience-layers.md) - LangChain resilience 発表の解釈を蒸留。発表の「障害」はシステム障害（durable execution、層A）で、エージェントの判断ミスからの自己復帰（層B）とは別層。4機能は「外部化された記憶から障害時にどう続けるか」の4ポリシーに圧縮。どちらの層を学習題材に作るかは brainstorming 継続中。
 
 ## 2026-08-04
