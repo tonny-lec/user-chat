@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-08-07
+
+* **Update**: [superpowers プラグイン解剖 — 公開ハーネスの実例読み解き](/tech/superpowers-plugin-anatomy.md) - 第3回として全14 skill(約3,200行)を通読し追記。3層構造（パイプライン: brainstorming→writing-plans→SDD/executing-plans→finishing、横串の規律: TDD/systematic-debugging/verification の Iron Law 型、支援・メタ）と、使う側の実践的含意4点（発動はモデル依存・パイプラインは一本道・成果物の置き場固定・自作 harness への流用点）を整理。
+
 ## 2026-08-06
 
 * **Creation**: [SSSF (Super Simple Software Factory) cookbooks 全9ファイルの読解](/tech/sssf-cookbooks.md) - disler の SSSF スキルの cookbooks 9本を精読して蒸留。「agent proposes, code disposes」（決定論的 Python がシーケンス・リトライ・受入を所有、エージェントは境界付きノード）、全フェーズ default fail、envelope の同期三つ組、ゲート違反は同一セッションへの補正返し、オーケストレーターは起動・監視・報告のみ。v1 実行系は pi。
