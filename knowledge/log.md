@@ -2,6 +2,8 @@
 
 ## 2026-08-08
 
+* **Update**: [TUI と headless — 同じループエンジンの2つの入り口](/tech/tui-vs-headless-entrypoints.md) - 続編として「SDK に進む目安」を追記。判断基準は機能ではなくグルーコードの重心（stream-json 自前パース・in-process ツール・permission callback・並行セッション管理・アプリ組み込みの5条件）。CLI に留まってよいケースと、その先の Managed Agents（ハーネス＋実行環境ごと預ける段）も整理。
+
 * **Creation**: [TUI と headless（claude -p / codex exec）— 同じループエンジンの2つの入り口](/tech/tui-vs-headless-entrypoints.md) - 「ワンショットは非対話であって非エージェントではない」を核に、TUI=ハーネスを育てる入り口 / headless=機械に運転させる入り口の使い分けと、CI・cron・パイプライン・fan-out が headless を土台にする実例、CLI→SDK の段階論を整理。
 
 ## 2026-08-07

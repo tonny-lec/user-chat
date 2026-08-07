@@ -1,8 +1,8 @@
 ---
 type: Consultation
 title: TUI と headless（claude -p / codex exec）— 同じループエンジンの2つの入り口
-description: 「ワンショット」は入力を1回渡すだけで中では TUI と同一の agentic loop が丸ごと回る（非対話 ≠ 非エージェント）。TUI はハーネスを育てる工程の入り口、headless は育ったハーネスを機械に運転させる工程の入り口。CI・cron・パイプライン・fan-out はすべて headless が土台で、規模が上がると CLI ワンショットから SDK へ進む。
-tags: [ai-agent, harness, headless, cli, agentic-loop, orchestration]
+description: 「ワンショット」は入力を1回渡すだけで中では TUI と同一の agentic loop が丸ごと回る（非対話 ≠ 非エージェント）。TUI はハーネスを育てる工程の入り口、headless は育ったハーネスを機械に運転させる工程の入り口。続編で CLI→SDK の移行判断を具体化: 目安は機能ではなく「グルーコードの重心」— stdout パース・プロセス管理・permission 判定のコードがプロンプト本体より育ったら SDK。
+tags: [ai-agent, harness, headless, cli, sdk, agentic-loop, orchestration]
 timestamp: 2026-08-08T00:00:00+09:00
 ---
 
@@ -50,6 +50,46 @@ CLI の `-p` は「シェルから使える SDK」。jq とパイプで済む規
 構造化した制御（ストリーム処理・セッション継続・型付き応答）が要る規模になったら
 Claude Agent SDK や `codex exec --json` のストリームパースへ進む。入り口の形式が
 変わるだけで、回っているループは同じ。
+
+## 続編（2026-08-08）: SDK に進む目安
+
+前提: `claude -p` と Claude Agent SDK（`claude-agent-sdk` / `@anthropic-ai/claude-agent-sdk`）は
+**同じ Claude Code ハーネスの2つの梱包**。SDK は Claude Code のライブラリ化で、
+`query(prompt, options)` で組み込みツール・hooks・サブエージェント・permission・
+セッション管理ごと動く。移行してもループは変わらず、**制御面がシェルから
+型付きコードに昇格する**だけ（claude-api skill で確認済み）。
+
+### 判断基準は機能ではなく「グルーコードの重心」
+
+`-p` の周りに書いたシェル/パース/プロセス管理コードが、本体のプロンプトより
+育ってきたら、そのグルーコードこそが SDK の提供物。以下のいずれかに該当したら移行:
+
+1. **ストリーム出力の自前パース** — `--output-format stream-json` を自前パーサで
+   捌き始めた（SDK の typed message の再発明）。
+2. **自作ツールの受け渡し** — CLI では外部 MCP サーバーを立てて配線が必要。
+   SDK なら同一プロセス内の関数をそのまま渡せる（in-process MCP）。
+   「ツール1個のためにサーバー1個」が馬鹿らしくなったら。
+3. **permission / hook をコードで** — CLI の hooks はシェル＋JSON パイプ。
+   動的判定（DB を見て許可を決める等）はホスト言語の callback が自然。
+4. **複数セッションの並行・キュー・リトライ** — subprocess の PID と stdout を
+   追いかける管理コードが脆くなったら。resume・multi-turn の型付き制御も SDK の領分。
+5. **アプリ組み込み** — 「スクリプトが agent を呼ぶ」から「サービスの一部が
+   agent である」へ変わった時点で subprocess 起動は不適合。
+
+### CLI に留まってよいケース
+
+パイプラインの1工程で結果は人間かファイル行き / 後処理が jq 数行 /
+cron・CI・Makefile などシェルが自然な場所 / 逐次実行で失敗は再実行で足りる。
+
+### その先の段
+
+SDK でもホスティングは自分持ち（ハーネスのみ提供）。実行環境・スケジューリング・
+サンドボックスごと預けるなら Managed Agents（Anthropic がループとセッションごとの
+コンテナをホストする）という段がある。
+
+```
+claude -p（シェル）→ SDK（ライブラリ、自前ホスト）→ Managed Agents（ハーネスも実行環境も預ける）
+```
 
 # 結論
 
