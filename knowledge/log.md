@@ -2,6 +2,8 @@
 
 ## 2026-08-07
 
+* **Creation**: [サンドボックス下のコーディングエージェントにハーネスを作らせるときのテスト環境](/tech/harness-dev-test-environment.md) - 根因を「エージェントの実行環境 ≠ ユーザーの実行環境」の非対称と特定し、4方針（隔離の外側移動/codex 設定明示/テスト2レーン分割/環境起因失敗の三分類ガード）に整理。codex exec のデフォルト read-only・approval_policy から on-failure 消滅など現行仕様も記録（原典スポットチェック済み）。
+
 * **Update**: [superpowers プラグイン解剖 — 公開ハーネスの実例読み解き](/tech/superpowers-plugin-anatomy.md) - 第3回として全14 skill(約3,200行)を通読し追記。3層構造（パイプライン: brainstorming→writing-plans→SDD/executing-plans→finishing、横串の規律: TDD/systematic-debugging/verification の Iron Law 型、支援・メタ）と、使う側の実践的含意4点（発動はモデル依存・パイプラインは一本道・成果物の置き場固定・自作 harness への流用点）を整理。
 
 ## 2026-08-06
