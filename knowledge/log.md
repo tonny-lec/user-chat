@@ -2,6 +2,8 @@
 
 ## 2026-08-07
 
+* **Creation**: [PEP 723「multiple metadata blocks」エラーの機構と対処](/tech/pep723-multiple-metadata-blocks.md) - uv のこのエラーは行単位の正規表現検出が原因で、文字列リテラル内のブロック例も本物としてカウントされる仕様上の挙動。SSSF の make_adw.py（HEADER テンプレート内に生成用ブロック）で実例を特定。対処はパターンを崩して書き出し時に組み立てる。
+
 * **Creation**: [サンドボックス下のコーディングエージェントにハーネスを作らせるときのテスト環境](/tech/harness-dev-test-environment.md) - 根因を「エージェントの実行環境 ≠ ユーザーの実行環境」の非対称と特定し、4方針（隔離の外側移動/codex 設定明示/テスト2レーン分割/環境起因失敗の三分類ガード）に整理。codex exec のデフォルト read-only・approval_policy から on-failure 消滅など現行仕様も記録（原典スポットチェック済み）。
 
 * **Update**: [superpowers プラグイン解剖 — 公開ハーネスの実例読み解き](/tech/superpowers-plugin-anatomy.md) - 第3回として全14 skill(約3,200行)を通読し追記。3層構造（パイプライン: brainstorming→writing-plans→SDD/executing-plans→finishing、横串の規律: TDD/systematic-debugging/verification の Iron Law 型、支援・メタ）と、使う側の実践的含意4点（発動はモデル依存・パイプラインは一本道・成果物の置き場固定・自作 harness への流用点）を整理。
