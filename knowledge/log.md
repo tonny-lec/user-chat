@@ -1,5 +1,9 @@
 # Directory Update Log
 
+## 2026-08-08
+
+* **Creation**: [TUI と headless（claude -p / codex exec）— 同じループエンジンの2つの入り口](/tech/tui-vs-headless-entrypoints.md) - 「ワンショットは非対話であって非エージェントではない」を核に、TUI=ハーネスを育てる入り口 / headless=機械に運転させる入り口の使い分けと、CI・cron・パイプライン・fan-out が headless を土台にする実例、CLI→SDK の段階論を整理。
+
 ## 2026-08-07
 
 * **Creation**: [PEP 723「multiple metadata blocks」エラーの機構と対処](/tech/pep723-multiple-metadata-blocks.md) - uv のこのエラーは行単位の正規表現検出が原因で、文字列リテラル内のブロック例も本物としてカウントされる仕様上の挙動。SSSF の make_adw.py（HEADER テンプレート内に生成用ブロック）で実例を特定。対処はパターンを崩して書き出し時に組み立てる。
