@@ -2,6 +2,8 @@
 
 ## 2026-08-08
 
+* **Creation**: [Codex をメイン開発エージェントとする OSS プロジェクト一覧](/tech/codex-driven-oss-projects.md) - 「Codex 駆動開発の生きた見本」探しの調査結果。確実5件（openai/codex・openclaw・CodexBar・ossrs/srs・tc39-codex-wiki）＋推定・境界例を証拠の強さ付きで整理。ハーネス見本の読みどころ（openai/codex の AGENTS.md＝規律の書き方、ossrs/srs＝既存大規模プロジェクトへの後付け）も記録。
+
 * **Creation**: [Claude Code の .claude/rules を Codex CLI で再現する — 完全相当は無く、部分代替3系統](/tech/claude-rules-in-codex.md) - 両者の "rules" は名前が同じだけの別物（Codex の rules は execpolicy＝Claude Code の permissions 相当）と確定。.claude/rules の価値を「指示のモジュール分割」と「paths glob の条件付き遅延読み込み」に分解し、Codex ではネスト AGENTS.md / Skills / 指示ベース参照の3系統で部分再現する対応表を整理。
 
 * **Update**: [TUI と headless — 同じループエンジンの2つの入り口](/tech/tui-vs-headless-entrypoints.md) - 続編として「SDK に進む目安」を追記。判断基準は機能ではなくグルーコードの重心（stream-json 自前パース・in-process ツール・permission callback・並行セッション管理・アプリ組み込みの5条件）。CLI に留まってよいケースと、その先の Managed Agents（ハーネス＋実行環境ごと預ける段）も整理。
