@@ -1,7 +1,7 @@
 ---
 type: Consultation
 title: Claude Code の .claude/rules を Codex CLI で再現する — 完全相当は無く、部分代替3系統
-description: Claude Code の .claude/rules（paths glob による条件付きモジュール指示）に完全対応する機能は Codex CLI に存在しない。Codex の "rules" は execpolicy（コマンド実行許可制御）で permissions 相当。部分代替はネスト AGENTS.md・Skills・指示ベース参照の3系統。
+description: Claude Code の .claude/rules（paths glob による条件付きモジュール指示）に完全対応する機能は Codex CLI に存在しない。Codex の "rules" は execpolicy で permissions 相当。部分代替はネスト AGENTS.md・Skills・指示ベース参照の3系統。続編でコミュニティの解消事例（symlink / rulesync・ruler 生成ツール / 上流要望5系統が全て open・無応答）を追記。
 tags: [codex, claude-code, harness, agents-md, rules]
 timestamp: 2026-08-08T00:00:00+09:00
 ---
@@ -54,6 +54,28 @@ Claude Code の `.claude/rules` を Codex CLI で再現したい。Codex CLI に
 なお「コマンドを制限したい」需要なら Codex の rules（execpolicy）がそのものずばりであり、
 Claude Code の permissions との対応で考える。
 
+# 続編: 同じ課題を感じた人たちの解消事例（2026-08-08 調査）
+
+上流要望と実運用の回避策を最新順に調査した結果。
+
+## 解消パターンは3層に収斂
+
+| 層 | 手段 | 代表例 | 限界 |
+|---|---|---|---|
+| (a) symlink | 単一ソースを各ツールのファイル名へリンク | COLOPL Tech Blog（2025-10-15）: `.agents/rules/base.md` → CLAUDE.md / AGENTS.md / .cursor/rules へリンク [7] | 全ツール同一内容が前提。glob 条件・ツール固有差分は扱えない |
+| (b) 生成ツール | 単一ソースから各ツール形式へコンパイル | **rulesync**（★1,295、2026-08-07 リリースの活発さ）: `.rulesync/**/*.md`（frontmatter に glob）→ `rulesync generate` で AGENTS.md / `.claude/` へ変換。Codex にない機能は「simulated」モードで指示文として擬似埋め込み [8][9]。**ruler**（★2,838）: `.ruler/*.md` を連結して配布、glob シミュレートなしのシンプル路線 [10] | rulesync の glob 再現は指示文埋め込みであり、Claude Code の機構的条件ロードと等価ではない |
+| (c) Codex 純正 | ネスト AGENTS.md + 指示ベース参照 | 本文の結論①③と同じ | 横断 glob は表現不能 |
+
+## 上流（openai/codex）の状況 — 要望5系統、全て open・メンテナ応答ゼロ
+
+- **#34002**（2026-07-18、open・実在確認済み）: `.codex/rules/` の path-scoped 条件付き読み込みそのものの要望。ネスト AGENTS.md は「ディレクトリ位置」スコープで「ファイル種別」（service層/DTO/テスト）には粗すぎると正確に指摘。
+- **#28739**（2026-06-17、活動 2026-08-05）: `AGENTS.local.md`（追加オーバーレイ）+ `@` 参照展開の要望。`AGENTS.override.md` は置換であって追加ではない、という不満。
+- **#17401**（2026-04-11、活動 2026-08-01）: `@include` 要望。実測報告あり — **`@/path/file.md` と書いてもリテラル文字列として素通し**される。コミュニティ実装ブランチもマージされず放置。
+- **#23788**（2026-05-21）: `~/.codex/instructions/` の自動連結読み込み要望。「既に `~/.claude/rules/*.md` を持っていて Codex でも再利用したい」動機を明記。
+- **#24881**（2026-05-28、コメント0）: Skills に `paths:` frontmatter を付ける提案。skills 側から条件付きロードに到達しようとするアプローチ。
+
+含意: 本体対応は当面期待薄。実務は (b) 生成ツール（分割と glob をソース側で持つ）か (c) 純正の範囲で設計するのが現実解。
+
 # Citations
 
 [1] [Claude Code Memory — .claude/rules](https://code.claude.com/docs/en/memory.md)
@@ -62,3 +84,10 @@ Claude Code の permissions との対応で考える。
 [4] [Configuration Reference | OpenAI Codex](https://developers.openai.com/codex/config-reference)
 [5] [Skills in OpenAI Codex](https://blog.fsck.com/2025/12/19/codex-skills/)
 [6] [agents.md 公式仕様](https://agents.md/)
+[7] [COLOPL Tech Blog: AIエージェントのルールを symlink で共通化](https://blog.colopl.dev/entry/2025/10/15/110000)
+[8] [dyoshikawa/rulesync](https://github.com/dyoshikawa/rulesync)
+[9] [Zenn: rulesync で AI 設定を同期](https://zenn.dev/painter/articles/89f630d0a7e378)
+[10] [intellectronica/ruler](https://github.com/intellectronica/ruler)
+[11] [openai/codex #34002: .codex/rules/ 要望](https://github.com/openai/codex/issues/34002)
+[12] [openai/codex #17401: @include 要望](https://github.com/openai/codex/issues/17401)
+[13] [openai/codex #28739: AGENTS.local.md 要望](https://github.com/openai/codex/issues/28739)
