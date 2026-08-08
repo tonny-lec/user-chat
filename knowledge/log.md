@@ -2,6 +2,10 @@
 
 ## 2026-08-08
 
+* **Creation**: [Pleasanter 向け Claude Code skills の調査 — 公開 skill は plsnt のみ、主流は MCP](/tech/pleasanter-claude-skills.md) - Pleasanter 開発に使える Claude Code skills の公開状況調査（2026-08）。SKILL.md 形式の公開物は immmmmmmu/plsnt（11スキル同梱、Star 0）が事実上唯一で、エコシステムの主流は公式 MCP サーバー（本体 v1.5.2.0 で実装）。自作するなら plsnt の目次を設計参考に。
+
+* **Update**: [Claude Code の .claude/rules を Codex CLI で再現する](/tech/claude-rules-in-codex.md) - 続編として「同じ課題を感じた人たちの解消事例」を追記。解消パターンは symlink（COLOPL）/ 生成ツール（rulesync・ruler）/ Codex 純正の3層に収斂。上流 openai/codex への要望は5系統（#34002 ほか）全て open でメンテナ応答ゼロ、本体対応は当面期待薄と記録。
+
 * **Creation**: [Codex をメイン開発エージェントとする OSS プロジェクト一覧](/tech/codex-driven-oss-projects.md) - 「Codex 駆動開発の生きた見本」探しの調査結果。確実5件（openai/codex・openclaw・CodexBar・ossrs/srs・tc39-codex-wiki）＋推定・境界例を証拠の強さ付きで整理。ハーネス見本の読みどころ（openai/codex の AGENTS.md＝規律の書き方、ossrs/srs＝既存大規模プロジェクトへの後付け）も記録。
 
 * **Creation**: [Claude Code の .claude/rules を Codex CLI で再現する — 完全相当は無く、部分代替3系統](/tech/claude-rules-in-codex.md) - 両者の "rules" は名前が同じだけの別物（Codex の rules は execpolicy＝Claude Code の permissions 相当）と確定。.claude/rules の価値を「指示のモジュール分割」と「paths glob の条件付き遅延読み込み」に分解し、Codex ではネスト AGENTS.md / Skills / 指示ベース参照の3系統で部分再現する対応表を整理。
